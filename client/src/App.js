@@ -6,16 +6,14 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 const App = () => {
-  const [data, setData] = useState(null);
   const dispatch = useDispatch();
   window.onkeydown = (e) => {
-    const listItem = document.querySelectorAll('.item--change');
+    const objData = document.querySelector('.item--change');
     if (
       e.keyCode === 13 &&
       /* !e.target.classList.contains('item__description-input') && */
-      listItem.length > 0
+      objData.length > 0
     ) {
-      const objData = document.querySelector('.item--change');
       let data = {
         id: objData.closest('li').id,
         name: objData.closest('li').querySelector('input').value,
@@ -32,16 +30,9 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    fetch('/api')
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
   return (
     <div className="App">
       <Board />
-      {/* <p>{!data ? 'Loading...' : data}</p> */}
     </div>
   );
 };
