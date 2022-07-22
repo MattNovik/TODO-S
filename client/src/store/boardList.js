@@ -1,9 +1,7 @@
 import { CompressOutlined } from '@mui/icons-material';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = localStorage.getItem('boardList')
-  ? JSON.parse(localStorage.getItem('boardList'))
-  : [];
+const initialState = [];
 
 const month = [
   'янв',
@@ -76,6 +74,12 @@ export const boardSlice = createSlice({
         }
       });
     },
+    refreshData: (state, action) => {
+      state.length = 0;
+      action.payload.tasks.map((item) => {
+        state.push(item);
+      });
+    },
   },
 });
 
@@ -88,6 +92,7 @@ export const {
   saveItem,
   sortItemsUp,
   sortItemsDown,
+  refreshData,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

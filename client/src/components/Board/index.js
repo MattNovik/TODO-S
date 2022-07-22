@@ -1,7 +1,12 @@
 import './index.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Item } from '../Item';
-import { addNewItem, sortItemsUp, sortItemsDown } from '../../store/boardList';
+import {
+  addNewItem,
+  sortItemsUp,
+  sortItemsDown,
+  refreshData,
+} from '../../store/boardList';
 import { nanoid } from '@reduxjs/toolkit';
 import { borderSpace } from '../../store/boardList';
 import { useEffect, useState } from 'react';
@@ -32,13 +37,15 @@ export const Board = () => {
   const [smallBoardList, setSmallBoardList] = useState(
     boardList.slice(0, maxList)
   );
-  const [data, setData] = useState(null);
 
-  /*   useEffect(() => {
-    fetch('/')
+  //const [data, setData] = useState(null);
+
+  useEffect(() => {
+    console.log('fetch');
+    fetch('/api')
       .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []); */
+      .then((data) => dispatch(refreshData(data)));
+  }, []);
 
   const todayDate =
     weekDay[new Date().getDay()] +
@@ -276,7 +283,13 @@ export const Board = () => {
         <div className="board__time">
           <span>Today is:</span>
           <span>{todayDate}</span>
-          <p>{!data ? 'Loading...' : data}</p>
+          {/*           <p>
+            {!data
+              ? 'Loading...'
+              : data.map((item, i) => {
+                  return <span>{item.description}</span>;
+                })}
+          </p> */}
         </div>
         <button
           className="board__button"
