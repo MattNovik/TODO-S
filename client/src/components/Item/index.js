@@ -27,6 +27,39 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
   </button>
 ));
 
+const collectData = (currentForm) => {
+  const data = new FormData(currentForm);
+  let getData = {};
+  getData.idItem = data.get('idItem');
+  getData.nameItem = data.get('nameItem');
+  getData.description = data.get('description');
+  getData.date = data.get('date');
+  getData.classChange = data.get('classChange');
+  return getData;
+};
+
+const setOptions = (currentForm) => {
+  return {
+    method: 'post',
+    body: { meet: 'gold' },
+  };
+};
+const sendForm = (currentForm) => {
+  return fetch('/', setOptions(currentForm));
+};
+
+function onSuccess(response) {
+  return response.json().then(showMessage);
+}
+
+function showMessage(data) {
+  alert(data.message);
+}
+
+function onError(data) {
+  console.error(data);
+}
+
 export const Item = ({ idItem, name, description, date, classChange }) => {
   const dispatch = useDispatch();
   const dateObj = new Date(date);
@@ -57,7 +90,8 @@ export const Item = ({ idItem, name, description, date, classChange }) => {
             item.classList.remove('item--new');
           });
           e.target.closest('li').classList.add('item--change');
-          e.target.closest('li').querySelector('input').value = name;
+          e.target.closest('li').querySelector('input[name=nameItem]').value =
+            name;
           e.target
             .closest('li')
             .querySelector('.item__description-input').value = description;
@@ -65,7 +99,17 @@ export const Item = ({ idItem, name, description, date, classChange }) => {
         }
       }}
     >
-      <form action="/" method="POST" className="item__form">
+      <form
+        action="/"
+        method="POST"
+        className="item__form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          sendForm(e.target)
+            .then((response) => onSuccess(response, e.target))
+            .catch(onError);
+        }}
+      >
         <input type="hidden" name="idItem" value={idItem} />
         <Close
           className="item__close"

@@ -1,7 +1,9 @@
 import { CompressOutlined } from '@mui/icons-material';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [];
+const initialState = localStorage.getItem('boardList')
+  ? JSON.parse(localStorage.getItem('boardList'))
+  : [];
 
 const month = [
   'янв',

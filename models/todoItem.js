@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const todoTaskSchema = new mongoose.Schema({
   idItem: {
     type: String,
-    required: true,
+    //required: true,
   },
   nameItem: {
     type: String,
@@ -11,11 +11,11 @@ const todoTaskSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+    //required: true,
   },
   date: {
     type: Number,
-    required: true,
+    //required: true,
   },
   classChange: {
     type: String,

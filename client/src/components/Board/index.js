@@ -40,12 +40,12 @@ export const Board = () => {
 
   //const [data, setData] = useState(null);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     console.log('fetch');
     fetch('/api')
       .then((res) => res.json())
       .then((data) => dispatch(refreshData(data)));
-  }, []);
+  }, []); */
 
   const todayDate =
     weekDay[new Date().getDay()] +
