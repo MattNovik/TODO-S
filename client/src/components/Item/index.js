@@ -38,29 +38,27 @@ const collectData = (currentForm) => {
   return getData;
 };
 
-const setOptions = (currentForm) => {
-  return {
+function fetchpost(currentForm) {
+  let data = collectData(currentForm);
+
+  // (B) FETCH
+  fetch('/', {
     method: 'post',
-    body: { meet: 'gold' },
-  };
-};
-const sendForm = (currentForm) => {
-  return fetch('/', setOptions(currentForm));
-};
+    body: JSON.stringify({ data }),
+    headers: { 'Content-Type': 'application/json' },
+  });
 
-function onSuccess(response) {
-  return response.json().then(showMessage);
+  return false;
 }
 
-function showMessage(data) {
-  alert(data.message);
-}
-
-function onError(data) {
-  console.error(data);
-}
-
-export const Item = ({ idItem, name, description, date, classChange }) => {
+export const Item = ({
+  baseId,
+  idItem,
+  nameItem,
+  description,
+  date,
+  classChange,
+}) => {
   const dispatch = useDispatch();
   const dateObj = new Date(date);
   const coverDate =
@@ -71,6 +69,17 @@ export const Item = ({ idItem, name, description, date, classChange }) => {
     dateObj.getFullYear();
   const [pickerDate, setPickerDate] = useState(new Date(date).getTime());
   const [classDate] = useState(new Date().getTime() > date ? true : false);
+
+  /*   const deleteItem = () => {
+    fetch('/delete/' + baseId, { method: 'DELETE' })
+      .then((res) => {
+        return res.json();
+      })
+      .then(() => {
+        console.log('ok');
+      })
+      .catch((err) => console.log('Something went wrong'));
+  }; */
 
   return (
     <li
@@ -91,7 +100,7 @@ export const Item = ({ idItem, name, description, date, classChange }) => {
           });
           e.target.closest('li').classList.add('item--change');
           e.target.closest('li').querySelector('input[name=nameItem]').value =
-            name;
+            nameItem;
           e.target
             .closest('li')
             .querySelector('.item__description-input').value = description;
@@ -105,9 +114,7 @@ export const Item = ({ idItem, name, description, date, classChange }) => {
         className="item__form"
         onSubmit={(e) => {
           e.preventDefault();
-          sendForm(e.target)
-            .then((response) => onSuccess(response, e.target))
-            .catch(onError);
+          fetchpost(e.target);
         }}
       >
         <input type="hidden" name="idItem" value={idItem} />
@@ -121,13 +128,15 @@ export const Item = ({ idItem, name, description, date, classChange }) => {
             dispatch(removeItem(data));
           }}
         />
+        <a href={'/delete/' + baseId}> delete </a>
+        {/* <button onClick={deleteItem}>Del</button> */}
         <TextField
           //label="Enter your goal"
-          placeholder={name}
+          placeholder={nameItem}
           name="nameItem"
           className="item__name-input"
           onChange={(e) => {
-            name = e.target.value;
+            nameItem = e.target.value;
           }}
           sx={{
             '& .MuiInputBase-input': {
@@ -154,7 +163,7 @@ export const Item = ({ idItem, name, description, date, classChange }) => {
             },
           }}
         />
-        <h3 className="item__name">{name}</h3>
+        <h3 className="item__name">{nameItem}</h3>
         <TextareaAutosize
           aria-label=""
           name="description"

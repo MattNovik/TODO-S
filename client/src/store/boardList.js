@@ -31,14 +31,14 @@ export const boardSlice = createSlice({
       });
       state.unshift({
         idItem: action.payload,
-        name: "Todo's name",
+        nameItem: "Todo's name",
         date: date,
         description: "Todo's description",
         classChange: 'item--change item--new',
       });
     },
     removeItem: (state, action) => {
-      let newId = action.payload.id;
+      let newId = action.payload.idItem;
       state.map((item, i) => {
         item.classChange = '';
       });
@@ -58,8 +58,8 @@ export const boardSlice = createSlice({
     },
     changeItem: (state, action) => {},
     saveItem: (state, action) => {
-      let id = action.payload.id;
-      let name = action.payload.name;
+      let id = action.payload.idItem;
+      let name = action.payload.nameItem;
       let description = action.payload.description;
       let date = action.payload.date;
       let classChange = action.payload.classChange;

@@ -21,6 +21,10 @@
     justify-self: center;
   }
 
+  &:nth-child(3n + 10) {
+    justify-self: start;
+  }
+
   @media (max-width: 1919px) {
     width: 300px;
     height: 200px;
@@ -108,9 +112,9 @@
     row-gap: 10px;
   }
 
-  &--new {
+/*   &--new {
     animation: bounceInLeft .3s backwards;
-  }
+  } */
 
   .react-datepicker-wrapper {
     max-width: 100px;

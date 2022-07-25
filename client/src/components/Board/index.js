@@ -38,14 +38,15 @@ export const Board = () => {
     boardList.slice(0, maxList)
   );
 
-  //const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
 
-  /*   useEffect(() => {
-    console.log('fetch');
+  useEffect(() => {
     fetch('/api')
       .then((res) => res.json())
-      .then((data) => dispatch(refreshData(data)));
-  }, []); */
+      .then((data) => {
+        dispatch(refreshData(data));
+      });
+  }, []);
 
   const todayDate =
     weekDay[new Date().getDay()] +
@@ -316,8 +317,9 @@ export const Board = () => {
               return (
                 <Item
                   key={nanoid()}
+                  baseId={item._id}
                   idItem={item.idItem}
-                  name={item.name}
+                  nameItem={item.nameItem}
                   description={item.description}
                   date={item.date}
                   classChange={item.classChange}
