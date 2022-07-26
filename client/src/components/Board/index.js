@@ -72,10 +72,32 @@ export const Board = () => {
     }
   };
 
+  function fetchpostItem(nanoid) {
+    //let data = collectData(currentForm);
+
+    let data = {
+      _id: nanoid,
+      idItem: nanoid,
+      nameItem: "Todo's name",
+      date: new Date().getTime(),
+      description: "Todo's description",
+      classChange: 'item--change item--new',
+    };
+
+    // (B) FETCH
+    fetch('/', {
+      method: 'post',
+      body: JSON.stringify({ data }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    return false;
+  }
+
   const filterByReal = () => {};
 
   useEffect(() => {
-    localStorage.setItem('boardList', JSON.stringify(boardList));
+    //localStorage.setItem('boardList', JSON.stringify(boardList));
     setSmallBoardList(boardList.slice(0, maxList));
     if (startDate !== null && endDate !== null) {
       setSmallBoardList(
@@ -295,7 +317,10 @@ export const Board = () => {
         <button
           className="board__button"
           onClick={() => {
-            dispatch(addNewItem(nanoid()));
+            let nanoidCreat = nanoid();
+            dispatch(addNewItem(nanoidCreat));
+            fetchpostItem(nanoidCreat);
+            console.log('add');
           }}
         >
           <IconAdd />

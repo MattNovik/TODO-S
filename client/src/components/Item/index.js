@@ -2,7 +2,7 @@ import './index.scss';
 import { TextareaAutosize, TextField } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
-import { removeItem, changeItem, saveItem } from '../../store/boardList';
+import { removeItem, updateItem, saveItem } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
 import { forwardRef, useState } from 'react';
 
@@ -70,16 +70,22 @@ export const Item = ({
   const [pickerDate, setPickerDate] = useState(new Date(date).getTime());
   const [classDate] = useState(new Date().getTime() > date ? true : false);
 
-  /*   const deleteItem = () => {
-    fetch('/delete/' + baseId, { method: 'DELETE' })
-      .then((res) => {
-        return res.json();
-      })
-      .then(() => {
-        console.log('ok');
-      })
-      .catch((err) => console.log('Something went wrong'));
-  }; */
+  const deleteItem = () => {
+    fetch('/' + baseId, {
+      method: 'DELETE',
+    });
+  };
+
+  const updateItemForm = (currentForm) => {
+    let data = collectData(currentForm);
+    fetch('/' + baseId, {
+      method: 'PATCH',
+      body: JSON.stringify({ data }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    return false;
+  };
 
   return (
     <li
@@ -104,7 +110,7 @@ export const Item = ({
           e.target
             .closest('li')
             .querySelector('.item__description-input').value = description;
-          dispatch(changeItem());
+          //dispatch(updateItem());
         }
       }}
     >
@@ -113,8 +119,10 @@ export const Item = ({
         method="POST"
         className="item__form"
         onSubmit={(e) => {
+          let dataInfo = collectData(e.target);
           e.preventDefault();
-          fetchpost(e.target);
+          updateItemForm(e.target);
+          dispatch(updateItem(dataInfo));
         }}
       >
         <input type="hidden" name="idItem" value={idItem} />
@@ -125,10 +133,10 @@ export const Item = ({
               id: e.target.closest('li').id,
               target: e.target.tagName,
             };
+            deleteItem();
             dispatch(removeItem(data));
           }}
         />
-        <a href={'/delete/' + baseId}> delete </a>
         {/* <button onClick={deleteItem}>Del</button> */}
         <TextField
           //label="Enter your goal"

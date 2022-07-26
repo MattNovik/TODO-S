@@ -1,4 +1,4 @@
-import { CompressOutlined } from '@mui/icons-material';
+import { Co2Sharp, CompressOutlined } from '@mui/icons-material';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = localStorage.getItem('boardList')
@@ -30,6 +30,7 @@ export const boardSlice = createSlice({
         item.classChange = '';
       });
       state.unshift({
+        _id: action.payload,
         idItem: action.payload,
         nameItem: "Todo's name",
         date: date,
@@ -38,7 +39,7 @@ export const boardSlice = createSlice({
       });
     },
     removeItem: (state, action) => {
-      let newId = action.payload.idItem;
+      let newId = action.payload.id;
       state.map((item, i) => {
         item.classChange = '';
       });
@@ -56,7 +57,28 @@ export const boardSlice = createSlice({
     sortItemsDown: (state, action) => {
       state.sort((a, b) => b.date - a.date);
     },
-    changeItem: (state, action) => {},
+    updateItem: (state, action) => {
+      let id = action.payload.idItem;
+      let name = action.payload.nameItem;
+      let description = action.payload.description;
+      let date = action.payload.date;
+      let classChange = action.payload.classChange;
+      console.log(action.payload);
+      state.map((item, i) => {
+        if (item.idItem === id) {
+          console.log(item.idItem);
+          if (name) {
+            item.name = name;
+            console.log(item.name);
+          }
+          if (description) {
+            item.description = description;
+          }
+          //item.date = date;
+          item.classChange = classChange;
+        }
+      });
+    },
     saveItem: (state, action) => {
       let id = action.payload.idItem;
       let name = action.payload.nameItem;
@@ -78,7 +100,7 @@ export const boardSlice = createSlice({
     },
     refreshData: (state, action) => {
       state.length = 0;
-      action.payload.tasks.map((item) => {
+      action.payload.map((item) => {
         state.push(item);
       });
     },
@@ -90,7 +112,7 @@ export const borderSpace = (state) => state.board;
 export const {
   addNewItem,
   removeItem,
-  changeItem,
+  updateItem,
   saveItem,
   sortItemsUp,
   sortItemsDown,

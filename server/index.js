@@ -2,6 +2,7 @@ import express from 'express';
 import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import mongoose from 'mongoose';
 import TodoTask from '../models/todoItem.js';
+import TodoTaskAPI from './product.api.js';
 
 dotenv.config();
 
@@ -26,13 +27,14 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
 // GET METHOD
 app.get('/api', (req, res) => {
   TodoTask.find({}, (err, tasks) => {
-    res.json({ tasks });
+    res.json(tasks);
   });
 });
 
 //POST METHOD
 app.post('/', async (req, res) => {
   const todoTask = new TodoTask({
+    _id: req.body.data._id,
     idItem: req.body.data.idItem,
     nameItem: req.body.data.nameItem,
     description: req.body.data.description,
@@ -65,23 +67,5 @@ app.post('/', async (req, res) => {
     });
   }); */
 
-//DELETE
-app
-  .route('/delete/:id')
-  .get((req, res) => {
-    const id = req.params.id;
-    TodoTask.findByIdAndRemove(id, (err) => {
-      if (err) return res.send(500, err);
-      res.redirect('/');
-    });
-  })
-  .post((req, res) => {
-    console.log('q');
-    const todoTask = new TodoTask({
-      idItem: req.body.data.idItem,
-      nameItem: req.body.data.nameItem,
-      description: req.body.data.description,
-      date: req.body.data.date,
-      classChange: req.body.data.classChange,
-    });
-  });
+app.delete('/:id', TodoTaskAPI.delete);
+app.patch('/:id', TodoTaskAPI.update);
