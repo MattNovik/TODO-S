@@ -1,34 +1,28 @@
 import './App.scss';
 import { Board } from './components/Board';
 import React from 'react';
-import { saveItem } from './store/boardList';
-import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+
+import { Circles } from 'react-loader-spinner';
 
 const App = () => {
-  const dispatch = useDispatch();
-  window.onkeydown = (e) => {
-    const objData = document.querySelector('.item--change');
-    if (
-      e.keyCode === 13 &&
-      /* !e.target.classList.contains('item__description-input') && */
-      objData.length > 0
-    ) {
-      let data = {
-        id: objData.closest('li').id,
-        name: objData.closest('li').querySelector('input').value,
-        description: objData
-          .closest('li')
-          .querySelector('.item__description-input').value,
-        date: +objData.dataset.datetime,
-        classChange: '',
-      };
-      console.log(data.date);
-      dispatch(saveItem(data));
-      objData.closest('li').classList.remove('item--change');
-      objData.closest('li').classList.remove('item-new');
-    }
-  };
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return (
+      <div className="react-spinner">
+        <Circles
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="circles-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="App">

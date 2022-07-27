@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-
 import mongoose from 'mongoose';
 import TodoTask from '../models/todoItem.js';
 import TodoTaskAPI from './product.api.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -24,6 +25,14 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
   res.json({ message: 'Hello from Express!' });
 }); */
 
+app.use(cors());
+
+app.use('/login', (req, res) => {
+  res.send({
+    token: 'test123',
+  });
+});
+
 // GET METHOD
 app.get('/api', (req, res) => {
   TodoTask.find({}, (err, tasks) => {
@@ -40,6 +49,7 @@ app.post('/', async (req, res) => {
     description: req.body.data.description,
     date: req.body.data.date,
     classChange: req.body.data.classChange,
+    userEmail: req.body.data.userEmail,
   });
   try {
     await todoTask.save();

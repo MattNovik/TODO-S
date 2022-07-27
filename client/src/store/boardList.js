@@ -21,6 +21,7 @@ export const boardSlice = createSlice({
         date: date,
         description: "Todo's description",
         classChange: 'item--change item--new',
+        userEmail: undefined,
       });
     },
     removeItem: (state, action) => {
@@ -50,6 +51,7 @@ export const boardSlice = createSlice({
       let description = action.payload.description;
       let date = action.payload.date;
       let classChange = action.payload.classChange;
+      let userEmail = action.payload.userEmail;
       state.map((item, i) => {
         item.classChange = '';
         if (item.idItem === id) {
@@ -61,6 +63,7 @@ export const boardSlice = createSlice({
           }
           item.date = +date;
           item.classChange = classChange;
+          item.userEmail = userEmail;
         }
         return false;
       });
@@ -91,7 +94,7 @@ export const boardSlice = createSlice({
         if (i !== 0) {
           item.classChange = '';
         }
-        state.push(item);
+        if (item.userEmail === 'googlecomus@gmail.com') state.unshift(item);
         return false;
       });
     },

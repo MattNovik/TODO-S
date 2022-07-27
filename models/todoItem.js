@@ -23,6 +23,9 @@ const todoTaskSchema = new mongoose.Schema({
   classChange: {
     type: String,
   },
+  userEmail: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('TodoTask', todoTaskSchema);

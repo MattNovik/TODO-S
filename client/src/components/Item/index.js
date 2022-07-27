@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { removeItem, updateItem, saveItem } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
 import { forwardRef, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const month = [
   'Jan',
@@ -46,6 +47,23 @@ export const Item = ({
   const [pickerDate, setPickerDate] = useState(new Date(date).getTime());
   const [classDate] = useState(new Date().getTime() > date ? true : false);
 
+  const { user, isAuthenticated } = useAuth0();
+
+  if (isAuthenticated) {
+    const { name, email } = user;
+  }
+
+  window.onkeydown = (e) => {
+    const objData = document.querySelector('.item--change > form');
+    if ((e.keyCode === 13 || e.key === 'Enter') && objData) {
+      let data = collectData(objData);
+      updateItemForm(objData);
+      dispatch(updateItem(data));
+      objData.closest('li').classList.remove('item--change');
+      objData.closest('li').classList.remove('item-new');
+    }
+  };
+
   const collectData = (currentForm) => {
     const data = new FormData(currentForm);
     let getData = {};
@@ -54,6 +72,9 @@ export const Item = ({
     getData.description = data.get('description');
     getData.date = data.get('date');
     getData.classChange = '';
+    isAuthenticated
+      ? (getData.userEmail = user.email)
+      : (getData.userEmail = undefined);
     return getData;
   };
 

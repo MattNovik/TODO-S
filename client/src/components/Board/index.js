@@ -12,6 +12,8 @@ import { borderSpace } from '../../store/boardList';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { ReactComponent as IconAdd } from '../../img/icon-add.svg';
+import AuthNav from '../auth-nav';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const month = [
   'Jan',
@@ -72,6 +74,12 @@ export const Board = () => {
     }
   };
 
+  const { user, isAuthenticated } = useAuth0();
+
+  if (isAuthenticated) {
+    const { name, email } = user;
+  }
+
   function fetchpostItem(nanoid) {
     //let data = collectData(currentForm);
 
@@ -82,6 +90,7 @@ export const Board = () => {
       date: new Date().getTime(),
       description: "Todo's description",
       classChange: 'item--change item--new',
+      userEmail: user.email ?? undefined,
     };
 
     // (B) FETCH
@@ -304,6 +313,7 @@ export const Board = () => {
           </div>
           <div className="wrapper-sorts"></div>
         </div>
+        <AuthNav />
       </div>
       <div className="board__main">
         <div className="board__time">
