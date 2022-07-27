@@ -38,7 +38,7 @@ export const Board = () => {
     boardList.slice(0, maxList)
   );
 
-  const [data, setData] = useState(null);
+  const [data] = useState(null);
 
   useEffect(() => {
     fetch('/api')
@@ -94,10 +94,12 @@ export const Board = () => {
     return false;
   }
 
-  const filterByReal = () => {};
+  //const filterByReal = () => {};
 
   useEffect(() => {
-    //localStorage.setItem('boardList', JSON.stringify(boardList));
+    if (data === null) {
+      localStorage.setItem('boardList', JSON.stringify(boardList));
+    }
     setSmallBoardList(boardList.slice(0, maxList));
     if (startDate !== null && endDate !== null) {
       setSmallBoardList(
@@ -171,6 +173,7 @@ export const Board = () => {
               item.classList.remove('item--change');
               item.classList.remove('item--new');
             }
+            return false;
           });
         } // убираю фокус с задачи
       }}
@@ -306,13 +309,6 @@ export const Board = () => {
         <div className="board__time">
           <span>Today is:</span>
           <span>{todayDate}</span>
-          {/*           <p>
-            {!data
-              ? 'Loading...'
-              : data.map((item, i) => {
-                  return <span>{item.description}</span>;
-                })}
-          </p> */}
         </div>
         <button
           className="board__button"
@@ -320,7 +316,6 @@ export const Board = () => {
             let nanoidCreat = nanoid();
             dispatch(addNewItem(nanoidCreat));
             fetchpostItem(nanoidCreat);
-            console.log('add');
           }}
         >
           <IconAdd />
@@ -370,6 +365,7 @@ export const Board = () => {
                   item.classList.remove('item--change');
                   item.classList.remove('item--new');
                 }
+                return false;
               });
               setMaxList(maxList + 12);
               setSmallBoardList(boardList.slice(0, maxList));

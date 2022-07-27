@@ -27,30 +27,6 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
   </button>
 ));
 
-const collectData = (currentForm) => {
-  const data = new FormData(currentForm);
-  let getData = {};
-  getData.idItem = data.get('idItem');
-  getData.nameItem = data.get('nameItem');
-  getData.description = data.get('description');
-  getData.date = data.get('date');
-  getData.classChange = data.get('classChange');
-  return getData;
-};
-
-function fetchpost(currentForm) {
-  let data = collectData(currentForm);
-
-  // (B) FETCH
-  fetch('/', {
-    method: 'post',
-    body: JSON.stringify({ data }),
-    headers: { 'Content-Type': 'application/json' },
-  });
-
-  return false;
-}
-
 export const Item = ({
   baseId,
   idItem,
@@ -69,6 +45,17 @@ export const Item = ({
     dateObj.getFullYear();
   const [pickerDate, setPickerDate] = useState(new Date(date).getTime());
   const [classDate] = useState(new Date().getTime() > date ? true : false);
+
+  const collectData = (currentForm) => {
+    const data = new FormData(currentForm);
+    let getData = {};
+    getData.idItem = data.get('idItem');
+    getData.nameItem = data.get('nameItem');
+    getData.description = data.get('description');
+    getData.date = data.get('date');
+    getData.classChange = '';
+    return getData;
+  };
 
   const deleteItem = () => {
     fetch('/' + baseId, {
@@ -103,6 +90,7 @@ export const Item = ({
           Array.from(listItem).map((item) => {
             item.classList.remove('item--change');
             item.classList.remove('item--new');
+            return false;
           });
           e.target.closest('li').classList.add('item--change');
           e.target.closest('li').querySelector('input[name=nameItem]').value =
@@ -137,9 +125,7 @@ export const Item = ({
             dispatch(removeItem(data));
           }}
         />
-        {/* <button onClick={deleteItem}>Del</button> */}
         <TextField
-          //label="Enter your goal"
           placeholder={nameItem}
           name="nameItem"
           className="item__name-input"

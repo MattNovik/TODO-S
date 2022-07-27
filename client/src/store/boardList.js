@@ -1,24 +1,8 @@
-import { Co2Sharp, CompressOutlined } from '@mui/icons-material';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = localStorage.getItem('boardList')
   ? JSON.parse(localStorage.getItem('boardList'))
   : [];
-
-const month = [
-  'янв',
-  'фев',
-  'мар',
-  'апр',
-  'май',
-  'июн',
-  'июл',
-  'авг',
-  'сен',
-  'окт',
-  'ноя',
-  'дек',
-];
 
 export const boardSlice = createSlice({
   name: 'board',
@@ -28,6 +12,7 @@ export const boardSlice = createSlice({
       let date = new Date().getTime();
       state.map((item, i) => {
         item.classChange = '';
+        return false;
       });
       state.unshift({
         _id: action.payload,
@@ -42,12 +27,14 @@ export const boardSlice = createSlice({
       let newId = action.payload.id;
       state.map((item, i) => {
         item.classChange = '';
+        return false;
       });
       if (action.payload.target === 'svg' || action.payload.target === 'path') {
         state.map((item, i) => {
           if (item.idItem === newId) {
             state.splice(i, 1);
           }
+          return false;
         });
       }
     },
@@ -63,20 +50,19 @@ export const boardSlice = createSlice({
       let description = action.payload.description;
       let date = action.payload.date;
       let classChange = action.payload.classChange;
-      console.log(action.payload);
       state.map((item, i) => {
+        item.classChange = '';
         if (item.idItem === id) {
-          console.log(item.idItem);
           if (name) {
-            item.name = name;
-            console.log(item.name);
+            item.nameItem = name;
           }
           if (description) {
             item.description = description;
           }
-          //item.date = date;
+          item.date = +date;
           item.classChange = classChange;
         }
+        return false;
       });
     },
     saveItem: (state, action) => {
@@ -96,12 +82,17 @@ export const boardSlice = createSlice({
           item.date = date;
           item.classChange = classChange;
         }
+        return false;
       });
     },
     refreshData: (state, action) => {
       state.length = 0;
-      action.payload.map((item) => {
+      action.payload.map((item, i) => {
+        if (i !== 0) {
+          item.classChange = '';
+        }
         state.push(item);
+        return false;
       });
     },
   },

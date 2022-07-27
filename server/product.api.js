@@ -7,7 +7,6 @@ var TodoTaskAPI = {
       if (error) {
         throw error;
       } else {
-        console.log(request.params.id);
         response.status(200).json(result);
       }
     });
@@ -22,11 +21,9 @@ var TodoTaskAPI = {
         classChange: request.body.data.classChange,
       },
       function (err, data) {
-        console.log(request.body);
         if (err) {
           throw err;
         } else {
-          console.log(request.params.id);
         }
       }
     );
