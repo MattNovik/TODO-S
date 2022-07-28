@@ -6,6 +6,7 @@ import { removeItem, updateItem, saveItem } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
 import { forwardRef, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import Loading from '../Loading';
 
 const month = [
   'Jan',
@@ -28,14 +29,7 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
   </button>
 ));
 
-export const Item = ({
-  baseId,
-  idItem,
-  nameItem,
-  description,
-  date,
-  classChange,
-}) => {
+const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
   const dispatch = useDispatch();
   const dateObj = new Date(date);
   const coverDate =
@@ -48,10 +42,6 @@ export const Item = ({
   const [classDate] = useState(new Date().getTime() > date ? true : false);
 
   const { user, isAuthenticated } = useAuth0();
-
-  if (isAuthenticated) {
-    const { name, email } = user;
-  }
 
   window.onkeydown = (e) => {
     const objData = document.querySelector('.item--change > form');
@@ -74,7 +64,7 @@ export const Item = ({
     getData.classChange = '';
     isAuthenticated
       ? (getData.userEmail = user.email)
-      : (getData.userEmail = undefined);
+      : (getData.userEmail = '');
     return getData;
   };
 
@@ -233,3 +223,5 @@ export const Item = ({
     </li>
   );
 };
+
+export default Item;

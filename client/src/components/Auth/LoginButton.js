@@ -7,7 +7,7 @@ const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
   return (
     <button
-      className="btn btn-primary btn-block"
+      className="auth__login auth__btn"
       onClick={() => loginWithRedirect()}
     >
       Log In

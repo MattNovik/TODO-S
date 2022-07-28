@@ -21,10 +21,6 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
   app.listen(PORT, () => console.log('Server Up and running'));
 });
 
-/* app.get('/api', (req, res) => {
-  res.json({ message: 'Hello from Express!' });
-}); */
-
 app.use(cors());
 
 app.use('/login', (req, res) => {
@@ -41,41 +37,7 @@ app.get('/api', (req, res) => {
 });
 
 //POST METHOD
-app.post('/', async (req, res) => {
-  const todoTask = new TodoTask({
-    _id: req.body.data._id,
-    idItem: req.body.data.idItem,
-    nameItem: req.body.data.nameItem,
-    description: req.body.data.description,
-    date: req.body.data.date,
-    classChange: req.body.data.classChange,
-    userEmail: req.body.data.userEmail,
-  });
-  try {
-    await todoTask.save();
-    res.redirect('/');
-  } catch (err) {
-    console.log(err);
-    res.redirect('/');
-  }
-});
-
-//UPDATE
-/* app
-  .route('/edit/:id')
-  .get((req, res) => {
-    const id = req.params.id;
-    TodoTask.find({}, (err, tasks) => {
-      res.render('todoEdit.ejs', { todoTasks: tasks, idTask: id });
-    });
-  })
-  .post((req, res) => {
-    const id = req.params.id;
-    TodoTask.findByIdAndUpdate(id, { content: req.body.content }, (err) => {
-      if (err) return res.send(500, err);
-      res.redirect('/');
-    });
-  }); */
+app.post('/', TodoTaskAPI.postTask);
 
 app.delete('/:id', TodoTaskAPI.delete);
 app.patch('/:id', TodoTaskAPI.update);

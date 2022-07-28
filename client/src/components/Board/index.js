@@ -1,6 +1,6 @@
 import './index.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { Item } from '../Item';
+import Item from '../Item';
 import {
   addNewItem,
   sortItemsUp,
@@ -12,8 +12,9 @@ import { borderSpace } from '../../store/boardList';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { ReactComponent as IconAdd } from '../../img/icon-add.svg';
-import AuthNav from '../auth-nav';
+import AuthNav from '../Auth/AuthNav';
 import { useAuth0 } from '@auth0/auth0-react';
+import ExternalApi from '../externalAPI';
 
 const month = [
   'Jan',
@@ -32,24 +33,13 @@ const month = [
 
 const weekDay = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-export const Board = () => {
+const Board = () => {
   const dispatch = useDispatch();
   const boardList = useSelector(borderSpace);
   const [maxList, setMaxList] = useState(12);
   const [smallBoardList, setSmallBoardList] = useState(
     boardList.slice(0, maxList)
   );
-
-  const [data] = useState(null);
-
-  useEffect(() => {
-    fetch('/api')
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(refreshData(data));
-      });
-  }, []);
-
   const todayDate =
     weekDay[new Date().getDay()] +
     ' ' +
@@ -59,6 +49,10 @@ export const Board = () => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const [data] = useState(null);
+
+  const { user, isAuthenticated } = useAuth0();
 
   const filterByDate = (dates) => {
     const [start, end] = dates;
@@ -74,15 +68,7 @@ export const Board = () => {
     }
   };
 
-  const { user, isAuthenticated } = useAuth0();
-
-  if (isAuthenticated) {
-    const { name, email } = user;
-  }
-
-  function fetchpostItem(nanoid) {
-    //let data = collectData(currentForm);
-
+  const fetchpostItem = (nanoid) => {
     let data = {
       _id: nanoid,
       idItem: nanoid,
@@ -90,8 +76,13 @@ export const Board = () => {
       date: new Date().getTime(),
       description: "Todo's description",
       classChange: 'item--change item--new',
-      userEmail: user.email ?? undefined,
     };
+
+    if (!isAuthenticated) {
+      data.userEmail = '';
+    } else {
+      data.userEmail = user.email;
+    }
 
     // (B) FETCH
     fetch('/', {
@@ -101,9 +92,20 @@ export const Board = () => {
     });
 
     return false;
-  }
+  };
 
   //const filterByReal = () => {};
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log(JSON.stringify(user, null, 2));
+    }
+    fetch('/api')
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(refreshData(data));
+      });
+  }, []);
 
   useEffect(() => {
     if (data === null) {
@@ -316,6 +318,7 @@ export const Board = () => {
         <AuthNav />
       </div>
       <div className="board__main">
+        <ExternalApi />
         <div className="board__time">
           <span>Today is:</span>
           <span>{todayDate}</span>
@@ -390,3 +393,5 @@ export const Board = () => {
     </div>
   );
 };
+
+export default Board;

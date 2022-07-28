@@ -31,9 +31,10 @@
     color: #fff;
     text-transform: uppercase;
     grid-area: title;
+    white-space: nowrap;
     
     @media (max-width: 767px) {
-      
+      white-space: normal;
     }
   }
 
@@ -154,6 +155,7 @@
       font-size: 40px;
       color: #fff;
       font-weight: 900;
+      text-align: center;
     }
   }
 

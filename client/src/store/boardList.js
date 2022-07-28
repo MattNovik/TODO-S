@@ -94,7 +94,7 @@ export const boardSlice = createSlice({
         if (i !== 0) {
           item.classChange = '';
         }
-        if (item.userEmail === 'googlecomus@gmail.com') state.unshift(item);
+        state.unshift(item);
         return false;
       });
     },
