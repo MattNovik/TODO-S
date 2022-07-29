@@ -14,7 +14,6 @@ import DatePicker from 'react-datepicker';
 import { ReactComponent as IconAdd } from '../../img/icon-add.svg';
 import AuthNav from '../Auth/AuthNav';
 import { useAuth0 } from '@auth0/auth0-react';
-import ExternalApi from '../externalAPI';
 
 const month = [
   'Jan',
@@ -318,7 +317,6 @@ const Board = () => {
         <AuthNav />
       </div>
       <div className="board__main">
-        <ExternalApi />
         <div className="board__time">
           <span>Today is:</span>
           <span>{todayDate}</span>
