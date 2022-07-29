@@ -16,11 +16,11 @@ let userEmail;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-app.use('/login', (req, res) => {
+/* app.use('/login', (req, res) => {
   res.send({
     token: 'test123',
   });
-});
+}); */
 
 //connection to db
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
