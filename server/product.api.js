@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import TodoTask from '../models/todoItem.js';
 
-var TodoTaskAPI = {
+const TodoTaskAPI = {
   delete: (request, response) => {
     TodoTask.findByIdAndRemove(request.params.id, function (error, result) {
       if (error) {
@@ -51,5 +51,15 @@ var TodoTaskAPI = {
       res.json(tasks);
     });
   },
+  postStatus: (req, res, userEmail) => {
+    try {
+      console.log(req.body);
+      userEmail = req.body.userData.email;
+      return userEmail;
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
+
 export default TodoTaskAPI;

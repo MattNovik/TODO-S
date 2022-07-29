@@ -94,7 +94,21 @@ export const boardSlice = createSlice({
         if (i !== 0) {
           item.classChange = '';
         }
-        state.unshift(item);
+        if (item.userEmail === '') {
+          state.unshift(item);
+        }
+        return false;
+      });
+    },
+    refreshDataUserEmail: (state, action) => {
+      state.length = 0;
+      action.payload.map((item, i) => {
+        if (i !== 0) {
+          item.classChange = '';
+        }
+        if (item.userEmail === action.payload.userEmail) {
+          state.unshift(item);
+        }
         return false;
       });
     },
@@ -111,6 +125,7 @@ export const {
   sortItemsUp,
   sortItemsDown,
   refreshData,
+  refreshDataUserEmail,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

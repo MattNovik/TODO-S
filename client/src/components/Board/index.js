@@ -6,6 +6,7 @@ import {
   sortItemsUp,
   sortItemsDown,
   refreshData,
+  refreshDataUserEmail,
 } from '../../store/boardList';
 import { nanoid } from '@reduxjs/toolkit';
 import { borderSpace } from '../../store/boardList';
@@ -98,12 +99,22 @@ const Board = () => {
   useEffect(() => {
     if (isAuthenticated) {
       console.log(JSON.stringify(user, null, 2));
+      const userData = user;
+      // получение данных при условии авторизации
+      fetch('/api')
+        .then((res) => res.json())
+        .then((data) => {
+          data.userEmail = userData.email;
+          dispatch(refreshDataUserEmail(data));
+        });
+    } else {
+      // получение данных при отсутсвия авторизации
+      fetch('/api')
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch(refreshData(data));
+        });
     }
-    fetch('/api')
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(refreshData(data));
-      });
   }, []);
 
   useEffect(() => {
