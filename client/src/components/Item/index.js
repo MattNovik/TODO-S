@@ -37,7 +37,11 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
     ' ' +
     month[dateObj.getMonth()] +
     ', ' +
-    dateObj.getFullYear();
+    dateObj.getFullYear() +
+    ' ' +
+    dateObj.getHours() +
+    ':' +
+    dateObj.getMinutes();
   const [pickerDate, setPickerDate] = useState(new Date(date).getTime());
   const [classDate] = useState(new Date().getTime() > date ? true : false);
 
@@ -184,13 +188,14 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
           <span className="item__date-visual">{coverDate}</span>
           <DatePicker
             selected={pickerDate}
-            //showTimeSelect
+            timeInputLabel="Time:"
+            dateFormat="dd MMM, yyyy HH:mm"
+            showTimeInput
             onChange={(date) => {
               setPickerDate(date.getTime());
             }}
             className="item__date"
             customInput={<CustomInput />}
-            dateFormat="d MMM, yyyy"
           />
           <input type="hidden" name="date" value={pickerDate ?? undefined} />
           <input

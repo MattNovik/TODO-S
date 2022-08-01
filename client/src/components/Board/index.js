@@ -170,6 +170,15 @@ const Board = () => {
           );
         } // убираю фокус с фильтра и сортировки
 
+        const profileInfo = document.querySelector('.profile__info');
+        if (
+          profileInfo &&
+          !profileInfo.classList.contains('profile__info--close') &&
+          !e.target.classList.contains('profile__picture') &&
+          !e.target.closest('.profile')
+        ) {
+          profileInfo.classList.add('profile__info--close');
+        } // убираю окно профиля если открыто
         if (!e.target.closest('li')) {
           if (
             (wrapperButtonSorts.classList.contains(

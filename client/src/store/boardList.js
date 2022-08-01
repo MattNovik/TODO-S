@@ -10,6 +10,7 @@ export const boardSlice = createSlice({
   reducers: {
     addNewItem: (state, action) => {
       let date = new Date().getTime();
+      console.log(date);
       state.map((item, i) => {
         item.classChange = '';
         return false;
@@ -91,11 +92,9 @@ export const boardSlice = createSlice({
     refreshData: (state, action) => {
       state.length = 0;
       action.payload.map((item, i) => {
-        if (i !== 0) {
-          item.classChange = '';
-        }
         if (item.userEmail === '') {
           state.unshift(item);
+          item.classChange = '';
         }
         return false;
       });
@@ -103,11 +102,9 @@ export const boardSlice = createSlice({
     refreshDataUserEmail: (state, action) => {
       state.length = 0;
       action.payload.map((item, i) => {
-        if (i !== 0) {
-          item.classChange = '';
-        }
         if (item.userEmail === action.payload.userEmail) {
           state.unshift(item);
+          item.classChange = '';
         }
         return false;
       });
