@@ -2,11 +2,15 @@ import './index.scss';
 import { TextareaAutosize, TextField } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
-import { removeItem, updateItem, saveItem } from '../../store/boardList';
+import {
+  removeItem,
+  updateItem,
+  saveItem,
+  changeTypeTask,
+} from '../../store/boardList';
 import DatePicker from 'react-datepicker';
 import { forwardRef, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import Loading from '../Loading';
 
 const month = [
   'Jan',
@@ -29,7 +33,15 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
   </button>
 ));
 
-const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
+const Item = ({
+  baseId,
+  idItem,
+  nameItem,
+  description,
+  date,
+  classChange,
+  typeTask,
+}) => {
   const dispatch = useDispatch();
   const dateObj = new Date(date);
   const coverDate =
@@ -51,7 +63,7 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
     const objData = document.querySelector('.item--change > form');
     if ((e.keyCode === 13 || e.key === 'Enter') && objData) {
       let data = collectData(objData);
-      updateItemForm(objData);
+      updateItemForm(data);
       dispatch(updateItem(data));
       objData.closest('li').classList.remove('item--change');
       objData.closest('li').classList.remove('item-new');
@@ -66,6 +78,7 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
     getData.description = data.get('description');
     getData.date = data.get('date');
     getData.classChange = '';
+    getData.typeTask = data.get('typeTask');
     isAuthenticated
       ? (getData.userEmail = user.email)
       : (getData.userEmail = '');
@@ -78,8 +91,7 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
     });
   };
 
-  const updateItemForm = (currentForm) => {
-    let data = collectData(currentForm);
+  const updateItemForm = (data) => {
     fetch('/' + baseId, {
       method: 'PATCH',
       body: JSON.stringify({ data }),
@@ -87,6 +99,17 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
     });
 
     return false;
+  };
+
+  const changeType = (e) => {
+    let dataForm = collectData(e.closest('form'));
+    let data = {
+      idItem: e.closest('li').id,
+      typeTask: e.value,
+    };
+    dataForm.typeTask = e.value;
+    dispatch(changeTypeTask(data));
+    updateItemForm(dataForm);
   };
 
   return (
@@ -124,7 +147,7 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
         onSubmit={(e) => {
           let dataInfo = collectData(e.target);
           e.preventDefault();
-          updateItemForm(e.target);
+          updateItemForm(dataInfo);
           dispatch(updateItem(dataInfo));
         }}
       >
@@ -184,6 +207,59 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
           className="item__description-input"
         />
         <p className="item__description">{description}</p>
+        <input type="hidden" name="typeTask" value={typeTask} />
+        {typeTask === 'todo' ? (
+          <div className="item__type-buttons-list">
+            <button
+              className="item__type-button-progress"
+              value="progress"
+              onClick={(e) => changeType(e.target)}
+            >
+              In progress
+            </button>
+            <button
+              className="item__type-button-done"
+              value="done"
+              onClick={(e) => changeType(e.target)}
+            >
+              Done
+            </button>
+          </div>
+        ) : typeTask === 'progress' ? (
+          <div className="item__type-buttons-list">
+            <button
+              className="item__type-button-todo"
+              value="todo"
+              onClick={(e) => changeType(e.target)}
+            >
+              To Do
+            </button>
+            <button
+              className="item__type-button-done"
+              value="done"
+              onClick={(e) => changeType(e.target)}
+            >
+              Done
+            </button>
+          </div>
+        ) : (
+          <div className="item__type-buttons-list">
+            <button
+              className="item__type-button-todo"
+              value="todo"
+              onClick={(e) => changeType(e.target)}
+            >
+              To Do
+            </button>
+            <button
+              className="item__type-button-progress"
+              value="progress"
+              onClick={(e) => changeType(e.target)}
+            >
+              In progress
+            </button>
+          </div>
+        )}
         <div className="item__date-save">
           <span className="item__date-visual">{coverDate}</span>
           <DatePicker
@@ -207,7 +283,7 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
             type="submit"
             className="item__save-button"
             onClick={(e) => {
-              let data = {
+              /*               let data = {
                 id: e.target.closest('li').id,
                 name: e.target.closest('li').querySelector('input').value,
                 description: e.target
@@ -216,12 +292,12 @@ const Item = ({ baseId, idItem, nameItem, description, date, classChange }) => {
                 date: pickerDate,
                 classChange: '',
               };
-              dispatch(saveItem(data));
+              dispatch(saveItem(data)); */
               e.target.closest('li').classList.remove('item--change');
               e.target.closest('li').classList.remove('item-new');
             }}
           >
-            ОК
+            Save
           </button>
         </div>
       </form>

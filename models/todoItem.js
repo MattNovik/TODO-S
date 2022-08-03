@@ -26,6 +26,9 @@ const todoTaskSchema = new mongoose.Schema({
   userEmail: {
     type: String,
   },
+  typeTask: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('TodoTask', todoTaskSchema);

@@ -1,0 +1,62 @@
+.filter {
+  position: relative;
+  grid-area: filter;
+  color: #fff;
+
+  &__wrapper-buttons-filters {
+    position: relative;
+  
+    &--open {
+      :last-child {
+        border-radius: 0 0 4px 4px;
+      }
+  
+      .filter__button-by-date,
+      .filter__button-by-real,
+      .filter__button-by-usual {
+        display: block;
+      }
+  
+      .button {
+        &.filters {
+          border-radius: 4px 4px 0 0;
+        }
+      }
+  
+      .filter__button-by-real {
+        top: 200%;
+        border-top: solid 1px #000;
+      }
+  
+      .filter__button-by-usual {
+        top: 300%;
+        border-top: solid 1px #000;
+      }
+    }
+  }
+
+  &__by-date {
+    display: none;
+  
+    &--open {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 100%;
+      transform: translate(0, 0);
+      z-index: 110;
+    }
+  }
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 10px;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}

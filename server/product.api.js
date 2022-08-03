@@ -19,6 +19,7 @@ const TodoTaskAPI = {
         description: request.body.data.description,
         date: request.body.data.date,
         classChange: request.body.data.classChange,
+        typeTask: request.body.data.typeTask,
       },
       function (err, data) {
         if (err) {
@@ -28,33 +29,33 @@ const TodoTaskAPI = {
       }
     );
   },
-  postTask: async (req, res) => {
+  postTask: async (request, response) => {
     const todoTask = new TodoTask({
-      _id: req.body.data._id,
-      idItem: req.body.data.idItem,
-      nameItem: req.body.data.nameItem,
-      description: req.body.data.description,
-      date: req.body.data.date,
-      classChange: req.body.data.classChange,
-      userEmail: req.body.data.userEmail,
+      _id: request.body.data._id,
+      idItem: request.body.data.idItem,
+      nameItem: request.body.data.nameItem,
+      description: request.body.data.description,
+      date: request.body.data.date,
+      classChange: request.body.data.classChange,
+      userEmail: request.body.data.userEmail,
+      typeTask: request.body.data.typeTask,
     });
     try {
       await todoTask.save();
-      res.redirect('/');
+      response.redirect('/');
     } catch (err) {
       console.log(err);
-      res.redirect('/');
+      response.redirect('/');
     }
   },
-  getListOfTasks: (req, res) => {
+  getListOfTasks: (request, response) => {
     TodoTask.find({}, (err, tasks) => {
-      res.json(tasks);
+      response.json(tasks);
     });
   },
-  postStatus: (req, res, userEmail) => {
+  postStatus: (request, userEmail) => {
     try {
-      console.log(req.body);
-      userEmail = req.body.userData.email;
+      userEmail = request.body.userData.email;
       return userEmail;
     } catch (err) {
       console.log(err);

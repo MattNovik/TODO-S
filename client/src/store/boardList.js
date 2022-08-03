@@ -10,7 +10,6 @@ export const boardSlice = createSlice({
   reducers: {
     addNewItem: (state, action) => {
       let date = new Date().getTime();
-      console.log(date);
       state.map((item, i) => {
         item.classChange = '';
         return false;
@@ -23,6 +22,7 @@ export const boardSlice = createSlice({
         description: "Todo's description",
         classChange: 'item--change item--new',
         userEmail: undefined,
+        typeTask: 'todo',
       });
     },
     removeItem: (state, action) => {
@@ -53,6 +53,7 @@ export const boardSlice = createSlice({
       let date = action.payload.date;
       let classChange = action.payload.classChange;
       let userEmail = action.payload.userEmail;
+      let typeTask = action.payload.typeTask;
       state.map((item, i) => {
         item.classChange = '';
         if (item.idItem === id) {
@@ -65,6 +66,7 @@ export const boardSlice = createSlice({
           item.date = +date;
           item.classChange = classChange;
           item.userEmail = userEmail;
+          item.typeTask = typeTask;
         }
         return false;
       });
@@ -75,6 +77,7 @@ export const boardSlice = createSlice({
       let description = action.payload.description;
       let date = action.payload.date;
       let classChange = action.payload.classChange;
+      let typeTask = action.payload.typeTask;
       state.map((item, i) => {
         if (item.idItem === id) {
           if (name) {
@@ -85,6 +88,17 @@ export const boardSlice = createSlice({
           }
           item.date = date;
           item.classChange = classChange;
+          item.typeTask = typeTask;
+        }
+        return false;
+      });
+    },
+    changeTypeTask: (state, action) => {
+      let id = action.payload.idItem;
+      let typeTask = action.payload.typeTask;
+      state.map((item) => {
+        if (item.idItem === id) {
+          item.typeTask = typeTask;
         }
         return false;
       });
@@ -123,6 +137,7 @@ export const {
   sortItemsDown,
   refreshData,
   refreshDataUserEmail,
+  changeTypeTask,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

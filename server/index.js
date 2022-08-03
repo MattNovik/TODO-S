@@ -35,7 +35,6 @@ app.get('/api', TodoTaskAPI.getListOfTasks);
 app.post('/', TodoTaskAPI.postTask);
 app.post('/status', (req, res) => {
   try {
-    console.log(req.body);
     userEmail = req.body.userData.email;
   } catch (err) {
     console.log(err);

@@ -1,0 +1,41 @@
+.sort {
+  grid-area: sort;
+  color: #fff;
+
+  &__wrapper-sorts {
+    display: none;
+  }
+
+  &__wrapper-buttons-sorts {
+    position: relative;
+  
+    &--open {
+  
+      :last-child {
+        border-radius: 0 0 4px 4px;
+      }
+  
+      .sort__button-by-up,
+      .sort__button-by-down,
+      .sort__button-by-usual {
+        display: block;
+      }
+  
+      .button {
+        &.sorts {
+          border-radius: 4px 4px 0 0;
+        }
+      }
+  
+      .sort__button-by-down {
+        top: 200%;
+        border-top: solid 1px #000;
+      }
+  
+      .sort__button-by-usual {
+        top: 300%;
+        border-top: solid 1px #000;
+      }
+    }  
+  }
+}
