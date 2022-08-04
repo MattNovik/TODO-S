@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import TodoTask from '../models/todoItem.js';
+var TodoTask = require('./models/todoItem.cjs');
 
 const TodoTaskAPI = {
   delete: (request, response) => {
@@ -63,4 +62,4 @@ const TodoTaskAPI = {
   },
 };
 
-export default TodoTaskAPI;
+module.exports = TodoTaskAPI;
