@@ -8,6 +8,8 @@ import Head from '../Head';
 import ListItems from '../ListItems';
 import AddItemButton from '../AddItemButton';
 import Time from '../Time';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -147,7 +149,9 @@ const Board = () => {
           <Time />
           <AddItemButton />
         </div>
-        <ListItems smallBoardList={smallBoardList} />
+        <DndProvider backend={HTML5Backend}>
+          <ListItems smallBoardList={smallBoardList} />
+        </DndProvider>
       </div>
     </div>
   );

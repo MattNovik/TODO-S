@@ -9,8 +9,9 @@ import {
   changeTypeTask,
 } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useDrag, useDrop } from 'react-dnd';
 
 const month = [
   'Jan',
@@ -41,6 +42,7 @@ const Item = ({
   date,
   classChange,
   typeTask,
+  moveListItem,
 }) => {
   const dispatch = useDispatch();
   const dateObj = new Date(date);
@@ -58,6 +60,27 @@ const Item = ({
   const [classDate] = useState(new Date().getTime() > date ? true : false);
 
   const { user, isAuthenticated } = useAuth0();
+
+  const [{ isDragging }, dragRef] = useDrag({
+    type: 'item',
+    item: { idItem, typeTask },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const [spec, dropRef] = useDrop({
+    accept: 'item',
+    hover: (item, monitor) => {
+      const idItemDrag = item.idItem;
+      const typeTaskDrag = item.typeTask;
+      const typeTaskHover = typeTask;
+      moveListItem(idItemDrag, typeTaskDrag, typeTaskHover);
+    },
+  });
+
+  const ref = useRef(null);
+  const dragDropRef = dragRef(dropRef(ref));
 
   window.onkeydown = (e) => {
     const objData = document.querySelector('.item--change > form');
@@ -118,6 +141,7 @@ const Item = ({
       data-classdate={classDate}
       data-datetime={pickerDate}
       id={idItem}
+      ref={dragDropRef}
       onClick={(e) => {
         if (
           e.target.tagName !== 'BUTTON' &&
