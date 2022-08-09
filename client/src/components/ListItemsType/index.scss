@@ -1,0 +1,28 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.type-list {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  row-gap: 20px;
+  padding: 0;
+
+  &__hidden-item {
+    display: none;
+  }
+
+  &__hidden-item--show {
+    display: block;
+    width: 300px;
+    height: 200px;
+    background-color: #F1F3F5;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23DEE2E6FF' stroke-width='4' stroke-dasharray='15' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
+    border-radius: 8px;
+  }
+}
