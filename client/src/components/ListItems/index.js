@@ -4,21 +4,28 @@ import ListItemsType from '../ListItemsType';
 
 const ListItems = ({ smallBoardList }) => {
   const [todoList, setTodoList] = useState(
-    smallBoardList.filter((item) => item.typeTask === 'todo')
+    smallBoardList
+      .filter((item) => item.typeTask === 'todo')
+      .sort((a, b) => a.index - b.index)
   );
+
   const [maxTodoList, setMaxTodoList] = useState(6);
   const [smallTodoList, setSmallTodoList] = useState(
     todoList !== null ? todoList.slice(0, maxTodoList) : []
   );
   const [progressList, setProgressList] = useState(
-    smallBoardList.filter((item) => item.typeTask === 'progress')
+    smallBoardList
+      .filter((item) => item.typeTask === 'progress')
+      .sort((a, b) => a.index - b.index)
   );
   const [maxProgressList, setMaxProgressList] = useState(6);
   const [smallProgressList, setSmallProgressList] = useState(
     progressList !== null ? progressList.slice(0, maxProgressList) : []
   );
   const [doneList, setDoneList] = useState(
-    smallBoardList.filter((item) => item.typeTask === 'done')
+    smallBoardList
+      .filter((item) => item.typeTask === 'done')
+      .sort((a, b) => a.index - b.index)
   );
   const [maxDoneList, setMaxDoneList] = useState(6);
   const [smallDoneList, setSmallDoneList] = useState(
@@ -26,11 +33,21 @@ const ListItems = ({ smallBoardList }) => {
   );
 
   useEffect(() => {
-    setTodoList(smallBoardList.filter((item) => item.typeTask === 'todo'));
-    setProgressList(
-      smallBoardList.filter((item) => item.typeTask === 'progress')
+    setTodoList(
+      smallBoardList
+        .filter((item) => item.typeTask === 'todo')
+        .sort((a, b) => a.index - b.index)
     );
-    setDoneList(smallBoardList.filter((item) => item.typeTask === 'done'));
+    setProgressList(
+      smallBoardList
+        .filter((item) => item.typeTask === 'progress')
+        .sort((a, b) => a.index - b.index)
+    );
+    setDoneList(
+      smallBoardList
+        .filter((item) => item.typeTask === 'done')
+        .sort((a, b) => a.index - b.index)
+    );
   }, [smallBoardList]);
 
   useEffect(() => {

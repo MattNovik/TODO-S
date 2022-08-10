@@ -9,9 +9,9 @@ import {
   changeTypeTask,
 } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useDrag } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 
 const month = [
   'Jan',
@@ -35,6 +35,7 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 ));
 
 const Item = ({
+  index,
   baseId,
   idItem,
   nameItem,
@@ -42,6 +43,7 @@ const Item = ({
   date,
   classChange,
   typeTask,
+  moveListItem,
 }) => {
   const dispatch = useDispatch();
   const dateObj = new Date(date);
@@ -66,24 +68,41 @@ const Item = ({
       baseId,
       idItem,
       typeTask,
+      index,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
 
-  /*   const [spec, dropRef] = useDrop({
+  const [, drop] = useDrop({
     accept: 'item',
     hover: (item, monitor) => {
       if (!ref.current) {
         return;
       }
-      const idItemDrag = item.idItem;
-      const typeTaskDrag = item.typeTask;
-      const typeTaskHover = typeTask;
-      moveListItem(idItemDrag, typeTaskDrag, typeTaskHover);
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
+      // if dragging down, continue only when hover is smaller than middle Y
+      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
+      // if dragging up, continue only when hover is bigger than middle Y
+      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
+      moveListItem(dragIndex, hoverIndex);
+      item.index = hoverIndex;
     },
-  }); */
+  });
+  const ref = useRef(null);
+  const dragDrop = drag(drop(ref));
+
+  const opacity = isDragging ? 0 : 1;
 
   window.onkeydown = (e) => {
     const objData = document.querySelector('.item--change > form');
@@ -144,8 +163,9 @@ const Item = ({
       data-classdate={classDate}
       data-datetime={pickerDate}
       id={idItem}
-      style={{ opacity: isDragging ? 0.4 : 1 }}
-      ref={drag}
+      ref={dragDrop}
+      index={index}
+      style={{ opacity }}
       onClick={(e) => {
         if (
           e.target.tagName !== 'BUTTON' &&
@@ -164,7 +184,6 @@ const Item = ({
           e.target
             .closest('li')
             .querySelector('.item__description-input').value = description;
-          //dispatch(updateItem());
         }
       }}
     >
@@ -311,16 +330,6 @@ const Item = ({
             type="submit"
             className="item__save-button"
             onClick={(e) => {
-              /*               let data = {
-                id: e.target.closest('li').id,
-                name: e.target.closest('li').querySelector('input').value,
-                description: e.target
-                  .closest('li')
-                  .querySelector('.item__description-input').value,
-                date: pickerDate,
-                classChange: '',
-              };
-              dispatch(saveItem(data)); */
               e.target.closest('li').classList.remove('item--change');
               e.target.closest('li').classList.remove('item-new');
             }}

@@ -31,6 +31,7 @@ const TodoTaskAPI = {
   postTask: async (request, response) => {
     const todoTask = new TodoTask({
       _id: request.body.data._id,
+      index: request.body.data.index,
       idItem: request.body.data.idItem,
       nameItem: request.body.data.nameItem,
       description: request.body.data.description,

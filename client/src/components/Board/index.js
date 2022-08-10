@@ -134,7 +134,6 @@ const Board = () => {
         } // убираю фокус с задачи
       }}
     >
-      {/* <div className="overlay-wrapper" onClick={() => {}}></div> */}
       <Head
         setSmallBoardList={setSmallBoardList}
         setStartDate={setStartDate}

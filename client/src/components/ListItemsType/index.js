@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import Item from '../Item';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadItemsButton from '../LoadItemsButton';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 
 const ListItemsType = ({
   value,
@@ -62,6 +62,20 @@ const ListItemsType = ({
   });
   drop(ref);
 
+  const movePetListItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      // Swap places of dragItem and hoverItem in the pets array
+      setSmallTypeList((smallTypeList) => {
+        const updatedPets = [...smallTypeList];
+        updatedPets.find((item) => item.index === dragIndex).index = hoverIndex;
+        updatedPets.find((item) => item.index === hoverIndex).index = dragIndex;
+        return updatedPets;
+      });
+      console.log(dragIndex + ' ' + hoverIndex);
+    },
+    [smallTypeList]
+  );
+
   const listName =
     value === 'todo' ? 'To do' : value === 'done' ? 'Done' : 'In progress';
   const listClasName =
@@ -91,6 +105,7 @@ const ListItemsType = ({
           smallTypeList.map((item) => {
             return (
               <Item
+                index={item.index}
                 key={nanoid()}
                 baseId={item._id}
                 idItem={item.idItem}
@@ -99,6 +114,7 @@ const ListItemsType = ({
                 date={item.date}
                 classChange={item.classChange}
                 typeTask={item.typeTask}
+                moveListItem={movePetListItem}
               />
             );
           })
