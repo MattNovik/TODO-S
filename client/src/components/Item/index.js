@@ -9,7 +9,7 @@ import {
   changeTypeTask,
 } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
-import { forwardRef, useState, useRef } from 'react';
+import { forwardRef, useState, useRef, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -65,10 +65,14 @@ const Item = ({
   const [{ isDragging }, drag, preview] = useDrag({
     type: 'item',
     item: {
+      index,
       baseId,
       idItem,
+      nameItem,
+      description,
+      date,
+      classChange,
       typeTask,
-      index,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -81,6 +85,7 @@ const Item = ({
       if (!ref.current) {
         return;
       }
+
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) {
@@ -101,8 +106,11 @@ const Item = ({
   });
   const ref = useRef(null);
   const dragDrop = drag(drop(ref));
+  let opacity = isDragging ? 0 : 1;
 
-  const opacity = isDragging ? 0 : 1;
+  useEffect(() => {
+    opacity = isDragging ? 0 : 1;
+  }, [isDragging]);
 
   window.onkeydown = (e) => {
     const objData = document.querySelector('.item--change > form');
@@ -137,17 +145,18 @@ const Item = ({
   };
 
   const updateItemForm = (data) => {
+    console.log(data);
     fetch('/' + baseId, {
       method: 'PATCH',
       body: JSON.stringify({ data }),
       headers: { 'Content-Type': 'application/json' },
     });
-
     return false;
   };
 
   const changeType = (e) => {
     let dataForm = collectData(e.closest('form'));
+    dataForm.index = +e.closest('li').getAttribute('index');
     let data = {
       idItem: e.closest('li').id,
       typeTask: e.value,
@@ -192,8 +201,8 @@ const Item = ({
         method="POST"
         className="item__form"
         onSubmit={(e) => {
-          let dataInfo = collectData(e.target);
           e.preventDefault();
+          let dataInfo = collectData(e.target);
           updateItemForm(dataInfo);
           dispatch(updateItem(dataInfo));
         }}

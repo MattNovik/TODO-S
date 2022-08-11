@@ -17,6 +17,7 @@ export const boardSlice = createSlice({
       state.unshift({
         _id: action.payload,
         idItem: action.payload,
+        index: 0,
         nameItem: "Todo's name",
         date: date,
         description: "Todo's description",
@@ -47,6 +48,7 @@ export const boardSlice = createSlice({
       state.sort((a, b) => b.date - a.date);
     },
     updateItem: (state, action) => {
+      let index = action.payload.index;
       let id = action.payload.idItem;
       let name = action.payload.nameItem;
       let description = action.payload.description;
@@ -63,6 +65,7 @@ export const boardSlice = createSlice({
           if (description) {
             item.description = description;
           }
+          item.index = index;
           item.date = +date;
           item.classChange = classChange;
           item.userEmail = userEmail;
@@ -72,6 +75,7 @@ export const boardSlice = createSlice({
       });
     },
     saveItem: (state, action) => {
+      let index = action.payload.index;
       let id = action.payload.idItem;
       let name = action.payload.nameItem;
       let description = action.payload.description;
@@ -86,6 +90,7 @@ export const boardSlice = createSlice({
           if (description) {
             item.description = description;
           }
+          item.index = index;
           item.date = date;
           item.classChange = classChange;
           item.typeTask = typeTask;

@@ -14,6 +14,7 @@ const TodoTaskAPI = {
     TodoTask.findByIdAndUpdate(
       request.params.id,
       {
+        index: request.body.data.index,
         nameItem: request.body.data.nameItem,
         description: request.body.data.description,
         date: request.body.data.date,
@@ -24,6 +25,7 @@ const TodoTaskAPI = {
         if (err) {
           throw err;
         } else {
+          response.status(200).json(data);
         }
       }
     );

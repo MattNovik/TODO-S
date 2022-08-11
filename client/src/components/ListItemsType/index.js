@@ -24,6 +24,8 @@ const ListItemsType = ({
       method: 'PATCH',
       body: JSON.stringify({ data }),
       headers: { 'Content-Type': 'application/json' },
+    }).catch((error) => {
+      console.error(error);
     });
 
     return false;
@@ -35,6 +37,7 @@ const ListItemsType = ({
         idItem: item.idItem,
         typeTask: value,
       };
+      console.log(item);
       dispatch(changeTypeTask(data));
       item.typeTask = value;
       updateItemForm(item, item.baseId);
@@ -64,14 +67,15 @@ const ListItemsType = ({
 
   const movePetListItem = useCallback(
     (dragIndex, hoverIndex) => {
+      const dragItem = smallTypeList[dragIndex];
+      const hoverItem = smallTypeList[hoverIndex];
       // Swap places of dragItem and hoverItem in the pets array
       setSmallTypeList((smallTypeList) => {
         const updatedPets = [...smallTypeList];
-        updatedPets.find((item) => item.index === dragIndex).index = hoverIndex;
-        updatedPets.find((item) => item.index === hoverIndex).index = dragIndex;
+        updatedPets[dragIndex] = hoverItem;
+        updatedPets[hoverIndex] = dragItem;
         return updatedPets;
       });
-      console.log(dragIndex + ' ' + hoverIndex);
     },
     [smallTypeList]
   );
@@ -102,10 +106,10 @@ const ListItemsType = ({
           }
         ></li>
         {smallTypeList !== null && smallTypeList.length ? (
-          smallTypeList.map((item) => {
+          smallTypeList.map((item, index) => {
             return (
               <Item
-                index={item.index}
+                index={index}
                 key={nanoid()}
                 baseId={item._id}
                 idItem={item.idItem}
