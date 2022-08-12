@@ -15,7 +15,7 @@ const month = [
   'Dec',
 ];
 
-const weekDay = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const Time = () => {
   const todayDate = new Date();

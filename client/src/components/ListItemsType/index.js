@@ -37,7 +37,6 @@ const ListItemsType = ({
         idItem: item.idItem,
         typeTask: value,
       };
-      console.log(item);
       dispatch(changeTypeTask(data));
       item.typeTask = value;
       updateItemForm(item, item.baseId);

@@ -56,7 +56,9 @@ const Item = ({
     ' ' +
     dateObj.getHours() +
     ':' +
-    dateObj.getMinutes();
+    (('' + dateObj.getMinutes()).length === 1
+      ? '0' + dateObj.getMinutes()
+      : dateObj.getMinutes());
   const [pickerDate, setPickerDate] = useState(new Date(date).getTime());
   const [classDate] = useState(new Date().getTime() > date ? true : false);
 
@@ -85,6 +87,10 @@ const Item = ({
       if (!ref.current) {
         return;
       }
+      if (ref.current.dataset.typeTask !== item.typeTask) {
+        //block swipe order. rework later
+        return;
+      }
 
       const dragIndex = item.index;
       const hoverIndex = index;
@@ -100,17 +106,12 @@ const Item = ({
       if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
       // if dragging up, continue only when hover is bigger than middle Y
       if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
-      moveListItem(dragIndex, hoverIndex);
+      //moveListItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
   });
   const ref = useRef(null);
   const dragDrop = drag(drop(ref));
-  let opacity = isDragging ? 0 : 1;
-
-  useEffect(() => {
-    opacity = isDragging ? 0 : 1;
-  }, [isDragging]);
 
   window.onkeydown = (e) => {
     const objData = document.querySelector('.item--change > form');
@@ -166,11 +167,20 @@ const Item = ({
     updateItemForm(dataForm);
   };
 
+  let opacity = isDragging ? 0 : 1;
+
+  let massive = [
+    ['Mallory', 'Everest', 'Mont Blanc', 'Pillar Rock'],
+    ['Mawson', 'South Pole', 'New Hebrides'],
+    ['Hillary', 'Everest', 'South Pole'],
+  ];
+
   return (
     <li
       className={classChange ? 'item ' + classChange : 'item'}
       data-classdate={classDate}
       data-datetime={pickerDate}
+      data-typetask={typeTask}
       id={idItem}
       ref={dragDrop}
       index={index}
