@@ -68,21 +68,3 @@
     text-align: center;
   }
 }
-
-.list {
-  display: flex;
-  flex-direction: column;
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.todo-list,
-.progress-list,
-.done-list {
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  row-gap: 20px;
-  padding: 0;
-}

@@ -4,6 +4,9 @@ const todoTaskSchema = new mongoose.Schema({
   _id: {
     type: String,
   },
+  index: {
+    type: Number,
+  },
   idItem: {
     type: String,
     //required: true,

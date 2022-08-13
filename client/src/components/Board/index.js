@@ -8,6 +8,8 @@ import Head from '../Head';
 import ListItems from '../ListItems';
 import AddItemButton from '../AddItemButton';
 import Time from '../Time';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -132,7 +134,6 @@ const Board = () => {
         } // убираю фокус с задачи
       }}
     >
-      {/* <div className="overlay-wrapper" onClick={() => {}}></div> */}
       <Head
         setSmallBoardList={setSmallBoardList}
         setStartDate={setStartDate}
@@ -147,7 +148,9 @@ const Board = () => {
           <Time />
           <AddItemButton />
         </div>
-        <ListItems smallBoardList={smallBoardList} />
+        <DndProvider backend={HTML5Backend}>
+          <ListItems smallBoardList={smallBoardList} />
+        </DndProvider>
       </div>
     </div>
   );

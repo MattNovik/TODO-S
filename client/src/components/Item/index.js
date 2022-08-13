@@ -9,8 +9,9 @@ import {
   changeTypeTask,
 } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState, useRef, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useDrag, useDrop } from 'react-dnd';
 
 const month = [
   'Jan',
@@ -34,6 +35,7 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 ));
 
 const Item = ({
+  index,
   baseId,
   idItem,
   nameItem,
@@ -41,6 +43,7 @@ const Item = ({
   date,
   classChange,
   typeTask,
+  moveListItem,
 }) => {
   const dispatch = useDispatch();
   const dateObj = new Date(date);
@@ -53,11 +56,62 @@ const Item = ({
     ' ' +
     dateObj.getHours() +
     ':' +
-    dateObj.getMinutes();
+    (('' + dateObj.getMinutes()).length === 1
+      ? '0' + dateObj.getMinutes()
+      : dateObj.getMinutes());
   const [pickerDate, setPickerDate] = useState(new Date(date).getTime());
   const [classDate] = useState(new Date().getTime() > date ? true : false);
 
   const { user, isAuthenticated } = useAuth0();
+
+  const [{ isDragging }, drag, preview] = useDrag({
+    type: 'item',
+    item: {
+      index,
+      baseId,
+      idItem,
+      nameItem,
+      description,
+      date,
+      classChange,
+      typeTask,
+    },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
+
+  const [, drop] = useDrop({
+    accept: 'item',
+    hover: (item, monitor) => {
+      if (!ref.current) {
+        return;
+      }
+      if (ref.current.dataset.typeTask !== item.typeTask) {
+        //block swipe order. rework later
+        return;
+      }
+
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
+      // if dragging down, continue only when hover is smaller than middle Y
+      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
+      // if dragging up, continue only when hover is bigger than middle Y
+      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
+      //moveListItem(dragIndex, hoverIndex);
+      item.index = hoverIndex;
+    },
+  });
+  const ref = useRef(null);
+  const dragDrop = drag(drop(ref));
 
   window.onkeydown = (e) => {
     const objData = document.querySelector('.item--change > form');
@@ -92,17 +146,18 @@ const Item = ({
   };
 
   const updateItemForm = (data) => {
+    console.log(data);
     fetch('/' + baseId, {
       method: 'PATCH',
       body: JSON.stringify({ data }),
       headers: { 'Content-Type': 'application/json' },
     });
-
     return false;
   };
 
   const changeType = (e) => {
     let dataForm = collectData(e.closest('form'));
+    dataForm.index = +e.closest('li').getAttribute('index');
     let data = {
       idItem: e.closest('li').id,
       typeTask: e.value,
@@ -112,12 +167,24 @@ const Item = ({
     updateItemForm(dataForm);
   };
 
+  let opacity = isDragging ? 0 : 1;
+
+  let massive = [
+    ['Mallory', 'Everest', 'Mont Blanc', 'Pillar Rock'],
+    ['Mawson', 'South Pole', 'New Hebrides'],
+    ['Hillary', 'Everest', 'South Pole'],
+  ];
+
   return (
     <li
       className={classChange ? 'item ' + classChange : 'item'}
       data-classdate={classDate}
       data-datetime={pickerDate}
+      data-typetask={typeTask}
       id={idItem}
+      ref={dragDrop}
+      index={index}
+      style={{ opacity }}
       onClick={(e) => {
         if (
           e.target.tagName !== 'BUTTON' &&
@@ -136,7 +203,6 @@ const Item = ({
           e.target
             .closest('li')
             .querySelector('.item__description-input').value = description;
-          //dispatch(updateItem());
         }
       }}
     >
@@ -145,8 +211,8 @@ const Item = ({
         method="POST"
         className="item__form"
         onSubmit={(e) => {
-          let dataInfo = collectData(e.target);
           e.preventDefault();
+          let dataInfo = collectData(e.target);
           updateItemForm(dataInfo);
           dispatch(updateItem(dataInfo));
         }}
@@ -283,16 +349,6 @@ const Item = ({
             type="submit"
             className="item__save-button"
             onClick={(e) => {
-              /*               let data = {
-                id: e.target.closest('li').id,
-                name: e.target.closest('li').querySelector('input').value,
-                description: e.target
-                  .closest('li')
-                  .querySelector('.item__description-input').value,
-                date: pickerDate,
-                classChange: '',
-              };
-              dispatch(saveItem(data)); */
               e.target.closest('li').classList.remove('item--change');
               e.target.closest('li').classList.remove('item-new');
             }}

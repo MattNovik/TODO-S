@@ -96,6 +96,7 @@
   &:hover {
     transform: /* scale(1.05) */ translateZ(0);
     cursor: pointer;
+    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.4);
 
     .item__close {
       visibility: visible;
@@ -112,9 +113,9 @@
     row-gap: 10px;
   }
 
-  &--new {
+/*   &--new {
     animation: fadeInDown .3s backwards;
-  }
+  } */
 
   .react-datepicker-wrapper {
     max-width: 100px;
@@ -147,7 +148,7 @@
 
   &__name {
     margin: 0;
-    line-height: 41px;
+    line-height: 39px;
   }
 
   &__description-input {
@@ -279,6 +280,39 @@
       visibility: hidden;
       opacity: 0;
     }
+  }
+
+  &__type-button-todo,
+  &__type-button-progress,
+  &__type-button-done {
+    background-color: #f8f9fa;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 4px 8px;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    transition: all .3s ease;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+    }
+  }
+
+  &__type-button-todo {
+    //background-color: #446DFF;
+    color: #446DFF;
+  }
+
+  &__type-button-progress {
+    //background-color: #EA8A32;
+    color: #EA8A32;
+  }
+
+  &__type-button-done {
+    //background-color: #168713;
+    color: #168713;
   }
 }
 

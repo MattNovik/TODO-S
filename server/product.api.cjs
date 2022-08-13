@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import TodoTask from '../models/todoItem.js';
+var TodoTask = require('./models/todoItem.cjs');
 
 const TodoTaskAPI = {
   delete: (request, response) => {
@@ -15,6 +14,7 @@ const TodoTaskAPI = {
     TodoTask.findByIdAndUpdate(
       request.params.id,
       {
+        index: request.body.data.index,
         nameItem: request.body.data.nameItem,
         description: request.body.data.description,
         date: request.body.data.date,
@@ -25,6 +25,7 @@ const TodoTaskAPI = {
         if (err) {
           throw err;
         } else {
+          response.status(200).json(data);
         }
       }
     );
@@ -32,6 +33,7 @@ const TodoTaskAPI = {
   postTask: async (request, response) => {
     const todoTask = new TodoTask({
       _id: request.body.data._id,
+      index: request.body.data.index,
       idItem: request.body.data.idItem,
       nameItem: request.body.data.nameItem,
       description: request.body.data.description,
@@ -63,4 +65,4 @@ const TodoTaskAPI = {
   },
 };
 
-export default TodoTaskAPI;
+module.exports = TodoTaskAPI;

@@ -19,8 +19,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f9fa;
-    padding: 20px 40px ;
+    /* background-color: #f8f9fa; */
+    background-color: #004cff;
+    padding: 15px 40px ;
     box-shadow: 0px 2px 2px 0px rgba(34, 60, 80, 0.23);
   }
 
@@ -31,12 +32,14 @@
     display: flex;
     justify-content:space-between;
     align-items: center;
-    background-color: #f8f9fa;
+    //background-color: #f8f9fa;
+    background-color: #004cff;
   }
 
   &__title {
     margin: 0;
-    color: #505457;
+    //color: #505457;
+    color: #fff;
     //text-transform: uppercase;
     grid-area: title;
     white-space: nowrap;

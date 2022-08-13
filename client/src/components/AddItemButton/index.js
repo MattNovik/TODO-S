@@ -11,6 +11,7 @@ const AddItemButton = () => {
 
   const fetchpostItem = (nanoid) => {
     let data = {
+      index: 0,
       _id: nanoid,
       idItem: nanoid,
       nameItem: "Todo's name",

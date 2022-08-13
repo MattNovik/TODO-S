@@ -1,26 +1,31 @@
 import './index.scss';
-import { nanoid } from '@reduxjs/toolkit';
-import Item from '../Item';
 import { useEffect, useState } from 'react';
-import LoadItemsButton from '../LoadItemsButton';
+import ListItemsType from '../ListItemsType';
 
 const ListItems = ({ smallBoardList }) => {
   const [todoList, setTodoList] = useState(
-    smallBoardList.filter((item) => item.typeTask === 'todo')
+    smallBoardList
+      .filter((item) => item.typeTask === 'todo')
+      .sort((a, b) => a.index - b.index)
   );
+
   const [maxTodoList, setMaxTodoList] = useState(6);
   const [smallTodoList, setSmallTodoList] = useState(
     todoList !== null ? todoList.slice(0, maxTodoList) : []
   );
   const [progressList, setProgressList] = useState(
-    smallBoardList.filter((item) => item.typeTask === 'progress')
+    smallBoardList
+      .filter((item) => item.typeTask === 'progress')
+      .sort((a, b) => a.index - b.index)
   );
   const [maxProgressList, setMaxProgressList] = useState(6);
   const [smallProgressList, setSmallProgressList] = useState(
     progressList !== null ? progressList.slice(0, maxProgressList) : []
   );
   const [doneList, setDoneList] = useState(
-    smallBoardList.filter((item) => item.typeTask === 'done')
+    smallBoardList
+      .filter((item) => item.typeTask === 'done')
+      .sort((a, b) => a.index - b.index)
   );
   const [maxDoneList, setMaxDoneList] = useState(6);
   const [smallDoneList, setSmallDoneList] = useState(
@@ -28,11 +33,21 @@ const ListItems = ({ smallBoardList }) => {
   );
 
   useEffect(() => {
-    setTodoList(smallBoardList.filter((item) => item.typeTask === 'todo'));
-    setProgressList(
-      smallBoardList.filter((item) => item.typeTask === 'progress')
+    setTodoList(
+      smallBoardList
+        .filter((item) => item.typeTask === 'todo')
+        .sort((a, b) => a.index - b.index)
     );
-    setDoneList(smallBoardList.filter((item) => item.typeTask === 'done'));
+    setProgressList(
+      smallBoardList
+        .filter((item) => item.typeTask === 'progress')
+        .sort((a, b) => a.index - b.index)
+    );
+    setDoneList(
+      smallBoardList
+        .filter((item) => item.typeTask === 'done')
+        .sort((a, b) => a.index - b.index)
+    );
   }, [smallBoardList]);
 
   useEffect(() => {
@@ -49,111 +64,30 @@ const ListItems = ({ smallBoardList }) => {
 
   return smallBoardList && smallBoardList.length !== 0 ? (
     <div className="list-items">
-      <div className="todo list">
-        <div className="list-items__name-wrapper">
-          <h3 className="list-items__name">To Do</h3>
-          <div className="list-items__count">
-            <span>{todoList !== null ? todoList.length : '0'}</span>
-          </div>
-        </div>
-        <ul className="todo-list">
-          {smallTodoList !== null && smallTodoList.length ? (
-            smallTodoList.map((item) => {
-              return (
-                <Item
-                  key={nanoid()}
-                  baseId={item._id}
-                  idItem={item.idItem}
-                  nameItem={item.nameItem}
-                  description={item.description}
-                  date={item.date}
-                  classChange={item.classChange}
-                  typeTask={item.typeTask}
-                />
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </ul>
-        <LoadItemsButton
-          listItems={todoList}
-          typeList={smallTodoList}
-          setMaxList={setMaxTodoList}
-          setTypeList={setSmallTodoList}
-          maxList={maxTodoList}
-        />
-      </div>
-      <div className="progress list">
-        <div className="list-items__name-wrapper">
-          <h3 className="list-items__name">In progress</h3>
-          <div className="list-items__count">
-            <span>{progressList !== null ? progressList.length : '0'}</span>
-          </div>
-        </div>
-        <ul className="progress-list">
-          {smallProgressList !== null && smallProgressList.length ? (
-            smallProgressList.map((item) => {
-              return (
-                <Item
-                  key={nanoid()}
-                  baseId={item._id}
-                  idItem={item.idItem}
-                  nameItem={item.nameItem}
-                  description={item.description}
-                  date={item.date}
-                  classChange={item.classChange}
-                  typeTask={item.typeTask}
-                />
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </ul>
-        <LoadItemsButton
-          listItems={progressList}
-          typeList={smallProgressList}
-          setMaxList={setMaxProgressList}
-          setTypeList={setSmallProgressList}
-          maxList={maxProgressList}
-        />
-      </div>
-      <div className="done list">
-        <div className="list-items__name-wrapper">
-          <h3 className="list-items__name">Done</h3>
-          <div className="list-items__count">
-            <span>{doneList !== null ? doneList.length : '0'}</span>
-          </div>
-        </div>
-        <ul className="done-list">
-          {smallDoneList !== null && smallDoneList.length ? (
-            smallDoneList.map((item) => {
-              return (
-                <Item
-                  key={nanoid()}
-                  baseId={item._id}
-                  idItem={item.idItem}
-                  nameItem={item.nameItem}
-                  description={item.description}
-                  date={item.date}
-                  classChange={item.classChange}
-                  typeTask={item.typeTask}
-                />
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </ul>
-        <LoadItemsButton
-          listItems={doneList}
-          typeList={smallDoneList}
-          setMaxList={setMaxDoneList}
-          setTypeList={setSmallDoneList}
-          maxList={maxDoneList}
-        />
-      </div>
+      <ListItemsType
+        value="todo"
+        typeList={todoList}
+        smallTypeList={smallTodoList}
+        setMaxTypeList={setMaxTodoList}
+        setSmallTypeList={setSmallTodoList}
+        maxTypeList={maxTodoList}
+      />
+      <ListItemsType
+        value="progress"
+        typeList={progressList}
+        smallTypeList={smallProgressList}
+        setMaxTypeList={setMaxProgressList}
+        setSmallTypeList={setSmallProgressList}
+        maxTypeList={maxProgressList}
+      />
+      <ListItemsType
+        value="done"
+        typeList={doneList}
+        smallTypeList={smallDoneList}
+        setMaxTypeList={setMaxDoneList}
+        setSmallTypeList={setSmallDoneList}
+        maxTypeList={maxDoneList}
+      />
     </div>
   ) : (
     <div className="list-items-empty">
