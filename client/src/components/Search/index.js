@@ -3,6 +3,19 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+/* import { createTheme } from '@mui/system';
+
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 424,
+      sm: 767,
+      md: 1023,
+      lg: 1200,
+      xl: 1439,
+    },
+  },
+}); */
 
 export default function Search() {
   return (
@@ -13,6 +26,9 @@ export default function Search() {
         alignItems: 'center',
         width: 300,
         maxHeight: '40px',
+        '@media (max-width: 424px)': {
+          width: '100%',
+        },
       }}
     >
       <InputBase

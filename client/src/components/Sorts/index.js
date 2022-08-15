@@ -1,6 +1,8 @@
 import './index.scss';
 import { sortItemsUp, sortItemsDown } from '../../store/boardList';
 import { useDispatch } from 'react-redux';
+import { ReactComponent as IconSort } from '../../img/icon-sort.svg';
+import { ReactComponent as IconArrow } from '../../img/icon-arrow.svg';
 
 const Sorts = ({ setSmallBoardList, boardList }) => {
   const dispatch = useDispatch();
@@ -31,15 +33,17 @@ const Sorts = ({ setSmallBoardList, boardList }) => {
             }
           }}
         >
+          <IconSort />
           sort
         </button>
         <button
           className="buttonFS sort__button-by-up"
+          value="up"
           onClick={() => {
             dispatch(sortItemsUp());
           }}
         >
-          date Up
+          date <IconArrow className="sort__arrow-up" />
         </button>
         <button
           className="buttonFS sort__button-by-down"
@@ -47,7 +51,7 @@ const Sorts = ({ setSmallBoardList, boardList }) => {
             dispatch(sortItemsDown());
           }}
         >
-          Date Down
+          Date <IconArrow className="sort__arrow-down" />
         </button>
         <button
           className="buttonFS sort__button-by-usual"
@@ -55,7 +59,7 @@ const Sorts = ({ setSmallBoardList, boardList }) => {
             setSmallBoardList(boardList);
           }}
         >
-          usual
+          reset
         </button>
       </div>
       <div className="sort__wrapper-sorts"></div>

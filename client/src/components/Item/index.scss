@@ -12,6 +12,34 @@
   transition: all .5s ease;
   backface-visibility: hidden;
 
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    border-radius: 10px 0 0 10px;
+  }
+
+  &[data-typetask="todo"] {
+    &:after {
+      background-color: #446DFF;
+    }
+  }
+
+  &[data-typetask="progress"] {
+    &:after {
+      background-color: #EA8A32;
+    }
+  }
+
+  &[data-typetask="done"] {
+    &:after {
+      background-color: #168713;
+    }
+  }
+
   &:nth-child(4n) {
     justify-self: end;
   }
@@ -48,20 +76,57 @@
       justify-self: center;
     }
   }
+
+  @media (max-width: 1149px) {
+    width: 260px;
+  }
   
   @media (max-width: 1023px) {
+    &:nth-child(1n) {
+      justify-self: start;
+    }
+
+    &:nth-child(2n) {
+      justify-self: start;
+    }
+
+    &:nth-child(4n + 4) {
+      justify-self: end;
+    }
+
+    &:nth-child(3n) {
+      justify-self: center;
+    }
+
+    &:nth-child(3n + 4) {
+      justify-self: end;
+    }
+
+    &:nth-child(3n + 5) {
+      justify-self: start;
+    }
+
+    .item__close {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 899px) {
+    width: 300px;
 
     &:nth-child(3n) {
       justify-self: start;
     }
 
     &:nth-child(1n) {
-      justify-self: start;
+      justify-self: end;
     }
 
     &:nth-child(2n) {
-      justify-self: end;
+      justify-self: start;
     }
+
     .item__close {
       visibility: visible;
       opacity: 1;
@@ -82,19 +147,8 @@
     }
   }
 
-/*   &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10px;
-    height: 100%;
-    background-color: green;
-    border-radius: 10px 0 0 10px;
-  } */
-
   &:hover {
-    transform: /* scale(1.05) */ translateZ(0);
+    transform: translateZ(0);
     cursor: pointer;
     box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.4);
 
@@ -112,10 +166,6 @@
     justify-content: space-between;
     row-gap: 10px;
   }
-
-/*   &--new {
-    animation: fadeInDown .3s backwards;
-  } */
 
   .react-datepicker-wrapper {
     max-width: 100px;
@@ -223,6 +273,12 @@
       background-color: #EAE6E5;
       color: #000;
     }
+
+    @media (max-width: 424px) {
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
   }
 
   &__date-save {
@@ -231,6 +287,12 @@
     justify-content: space-between;
     align-items: flex-end;
     column-gap: 10px;
+
+    @media (max-width: 424px) {
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 10px;
+    }
 
     span {
       font-size: 16px;

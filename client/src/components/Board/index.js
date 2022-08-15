@@ -56,6 +56,10 @@ const Board = () => {
     }
   }, [boardList]);
 
+  const [filterTodoList, setFilterTodoList] = useState(true);
+  const [filterProgressList, setFilterProgressList] = useState(true);
+  const [filterDoneList, setFilterDoneList] = useState(true);
+
   return (
     <div
       className="board"
@@ -67,24 +71,15 @@ const Board = () => {
         const wrapperButtonSorts = document.querySelector(
           '.sort__wrapper-buttons-sorts'
         );
-        const wrapperFilterDate = document.querySelector('.filter__by-date');
         if (
-          !e.target.closest('.filter__by-date') &&
-          wrapperFilterDate.classList.contains('filter__by-date--open') &&
-          !e.target.classList.contains('filter__button-by-date')
-        ) {
-          wrapperFilterDate.classList.remove('filter__by-date--open');
-        } // убираю окно фильтра даты при клике не на фильтр
-        if (
-          ((wrapperButtonSorts.classList.contains(
+          (wrapperButtonSorts.classList.contains(
             'sort__wrapper-buttons-sorts--open'
           ) ||
             wrapperButtonFilters.classList.contains(
               'filter__wrapper-buttons-filters--open'
             )) &&
-            !e.target.classList.contains('sorts') &&
-            !e.target.classList.contains('filters')) ||
-          (!e.target.closest('.sorts') && !e.target.closest('.filters'))
+          !e.target.closest('.sort') &&
+          !e.target.closest('.filter')
         ) {
           wrapperButtonSorts.classList.remove(
             'sort__wrapper-buttons-sorts--open'
@@ -92,6 +87,7 @@ const Board = () => {
           wrapperButtonFilters.classList.remove(
             'filter__wrapper-buttons-filters--open'
           );
+          console.log('remove');
         } // убираю фокус с фильтра и сортировки
 
         const profileInfo = document.querySelector('.profile__info');
@@ -111,8 +107,8 @@ const Board = () => {
               wrapperButtonFilters.classList.contains(
                 'filter__wrapper-buttons-filters--open'
               )) &&
-            !e.target.classList.contains('sorts') &&
-            !e.target.classList.contains('filters')
+            !e.target.closest('.sort') &&
+            !e.target.closest('.filter')
           ) {
             wrapperButtonSorts.classList.remove(
               'sort__wrapper-buttons-sorts--open'
@@ -142,6 +138,12 @@ const Board = () => {
         endDate={endDate}
         boardList={boardList}
         smallBoardList={smallBoardList}
+        filterTodoList={filterTodoList}
+        setFilterTodoList={setFilterTodoList}
+        filterProgressList={filterProgressList}
+        setFilterProgressList={setFilterProgressList}
+        filterDoneList={filterDoneList}
+        setFilterDoneList={setFilterDoneList}
       />
       <div className="board__main">
         <div className="board__time-add-wrapper">
@@ -149,7 +151,12 @@ const Board = () => {
           <AddItemButton />
         </div>
         <DndProvider backend={HTML5Backend}>
-          <ListItems smallBoardList={smallBoardList} />
+          <ListItems
+            smallBoardList={smallBoardList}
+            filterTodoList={filterTodoList}
+            filterProgressList={filterProgressList}
+            filterDoneList={filterDoneList}
+          />
         </DndProvider>
       </div>
     </div>

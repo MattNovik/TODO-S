@@ -23,7 +23,19 @@
 
   @media (max-width: 767px) {
     width: 100%;
-    max-width: 400px;
+    max-width: 150px;
+  }
+
+  @media (max-width: 424px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    margin: 0;
+    
+    span {
+      display: none;
+    }
   }
 
   &:hover {

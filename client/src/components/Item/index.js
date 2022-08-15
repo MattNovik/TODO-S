@@ -9,7 +9,7 @@ import {
   changeTypeTask,
 } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
-import { forwardRef, useState, useRef, useEffect } from 'react';
+import { forwardRef, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -29,7 +29,7 @@ const month = [
 ];
 
 const CustomInput = forwardRef(({ value, onClick }, ref) => (
-  <button className="custom-input" onClick={onClick} ref={ref}>
+  <button type="button" className="custom-input" onClick={onClick} ref={ref}>
     {value}
   </button>
 ));
@@ -146,7 +146,6 @@ const Item = ({
   };
 
   const updateItemForm = (data) => {
-    console.log(data);
     fetch('/' + baseId, {
       method: 'PATCH',
       body: JSON.stringify({ data }),

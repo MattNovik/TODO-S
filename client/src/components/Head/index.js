@@ -13,6 +13,12 @@ const Head = ({
   endDate,
   boardList,
   smallBoardList,
+  filterTodoList,
+  setFilterTodoList,
+  filterProgressList,
+  setFilterProgressList,
+  filterDoneList,
+  setFilterDoneList,
 }) => {
   return (
     <div className="head">
@@ -35,6 +41,12 @@ const Head = ({
             boardList={boardList}
             startDate={startDate}
             endDate={endDate}
+            filterTodoList={filterTodoList}
+            setFilterTodoList={setFilterTodoList}
+            filterProgressList={filterProgressList}
+            setFilterProgressList={setFilterProgressList}
+            filterDoneList={filterDoneList}
+            setFilterDoneList={setFilterDoneList}
           />
           <Sorts setSmallBoardList={setSmallBoardList} boardList={boardList} />
         </div>

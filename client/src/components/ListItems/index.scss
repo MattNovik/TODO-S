@@ -15,7 +15,7 @@
   }
 
   @media (max-width: 1023px) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   @media (max-width: 767px) {
@@ -31,6 +31,19 @@
 
     @media (max-width: 1919px) {
       width: 300px;
+    }
+
+    @media (max-width: 1149px) {
+      width: 260px;
+    }
+
+    @media (max-width: 1023px) {
+      width: 300px;
+      margin: 0;
+    }
+
+    @media (max-width: 767px) {
+      width: 100%;
     }
 
     h3 {

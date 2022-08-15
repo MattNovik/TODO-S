@@ -2,6 +2,11 @@
   grid-area: sort;
   color: #fff;
 
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
   &__wrapper-sorts {
     display: none;
   }
@@ -9,16 +14,12 @@
   &__wrapper-buttons-sorts {
     position: relative;
   
-    &--open {
-  
-      :last-child {
-        border-radius: 0 0 4px 4px;
-      }
-  
+    &--open {  
       .sort__button-by-up,
       .sort__button-by-down,
       .sort__button-by-usual {
-        display: block;
+        display: flex;
+        padding: 11px 16px;
       }
   
       .button {
@@ -26,16 +27,37 @@
           border-radius: 4px 4px 0 0;
         }
       }
+
+      .sort__button-by-up {
+        svg {
+          transform: rotate(90deg);
+        }
+      }
   
       .sort__button-by-down {
         top: 200%;
         border-top: solid 1px #000;
+
+        svg {
+          transform: rotate(-90deg);
+        }
       }
   
       .sort__button-by-usual {
         top: 300%;
         border-top: solid 1px #000;
+        border-radius: 0 0 4px 4px;
+        box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
       }
     }  
   }
+
+
+}
+
+.sorts {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 5px;
 }

@@ -17,7 +17,7 @@
     flex-grow: 1;
 
     @media (max-width: 767px) {
-      padding: 20px 20px;
+      padding: 0 20px 20px;
     }
   }
 
@@ -28,6 +28,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 424px) {
+    }
   }
 }
 
@@ -69,6 +72,9 @@
 .buttonFS {
   display: none;
   position: absolute;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
   top: 100%;
   left: 0;
   width: 100%;
@@ -87,25 +93,3 @@
     color: #fff;
   }
 }
-
-/* .wrapper-buttons-filter--open + .filter__by-date--open {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 100%;
-  transform: translate(0, 0);
-  z-index: 110;
-} */
-
-/* .wrapper-filters {
-  display: none;
-
-  &--open {
-    display: block;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    transform: translate(50%, 0);
-    z-index: 100;
-  }
-} */
