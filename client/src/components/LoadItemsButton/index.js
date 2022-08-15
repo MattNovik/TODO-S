@@ -1,4 +1,5 @@
 import './index.scss';
+import React from 'react';
 
 const LoadItemsButton = ({
   listItems,
@@ -12,9 +13,9 @@ const LoadItemsButton = ({
     listItems.length !== typeList.length ? (
     <button
       className="load-more-button"
-      onClick={(e) => {
+      onClick={e => {
         const listTypeItems = e.target.closest('.list').querySelector('ul');
-        Array.from(listTypeItems).map((item) => {
+        Array.from(listTypeItems).map(item => {
           if (
             item.classList.contains('item--change') ||
             item.classList.contains('item--new')

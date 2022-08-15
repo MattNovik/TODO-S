@@ -42,10 +42,18 @@ export const boardSlice = createSlice({
       }
     },
     sortItemsUp: (state, action) => {
-      state.sort((a, b) => a.date - b.date);
+      state
+        .sort((a, b) => a.date - b.date)
+        .map((item, i) => {
+          item.index = i;
+        });
     },
     sortItemsDown: (state, action) => {
-      state.sort((a, b) => b.date - a.date);
+      state
+        .sort((a, b) => b.date - a.date)
+        .map((item, i) => {
+          item.index = i;
+        });
     },
     updateItem: (state, action) => {
       let index = action.payload.index;

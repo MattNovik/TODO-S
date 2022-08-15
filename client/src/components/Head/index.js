@@ -3,6 +3,7 @@ import Search from '../Search';
 import AuthNav from '../Auth/AuthNav';
 import Filters from '../Filters';
 import Sorts from '../Sorts';
+import { ReactComponent as Logo } from '../../img/logo.svg';
 
 const Head = ({
   setSmallBoardList,
@@ -17,7 +18,9 @@ const Head = ({
     <div className="head">
       <div className="head__title-wrapper">
         <div className="head__title-wrapper-sec">
-          <h1 className="head__title">TODO APP @lockdur</h1>
+          <h1 className="head__title">
+            <Logo />
+          </h1>
           <AuthNav />
         </div>
       </div>

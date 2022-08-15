@@ -169,12 +169,6 @@ const Item = ({
 
   let opacity = isDragging ? 0 : 1;
 
-  let massive = [
-    ['Mallory', 'Everest', 'Mont Blanc', 'Pillar Rock'],
-    ['Mawson', 'South Pole', 'New Hebrides'],
-    ['Hillary', 'Everest', 'South Pole'],
-  ];
-
   return (
     <li
       className={classChange ? 'item ' + classChange : 'item'}

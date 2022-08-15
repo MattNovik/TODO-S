@@ -60,5 +60,6 @@
   "devDependencies": {
     "@types/sortablejs": "^1.13.0",
     "nodemon": "^2.0.19"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }

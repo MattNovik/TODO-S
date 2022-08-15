@@ -1,8 +1,8 @@
-var express = require('express');
+const express = require('express');
 //import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-var mongoose = require('mongoose');
-var TodoTaskAPI = require('./product.api.cjs');
-var cors = require('cors');
+const mongoose = require('mongoose');
+const TodoTaskAPI = require('./product.api.cjs');
+const cors = require('cors');
 
 //dotenv.config();
 
