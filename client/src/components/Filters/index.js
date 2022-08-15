@@ -2,7 +2,6 @@ import './index.scss';
 import { ReactComponent as IconFilter } from '../../img/icon-filter.svg';
 import DatePicker from 'react-datepicker';
 import { Close } from '@mui/icons-material';
-import { useState } from 'react';
 
 const Filters = ({
   setEndDate,
