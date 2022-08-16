@@ -1,17 +1,8 @@
 .sort {
-  grid-area: sort;
+  position: relative;
   color: #fff;
 
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-
   &__wrapper-sorts {
-    display: none;
-  }
-
-  &__wrapper-buttons-sorts {
     position: relative;
   
     &--open {  
@@ -25,39 +16,119 @@
       .button {
         &.sorts {
           border-radius: 4px 4px 0 0;
+
+          @media (max-width: 424px) {
+            pointer-events: none;
+          }
+
+          svg,
+          span {
+            position: relative;
+            z-index: 120;
+          }
         }
       }
 
-      .sort__button-by-up {
-        svg {
-          transform: rotate(90deg);
-        }
-      }
-  
-      .sort__button-by-down {
-        top: 200%;
-        border-top: solid 1px #000;
-
-        svg {
-          transform: rotate(-90deg);
-        }
-      }
-  
-      .sort__button-by-usual {
-        top: 300%;
-        border-top: solid 1px #000;
-        border-radius: 0 0 4px 4px;
-        box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+      .sort__wrapper {
+        visibility: visible;
+        opacity: 1;
       }
     }  
   }
 
+  &__wrapper {
+    display: grid;
+    grid-template-areas: 
+    'up down'
+    '. reset';
+    column-gap: 20px;
+    row-gap: 20px;
+    visibility: hidden;
+    opacity: 0;
+    min-width: 240px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #000;
+    transform: translate(0, 0);
+    z-index: 110;
+    padding: 60px 16px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px -1px 10px 0px rgb(0 0 0 / 20%), 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  
+    @media (max-width: 424px) {
+      width: 100vw;
+      right: -20px;
+      border-radius: 0;
+    }
+  }
 
+  &__close {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    transition: all .3s ease;
+    z-index: 120;
+    color: #000;
+    
+    &:hover {
+      cursor: pointer;
+      fill: red !important;
+    }
+  }
+
+  &__reset {
+    grid-area: reset;
+    background-color: rgba(0, 150, 255, 0.08);
+    color: #004cff;
+  }
+
+  &__by-up,
+  &__by-down {
+    color: rgb(141, 141, 141);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+  }
+
+  &__by-up--active,
+  &__by-down--active {
+    color: #000;
+    box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+  }
+
+  &__by-up {
+    grid-area: up;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      transform: rotate(90deg);
+    }
+  }
+
+  &__by-down {
+    grid-area: down;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      transform: rotate(-90deg);
+    }
+  }
 }
 
 .sorts {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   column-gap: 5px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }

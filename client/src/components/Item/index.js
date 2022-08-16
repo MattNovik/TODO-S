@@ -2,16 +2,12 @@ import './index.scss';
 import { TextareaAutosize, TextField } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
-import {
-  removeItem,
-  updateItem,
-  saveItem,
-  changeTypeTask,
-} from '../../store/boardList';
+import { removeItem, updateItem, changeTypeTask } from '../../store/boardList';
 import DatePicker from 'react-datepicker';
 import { forwardRef, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDrag, useDrop } from 'react-dnd';
+import { ReactComponent as IconFlag } from '../../img/icon-flag.svg';
 
 const month = [
   'Jan',
@@ -29,7 +25,12 @@ const month = [
 ];
 
 const CustomInput = forwardRef(({ value, onClick }, ref) => (
-  <button type="button" className="custom-input" onClick={onClick} ref={ref}>
+  <button
+    type="button"
+    className="item__date-visual-button"
+    onClick={onClick}
+    ref={ref}
+  >
     {value}
   </button>
 ));
@@ -332,6 +333,15 @@ const Item = ({
             className="item__date"
             customInput={<CustomInput />}
           />
+          <div
+            className={
+              pickerDate < Date.now()
+                ? 'item__flag item__flag--expired'
+                : 'item__flag'
+            }
+          >
+            <IconFlag />
+          </div>
           <input type="hidden" name="date" value={pickerDate ?? undefined} />
           <input
             type="hidden"

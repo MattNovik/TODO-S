@@ -21,49 +21,6 @@
   @media (max-width: 767px) {
     grid-template-columns: 1fr;
   }
-
-  &__name-wrapper {
-    display: flex;
-    column-gap: 20px;
-    align-items: center;
-    width: 400px;
-    margin: 0 auto;
-
-    @media (max-width: 1919px) {
-      width: 300px;
-    }
-
-    @media (max-width: 1149px) {
-      width: 260px;
-    }
-
-    @media (max-width: 1023px) {
-      width: 300px;
-      margin: 0;
-    }
-
-    @media (max-width: 767px) {
-      width: 100%;
-    }
-
-    h3 {
-      margin: 0;
-      font-size: 20px;
-    }
-  }
-
-  &__count {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #dee2e6;
-    font-weight: 600;
-    font-size: 20px;
-  }
-  
 }
 
 .list-items-empty {

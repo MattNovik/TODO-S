@@ -17,7 +17,7 @@ const AddItemButton = () => {
       nameItem: "Todo's name",
       date: new Date().getTime(),
       description: "Todo's description",
-      classChange: 'item--change item--new',
+      classChange: '',
       typeTask: 'todo',
     };
 

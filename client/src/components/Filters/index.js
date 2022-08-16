@@ -36,43 +36,42 @@ const Filters = ({
 
   return (
     <div className="filter">
-      <div className="filter__wrapper-buttons-filters">
+      <div className="filter__wrapper-filters">
         <button
           className="button filters"
           onClick={() => {
             const wrapperButtonFilters = document.querySelector(
-              '.filter__wrapper-buttons-filters'
+              '.filter__wrapper-filters'
             );
             const wrapperButtonSorts = document.querySelector(
-              '.sort__wrapper-buttons-sorts'
+              '.sort__wrapper-sorts'
             );
 
             wrapperButtonFilters.classList.toggle(
-              'filter__wrapper-buttons-filters--open'
+              'filter__wrapper-filters--open'
             );
+            /*             const root = document.querySelector('#root');
+            root.classList.toggle('root--hidden'); */
+
             if (
-              wrapperButtonSorts.classList.contains(
-                'sort__wrapper-buttons-sorts--open'
-              )
+              wrapperButtonSorts.classList.contains('sort__wrapper-sorts--open')
             ) {
-              wrapperButtonSorts.classList.remove(
-                'sort__wrapper-buttons-sorts--open'
-              );
+              wrapperButtonSorts.classList.remove('sort__wrapper-sorts--open');
             }
           }}
         >
           <IconFilter />
-          filter
+          <span>filter</span>
         </button>
         <div className="filter__wrapper">
           <Close
             className="filter__close"
             onClick={(e) => {
               const wrapperButtonFilters = document.querySelector(
-                '.filter__wrapper-buttons-filters'
+                '.filter__wrapper-filters'
               );
               wrapperButtonFilters.classList.toggle(
-                'filter__wrapper-buttons-filters--open'
+                'filter__wrapper-filters--open'
               );
             }}
           />

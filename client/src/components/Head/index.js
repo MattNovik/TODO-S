@@ -31,7 +31,11 @@ const Head = ({
         </div>
       </div>
       <div className="head__filters-search-wrapper">
-        <Search />
+        <Search
+          smallBoardList={smallBoardList}
+          setSmallBoardList={setSmallBoardList}
+          boardList={boardList}
+        />
         <div className="head__filters-wrapper">
           <Filters
             setEndDate={setEndDate}

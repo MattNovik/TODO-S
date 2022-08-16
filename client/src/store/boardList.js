@@ -26,6 +26,24 @@ export const boardSlice = createSlice({
         typeTask: 'todo',
       });
     },
+    addNewItemType: (state, action) => {
+      let date = new Date().getTime();
+      state.map((item, i) => {
+        item.classChange = '';
+        return false;
+      });
+      state.unshift({
+        _id: action.payload.id,
+        idItem: action.payload.id,
+        index: 0,
+        nameItem: "Todo's name",
+        date: date,
+        description: "Todo's description",
+        classChange: 'item--change item--new',
+        userEmail: undefined,
+        typeTask: action.payload.type,
+      });
+    },
     removeItem: (state, action) => {
       let newId = action.payload.id;
       state.map((item, i) => {
@@ -110,6 +128,7 @@ export const boardSlice = createSlice({
       let id = action.payload.idItem;
       let typeTask = action.payload.typeTask;
       state.map((item) => {
+        item.classChange = '';
         if (item.idItem === id) {
           item.typeTask = typeTask;
         }
@@ -151,6 +170,7 @@ export const {
   refreshData,
   refreshDataUserEmail,
   changeTypeTask,
+  addNewItemType,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

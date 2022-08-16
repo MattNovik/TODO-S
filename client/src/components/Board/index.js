@@ -66,28 +66,23 @@ const Board = () => {
       onClick={(e) => {
         const listItem = document.querySelectorAll('.item');
         const wrapperButtonFilters = document.querySelector(
-          '.filter__wrapper-buttons-filters'
+          '.filter__wrapper-filters'
         );
         const wrapperButtonSorts = document.querySelector(
-          '.sort__wrapper-buttons-sorts'
+          '.sort__wrapper-sorts'
         );
         if (
-          (wrapperButtonSorts.classList.contains(
-            'sort__wrapper-buttons-sorts--open'
-          ) ||
+          (wrapperButtonSorts.classList.contains('sort__wrapper-sorts--open') ||
             wrapperButtonFilters.classList.contains(
-              'filter__wrapper-buttons-filters--open'
+              'filter__wrapper-filters--open'
             )) &&
           !e.target.closest('.sort') &&
           !e.target.closest('.filter')
         ) {
-          wrapperButtonSorts.classList.remove(
-            'sort__wrapper-buttons-sorts--open'
-          );
+          wrapperButtonSorts.classList.remove('sort__wrapper-sorts--open');
           wrapperButtonFilters.classList.remove(
-            'filter__wrapper-buttons-filters--open'
+            'filter__wrapper-filters--open'
           );
-          console.log('remove');
         } // убираю фокус с фильтра и сортировки
 
         const profileInfo = document.querySelector('.profile__info');
@@ -102,19 +97,17 @@ const Board = () => {
         if (!e.target.closest('li')) {
           if (
             (wrapperButtonSorts.classList.contains(
-              'sort__wrapper-buttons-sorts--open'
+              'sort__wrapper-sorts--open'
             ) ||
               wrapperButtonFilters.classList.contains(
-                'filter__wrapper-buttons-filters--open'
+                'filter__wrapper-filters--open'
               )) &&
             !e.target.closest('.sort') &&
             !e.target.closest('.filter')
           ) {
-            wrapperButtonSorts.classList.remove(
-              'sort__wrapper-buttons-sorts--open'
-            );
+            wrapperButtonSorts.classList.remove('sort__wrapper-sorts--open');
             wrapperButtonFilters.classList.remove(
-              'filter__wrapper-buttons-filters--open'
+              'filter__wrapper-filters--open'
             );
           }
           Array.from(listItem).map((item) => {

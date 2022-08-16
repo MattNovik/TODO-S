@@ -1,11 +1,13 @@
 import './index.scss';
 import { useDrop } from 'react-dnd';
-import { changeTypeTask } from '../../store/boardList';
+import { changeTypeTask, addNewItemType } from '../../store/boardList';
 import { useDispatch } from 'react-redux';
 import Item from '../Item';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadItemsButton from '../LoadItemsButton';
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
+import { ReactComponent as IconPlus } from '../../img/icon-plus.svg';
+import { useAuth0, isAuthenticated } from '@auth0/auth0-react';
 
 const ListItemsType = ({
   value,
@@ -64,6 +66,36 @@ const ListItemsType = ({
   });
   drop(ref);
 
+  const { user, isAuthenticated } = useAuth0();
+
+  const fetchpostItem = (dataInfo) => {
+    let data = {
+      index: 0,
+      _id: dataInfo.id,
+      idItem: dataInfo.id,
+      nameItem: "Todo's name",
+      date: new Date().getTime(),
+      description: "Todo's description",
+      classChange: '',
+      typeTask: dataInfo.type,
+    };
+
+    if (!isAuthenticated) {
+      data.userEmail = '';
+    } else {
+      data.userEmail = user.email;
+    }
+
+    // (B) FETCH
+    fetch('/', {
+      method: 'post',
+      body: JSON.stringify({ data }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    return false;
+  };
+
   const movePetListItem = useCallback(
     (dragIndex, hoverIndex) => {
       const dragItem = smallTypeList[dragIndex];
@@ -90,11 +122,27 @@ const ListItemsType = ({
 
   return (
     <div className={listClasName} ref={ref} data-typetask={value}>
-      <div className="list-items__name-wrapper">
-        <h3 className="list-items__name">{listName}</h3>
-        <div className="list-items__count">
-          <span>{typeList !== null ? typeList.length : '0'}</span>
+      <div className="type-list__head">
+        <div className="type-list__name-wrapper">
+          <h3 className="type-list__name">{listName}</h3>
+          <div className="type-list__count">
+            <span>{typeList !== null ? typeList.length : '0'}</span>
+          </div>
         </div>
+        <button
+          type="button"
+          className="type-list__add-button"
+          onClick={(e) => {
+            let data = {
+              id: nanoid(),
+              type: value,
+            };
+            dispatch(addNewItemType(data));
+            fetchpostItem(data);
+          }}
+        >
+          <IconPlus />
+        </button>
       </div>
       <ul className="type-list">
         <li
