@@ -11,7 +11,7 @@ import Time from '../Time';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const Board = () => {
+const Board = ({ theme, setTheme }) => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -137,6 +137,8 @@ const Board = () => {
         setFilterProgressList={setFilterProgressList}
         filterDoneList={filterDoneList}
         setFilterDoneList={setFilterDoneList}
+        setTheme={setTheme}
+        theme={theme}
       />
       <div className="board__main">
         <div className="board__time-add-wrapper">

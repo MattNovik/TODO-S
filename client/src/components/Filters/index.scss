@@ -1,7 +1,7 @@
 .filter {
   position: relative;
   grid-area: filter;
-  color: #fff;
+  color: var(--default-white);
 
   @media (max-width: 767px) {
     position: static;
@@ -18,7 +18,7 @@
       .button {
         &.filters {
           position: absolute;
-          background-color: #fff;
+          background-color: var(--default-white);
           box-shadow: none;
           pointer-events: none;
 
@@ -37,7 +37,7 @@
 
           &:hover {
             cursor: auto;
-            background-color: #fff;
+            background-color: var(--default-white);
             box-shadow: none;
           }
         }
@@ -57,7 +57,7 @@
     flex-direction: column;
     align-items: flex-end;
     padding: 40px 16px 20px;
-    background-color: #fff;
+    background-color: var(--default-white);
     border-radius: 8px;
     box-shadow: 0px -1px 10px 0px rgba(0, 0, 0, 0.2), 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
     
@@ -71,7 +71,7 @@
 
   &__type-name {
     text-transform: uppercase;
-    color: #000;
+    color: var(--default-black);
     font-weight: 700;
     font-size: 14px;
     text-align: right;
@@ -88,7 +88,7 @@
   &__type-button-todo,
   &__type-button-progress,
   &__type-button-done {
-    background-color: #f8f9fa;
+    background-color: var(--button-usual);
     border: none;
     outline: none;
     border-radius: 8px;
@@ -105,21 +105,21 @@
   }
 
   &__type-button-todo {
-    color: #446DFF;
+    color: var(--main);
   }
 
   &__type-button-progress {
-    color: #EA8A32;
+    color: var(--second);
   }
 
   &__type-button-done {
-    color: #168713;
+    color: var(--helpfull);
   }
 
   &__type-button-todo--active,
   &__type-button-progress--active,
   &__type-button-done--active {
-    color: rgb(141, 141, 141);
+    color: var(--button-inactive);
   }
 
   &__close {
@@ -128,17 +128,17 @@
     left: 16px;
     transition: all .3s ease;
     z-index: 120;
-    color: #000;
+    color: var(--default-black);
     
     &:hover {
       cursor: pointer;
-      fill: red !important;
+      fill: var(--attention) !important;
     }
   }
 
   &__reset {
     background-color: rgba(0,150,255,.08);;
-    color: #004cff;
+    color: var(--main);
 
     @media (max-width: 767px) {
       align-self: center;
@@ -157,5 +157,34 @@
   svg {
     width: 15px;
     height: 15px;
+  }
+}
+
+[data-theme='dark'] { 
+  .filter {
+    &__reset {
+      background-color: rgba(0,150,255,.08);;
+      color: var(--main);
+    }
+
+    &__wrapper-filters {    
+      &--open {
+        .button {
+          &.filters {
+            color: var(--default-black);
+          }
+        }
+      }
+    }
+
+    &__wrapper {
+      background-color: var(--light-bg);
+    }
+  }
+
+  .filters {
+    &:hover {
+      box-shadow: 0px 5px 8px 0px rgb(234 138 50 / 35%);
+    }
   }
 }

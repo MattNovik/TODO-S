@@ -45,7 +45,12 @@ export default function Search({
       className={startType ? 'search-form search-form--start' : 'search-form'}
     >
       <InputBase
-        sx={{ ml: 1, flex: 1, p: '7px', m: '0' }}
+        sx={{
+          ml: 1,
+          flex: 1,
+          p: '7px',
+          m: '0',
+        }}
         placeholder="Search"
         inputProps={{ 'aria-label': 'search' }}
         onInput={(e) => {
@@ -53,6 +58,7 @@ export default function Search({
             setStartType(true);
           }
         }}
+        className="search-form__input"
       />
       <Close
         sx={{
@@ -79,7 +85,7 @@ export default function Search({
         className="search-form__close"
       />
       <IconButton sx={{ p: '7px' }} aria-label="search" type="submit">
-        <SearchIcon />
+        <SearchIcon className="search-form__search-icon" />
       </IconButton>
     </Paper>
   );

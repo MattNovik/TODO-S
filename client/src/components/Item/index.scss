@@ -5,7 +5,7 @@
   min-height: 203px;
   padding: 20px 35px 20px 25px;
   box-sizing: border-box;
-  background-color: #fff;
+  background-color: var(--default-white);
   box-shadow: 0px -2px 12px 0px rgba(34, 60, 80, 0.38);
   border-radius: 10px;
   z-index: 1;
@@ -24,19 +24,19 @@
 
   &[data-typetask="todo"] {
     &:after {
-      background-color: #446DFF;
+      background-color: var(--main);
     }
   }
 
   &[data-typetask="progress"] {
     &:after {
-      background-color: #EA8A32;
+      background-color: var(--second);
     }
   }
 
   &[data-typetask="done"] {
     &:after {
-      background-color: #168713;
+      background-color: var(--helpfull);
     }
   }
 
@@ -54,11 +54,13 @@
   }
 
   @media (max-width: 1919px) {
-    width: 300px;
+    width: 370px;
     min-height: 203px;
   }
 
   @media (max-width: 1439px) {
+    width: 300px;
+
     &:nth-child(4n) {
       justify-self: start;
     }
@@ -143,7 +145,7 @@
 
   &[data-classdate='true'] {
     &:before {
-      background-color: red;
+      background-color: var(--attention);
     }
   }
 
@@ -194,7 +196,7 @@
     
     &:hover {
       cursor: pointer;
-      fill: red !important;
+      fill: var(--attention) !important;
     }
   }
 
@@ -222,11 +224,11 @@
     }
 
     &:hover {
-      border-color: #1976d2;
+      border-color: var(--input-hover-border);
     }
 
     &:focus {
-      border-color: #1976d2;
+      border-color: var(--input-hover-border);
       outline: none;
     }
   }
@@ -269,17 +271,17 @@
   &__save-button {
     border: none;
     border-radius: 5px;
-    background-color: #004cff;
+    background-color: var(--main);
     transition: all .3s ease;
-    color: #fff;
+    color: var(--default-white);
     padding: 5px 10px;
     font-weight: 600;
     box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 
     &:hover {
       cursor: pointer;
-      color:#004cff;
-      background-color: #f8f9fa ;
+      color: var(--main);
+      background-color: var(--button-usual) ;
       box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
     }
 
@@ -315,6 +317,9 @@
   }
 
   &__flag {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
     svg {
       width: 17px;
       height: 17px;
@@ -323,7 +328,7 @@
 
     &--expired {
       svg {
-        color: red;
+        color: var(--attention);
       }
     }
   }
@@ -369,7 +374,7 @@
   &__type-button-todo,
   &__type-button-progress,
   &__type-button-done {
-    background-color: #f8f9fa;
+    background-color: var(--button-usual);
     border: none;
     outline: none;
     border-radius: 8px;
@@ -385,25 +390,22 @@
   }
 
   &__type-button-todo {
-    //background-color: #446DFF;
-    color: #446DFF;
+    color: var(--main);
   }
 
   &__type-button-progress {
-    //background-color: #EA8A32;
-    color: #EA8A32;
+    color: var(--second);
   }
 
   &__type-button-done {
-    //background-color: #168713;
-    color: #168713;
+    color: var(--helpfull);
   }
 
   &__date-visual-button {
     font-size: 14px;
     white-space: nowrap;
     padding: 5px;
-    background-color: #f8f9fa;
+    background-color: var(--button-usual);
     border-radius: 5px;
     border: none;
     color: #000;
@@ -413,8 +415,18 @@
   
     &:hover {
       cursor: pointer;
-      background-color: rgba(255,255,255,1);
+      background-color: var(--default-white);
       box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+    }
+  }
+}
+
+[data-theme='dark'] { 
+  .item {
+    background-color: var(--light-bg);
+
+    &__name-input {
+      background-color: var(--default-white);
     }
   }
 }

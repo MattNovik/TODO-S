@@ -1,6 +1,6 @@
 .sort {
   position: relative;
-  color: #fff;
+  color: var(--default-white);
 
   &__wrapper-sorts {
     position: relative;
@@ -15,6 +15,7 @@
   
       .button {
         &.sorts {
+          transition: all .3s ease;
           border-radius: 4px 4px 0 0;
 
           @media (max-width: 424px) {
@@ -49,11 +50,11 @@
     position: absolute;
     top: 0;
     right: 0;
-    color: #000;
+    color: var(--default-black);
     transform: translate(0, 0);
     z-index: 110;
     padding: 60px 16px 20px;
-    background-color: #fff;
+    background-color: var(--default-white);
     border-radius: 8px;
     box-shadow: 0px -1px 10px 0px rgb(0 0 0 / 20%), 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   
@@ -70,23 +71,23 @@
     left: 16px;
     transition: all .3s ease;
     z-index: 120;
-    color: #000;
+    color: var(--default-black);
     
     &:hover {
       cursor: pointer;
-      fill: red !important;
+      fill: var(--attention) !important;
     }
   }
 
   &__reset {
     grid-area: reset;
     background-color: rgba(0, 150, 255, 0.08);
-    color: #004cff;
+    color: var(--main);
   }
 
   &__by-up,
   &__by-down {
-    color: rgb(141, 141, 141);
+    color: var(--button-inactive);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -95,7 +96,7 @@
 
   &__by-up--active,
   &__by-down--active {
-    color: #000;
+    color: var(--default-black);
     box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
   }
 
@@ -130,5 +131,40 @@
   svg {
     width: 20px;
     height: 20px;
+  }
+}
+
+[data-theme='dark'] { 
+  .sort {
+    &__wrapper-sorts {
+      &--open {      
+        .button {
+          &.sorts {
+            color: var(--default-black);
+          }
+        }
+      }
+    }
+
+    &__by-up--active,
+    &__by-down--active {
+      color: var(--default-black);
+      box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+    }
+
+    &__wrapper {
+      background-color: var(--light-bg);
+    }
+
+    &__reset {
+      background-color: rgba(0, 150, 255, 0.08);
+      color: var(--main);
+    }
+  }
+
+  .sorts {
+    &:hover {
+      box-shadow: 0px 5px 8px 0px rgb(234 138 50 / 35%);
+    }
   }
 }

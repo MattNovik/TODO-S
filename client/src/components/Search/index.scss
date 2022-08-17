@@ -1,4 +1,5 @@
 .search-form {
+  border: solid 1px var(--default-transparent);
   &__close {
     visibility: hidden;
     opacity: 0;
@@ -8,6 +9,26 @@
     .search-form__close {
       visibility: visible;
       opacity: 1;
+    }
+  }
+}
+
+[data-theme='dark'] {
+  .search-form {
+    background-color: var(--default-transparent);
+    color: var(--text-first);
+    border: solid 1px var(--text-first);
+
+    &__input {
+      color: var(--text-first);
+    }
+
+    &__close {
+      color: var(--text-first);
+    }
+
+    &__search-icon {
+      color: var(--text-first);
     }
   }
 }

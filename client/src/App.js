@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <div className="App" data-theme={theme}>
-      <Board />
+      <Board theme={theme} setTheme={setTheme} />
     </div>
   );
 };

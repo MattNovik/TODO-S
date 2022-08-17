@@ -3,16 +3,44 @@
 }
 
 :root {
-  --background: purple;
-  --text-primary: black;
-  --text-secondary: royalblue;
-  --accent: purple;
+  --default-white: #fff;
+  --default-black: #000;
+  --default-transparent: transparent;
+  --main: #004cff;
+  --second: #EA8A32;
+  --main-bg: #fff;
+  --head-bg: #004cff;
+  --list-items-bg: #F8F9FA;
+  --helpfull: #168713;
+  --button-usual: #F8F9FA;
+  --button-darker: #DEE2E6;
+  --button-inactive: #8d8d8d;
+  --text-second: #90989f;
+  --attention: 	#BC243C;
+  --reset-bg: #0096ff14;
+  --logout: #808080;
+  --input-hover-border: #1976d2;
 }
 [data-theme='dark'] {
-  --background: green;
-  --text-primary: white;
-  --text-secondary: grey;
-  --accent: darkred;
+  --default-white: #fff;
+  --default-black: #000;
+  --default-transparent: transparent;
+  --main: #004cff;
+  --second: #EA8A32;
+  --main-bg: #202025;
+  --head-bg: #202025;
+  --list-items-bg: #3f3f42;
+  --light-bg: #f7f7f2;
+  --helpfull: #168713;
+  --button-usual: #F8F9FA;
+  --button-darker: #DEE2E6;
+  --button-inactive: #8d8d8d;
+  --text-first: #e2e2e8;
+  --text-second: #90989f;
+  --attention: 	#800000;
+  --reset-bg: rgba(0, 150, 255, 0.08);
+  --logout: #808080;
+  --input-hover-border: #1976d2;
 }
 
 body {
@@ -36,3 +64,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.button {
+  min-width: 100px;
+  min-height: 40px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  outline: 0;
+  background-color: var(--button-usual);
+  color: var(--default-black);
+  //border: solid 1px var(--default-transparent);
+  border: none;
+  transition: all .3s ease;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+
+  &:hover {
+    background-color: var(--default-white);
+    box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+  }
+}
+
+[data-theme='dark'] {
+  .button {
+    background-color: var(--default-transparent);
+    color: var(--text-first);
+    //border: solid 1px var(--text-first);
+  }
+}
+
+

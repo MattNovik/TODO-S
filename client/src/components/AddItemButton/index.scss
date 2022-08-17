@@ -6,21 +6,14 @@
   position: relative;
   padding: 10px 16px 10px 16px;
   margin: 10px 0 0 0;
-  background-color: #004cff;
-  border: none;
+  background-color: var(--main);
+  color: var(--button-usual) ;
+  border: solid 1px var(--default-transparent);
   font-size: 16px;
   font-weight: 600;
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   transition: all .3s ease;
-  border-radius: 8px;
-  //text-transform: uppercase;
-  color: #f8f9fa ; 
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-
+  border-radius: 8px; 
   @media (max-width: 767px) {
     width: 100%;
     max-width: 150px;
@@ -40,17 +33,26 @@
 
   &:hover {
     cursor: pointer;
-    color:#004cff;
-    background-color: #f8f9fa ;
+    color:var(--main);
+    background-color: var(--button-usual) ;
     box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
-    //font-weight: 600;
   }
 
-/*     &:before {
-    content: '+';
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translate(0, -50%);
-  } */
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+}
+
+[data-theme='dark'] { 
+  .add-item-button {
+    background-color: var(--default-transparent);
+    color: var(--second) ;
+    border: solid 1px var(--second);
+
+    &:hover {
+      box-shadow: 0px 5px 8px 6px rgb(234 138 50 / 35%);
+    }
+  }
 }

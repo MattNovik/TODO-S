@@ -3,6 +3,7 @@ import Search from '../Search';
 import AuthNav from '../Auth/AuthNav';
 import Filters from '../Filters';
 import Sorts from '../Sorts';
+import ThemeCheckbox from '../ThemeCheckbox';
 import { ReactComponent as Logo } from '../../img/logo.svg';
 
 const Head = ({
@@ -19,15 +20,20 @@ const Head = ({
   setFilterProgressList,
   filterDoneList,
   setFilterDoneList,
+  setTheme,
+  theme,
 }) => {
   return (
     <div className="head">
       <div className="head__title-wrapper">
         <div className="head__title-wrapper-sec">
-          <h1 className="head__title">
+          <div className="head__title">
             <Logo />
-          </h1>
-          <AuthNav />
+          </div>
+          <div className="head__theme-auth">
+            <ThemeCheckbox theme={theme} setTheme={setTheme} />
+            <AuthNav />
+          </div>
         </div>
       </div>
       <div className="head__filters-search-wrapper">
