@@ -8,6 +8,7 @@ import { forwardRef, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ReactComponent as IconFlag } from '../../img/icon-flag.svg';
+import { motion } from 'framer-motion';
 
 const month = [
   'Jan',
@@ -36,6 +37,7 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 ));
 
 const Item = ({
+  key,
   index,
   baseId,
   idItem,
@@ -167,10 +169,11 @@ const Item = ({
     updateItemForm(dataForm);
   };
 
-  let opacity = isDragging ? 0 : 1;
-
   return (
-    <li
+    <motion.li
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { delay: 0 } }}
       className={classChange ? 'item ' + classChange : 'item'}
       data-classdate={classDate}
       data-datetime={pickerDate}
@@ -178,7 +181,6 @@ const Item = ({
       id={idItem}
       ref={dragDrop}
       index={index}
-      style={{ opacity }}
       onClick={(e) => {
         if (
           e.target.tagName !== 'BUTTON' &&
@@ -257,12 +259,16 @@ const Item = ({
         />
         <h3 className="item__name">{nameItem}</h3>
         <TextareaAutosize
+          value={description}
           aria-label=""
           name="description"
           minRows={3}
+          maxRows={10}
           onChange={(e) => {
             description = e.target.value;
           }}
+          style={{ width: '100%', height: '45px' }}
+          multiline="true"
           placeholder={description}
           className="item__description-input"
         />
@@ -360,7 +366,7 @@ const Item = ({
           </button>
         </div>
       </form>
-    </li>
+    </motion.li>
   );
 };
 

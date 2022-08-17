@@ -7,9 +7,11 @@ import { nanoid } from '@reduxjs/toolkit';
 import LoadItemsButton from '../LoadItemsButton';
 import { useRef, useState, useCallback } from 'react';
 import { ReactComponent as IconPlus } from '../../img/icon-plus.svg';
-import { useAuth0, isAuthenticated } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
+import { AnimatePresence, Reorder, motion } from 'framer-motion';
 
 const ListItemsType = ({
+  id,
   value,
   typeList,
   smallTypeList,
@@ -121,7 +123,7 @@ const ListItemsType = ({
       : 'progress list';
 
   return (
-    <div className={listClasName} ref={ref} data-typetask={value}>
+    <motion.div className={listClasName} ref={ref} data-typetask={value}>
       <div className="type-list__head">
         <div className="type-list__name-wrapper">
           <h3 className="type-list__name">{listName}</h3>
@@ -144,7 +146,13 @@ const ListItemsType = ({
           <IconPlus />
         </button>
       </div>
-      <ul className="type-list">
+      <Reorder.Group
+        //layout
+        axis="y"
+        values={smallTypeList}
+        onReorder={setSmallTypeList}
+        className="type-list"
+      >
         <li
           className={
             isOver && listHovered
@@ -152,27 +160,30 @@ const ListItemsType = ({
               : 'type-list__hidden-item'
           }
         ></li>
-        {smallTypeList !== null && smallTypeList.length ? (
-          smallTypeList.map((item, index) => {
-            return (
-              <Item
-                index={index}
-                key={nanoid()}
-                baseId={item._id}
-                idItem={item.idItem}
-                nameItem={item.nameItem}
-                description={item.description}
-                date={item.date}
-                classChange={item.classChange}
-                typeTask={item.typeTask}
-                moveListItem={movePetListItem}
-              />
-            );
-          })
-        ) : (
-          <></>
-        )}
-      </ul>
+        <AnimatePresence>
+          {smallTypeList !== null && smallTypeList.length ? (
+            smallTypeList.map((item, index) => {
+              return (
+                <Item
+                  as={Reorder.Item}
+                  index={index}
+                  key={item.idItem}
+                  baseId={item._id}
+                  idItem={item.idItem}
+                  nameItem={item.nameItem}
+                  description={item.description}
+                  date={item.date}
+                  classChange={item.classChange}
+                  typeTask={item.typeTask}
+                  moveListItem={movePetListItem}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </AnimatePresence>
+      </Reorder.Group>
       <LoadItemsButton
         listItems={typeList}
         typeList={smallTypeList}
@@ -180,7 +191,7 @@ const ListItemsType = ({
         setTypeList={setSmallTypeList}
         maxList={maxTypeList}
       />
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,6 +1,7 @@
 import './index.scss';
 import { useEffect, useState } from 'react';
 import ListItemsType from '../ListItemsType';
+import { LayoutGroup } from 'framer-motion';
 
 const ListItems = ({
   smallBoardList,
@@ -74,6 +75,7 @@ const ListItems = ({
   return smallBoardList && smallBoardList.length !== 0 ? (
     <div className="list-items">
       <ListItemsType
+        key="1"
         value="todo"
         typeList={todoList}
         smallTypeList={smallTodoList}
@@ -82,6 +84,7 @@ const ListItems = ({
         maxTypeList={maxTodoList}
       />
       <ListItemsType
+        key="2"
         value="progress"
         typeList={progressList}
         smallTypeList={smallProgressList}
@@ -90,6 +93,7 @@ const ListItems = ({
         maxTypeList={maxProgressList}
       />
       <ListItemsType
+        key="3"
         value="done"
         typeList={doneList}
         smallTypeList={smallDoneList}
