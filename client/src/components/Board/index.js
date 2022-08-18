@@ -18,7 +18,11 @@ const Board = ({ theme, setTheme }) => {
   const { user, isAuthenticated } = useAuth0();
   const boardList = useSelector(borderSpace);
   const [smallBoardList, setSmallBoardList] = useState(boardList);
-  const [data] = useState(null);
+
+  const [filterTodoList, setFilterTodoList] = useState(true);
+  const [filterProgressList, setFilterProgressList] = useState(true);
+  const [filterDoneList, setFilterDoneList] = useState(true);
+  const [searchValue, setSearchValue] = useState(null);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -32,17 +36,19 @@ const Board = ({ theme, setTheme }) => {
           dispatch(refreshDataUserEmail(data));
         });
     } else {
-      // получение данных при отсутсвия авторизации
-      fetch('/api')
-        .then((res) => res.json())
-        .then((data) => {
-          dispatch(refreshData(data));
-        });
+      dispatch(
+        refreshData(
+          JSON.parse(localStorage.getItem('boardList')) !== null
+            ? JSON.parse(localStorage.getItem('boardList'))
+            : []
+        )
+      );
+      // получение данных из localstorage при отсутсвия авторизации
     }
   }, []);
 
   useEffect(() => {
-    if (data === null) {
+    if (!isAuthenticated) {
       localStorage.setItem('boardList', JSON.stringify(boardList));
     }
     setSmallBoardList(boardList);
@@ -54,11 +60,16 @@ const Board = ({ theme, setTheme }) => {
         )
       );
     }
-  }, [boardList]);
-
-  const [filterTodoList, setFilterTodoList] = useState(true);
-  const [filterProgressList, setFilterProgressList] = useState(true);
-  const [filterDoneList, setFilterDoneList] = useState(true);
+    if (searchValue !== null) {
+      setSmallBoardList(
+        boardList.filter(
+          (item) =>
+            item.nameItem.toLowerCase().includes(searchValue) ||
+            item.description.toLowerCase().includes(searchValue)
+        )
+      );
+    }
+  }, [boardList, searchValue, isAuthenticated]);
 
   return (
     <div
@@ -110,16 +121,21 @@ const Board = ({ theme, setTheme }) => {
               'filter__wrapper-filters--open'
             );
           }
-          Array.from(listItem).map((item) => {
-            if (
-              item.classList.contains('item--change') ||
-              item.classList.contains('item--new')
-            ) {
-              item.classList.remove('item--change');
-              item.classList.remove('item--new');
-            }
-            return false;
-          });
+          if (
+            document.activeElement.tagName !== 'INPUT' &&
+            document.activeElement.tagName !== 'TEXTAREA'
+          ) {
+            Array.from(listItem).map((item) => {
+              if (
+                item.classList.contains('item--change') ||
+                item.classList.contains('item--new')
+              ) {
+                item.classList.remove('item--change');
+                item.classList.remove('item--new');
+              }
+              return false;
+            });
+          }
         } // убираю фокус с задачи
       }}
     >
@@ -139,6 +155,7 @@ const Board = ({ theme, setTheme }) => {
         setFilterDoneList={setFilterDoneList}
         setTheme={setTheme}
         theme={theme}
+        setSearchValue={setSearchValue}
       />
       <div className="board__main">
         <div className="board__time-add-wrapper">

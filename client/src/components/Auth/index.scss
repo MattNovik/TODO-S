@@ -1,21 +1,35 @@
+@function size($size-in-px) {
+  @return $size-in-px / 1919px * 100vw;
+}
+
 .auth {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
 
   &__btn {
-    min-width: 100px;
-    padding: 8px 16px;
-    min-height: 44px;
-    border-radius: 8px;
+    min-width: size(100px);
+    padding: size(8px) size(16px);
+    min-height: size(44px);
+    border-radius: size(8px);
     cursor: pointer;
     transition: all .3s ease, color .3s ease;
-    //border: 1px solid var(--default-transparent);
+    //border: size(1px) solid var(--default-transparent);
     border: none;
     background-color: var(--default-white);
     color: var(--default-black);
     font-weight: 600;
-    font-size: 16px;
-    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.35);
+    font-size: size(16px);
+    box-shadow: 0px size(5px) size(8px) 0px rgba(0, 0, 0, 0.35);
+
+    @media (max-width: 1919px) {
+      min-width: 100px;
+      padding: 8px 16px;
+      min-height: 44px;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.35);
+    }
 
     &:hover {
       background-color: var(--button-usual);
@@ -23,8 +37,12 @@
   }
 
   &__logout {
-    border: solid 1px var(--logout);
-  }
+    border: solid size(1px) var(--logout);
+
+    @media (max-width: 1919px) {
+      border: solid 1px var(--logout);
+    }
+   }
 }
 
 [data-theme='dark'] {
@@ -34,8 +52,13 @@
       color: var(--text-first);
       //border: solid 1px var(--text-first);
 
-      &:hover {
-        box-shadow: 0px 5px 8px 0px rgb(234 138 50 / 35%);
+      &:hover,
+      &:focus {
+        box-shadow: 0px size(5px) size(8px) 0px rgb(234 138 50 / 35%);
+
+        @media (max-width: 1919px) {
+          box-shadow: 0px 5px 8px 0px rgb(234 138 50 / 35%);
+        }
       }
     }
   }

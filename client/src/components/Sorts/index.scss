@@ -1,3 +1,7 @@
+@function size($size-in-px) {
+  @return $size-in-px / 1919px * 100vw;
+}
+
 .sort {
   position: relative;
   color: var(--default-white);
@@ -11,12 +15,20 @@
       .sort__button-by-usual {
         display: flex;
         padding: 11px 16px;
+
+        @media (max-width: 1919px) {
+          padding: size(11px) size(16px);
+        }
       }
   
       .button {
         &.sorts {
           transition: all .3s ease;
-          border-radius: 4px 4px 0 0;
+          border-radius: size(4px) size(4px) 0 0;
+
+          @media (max-width: 1919px) {
+            border-radius: 4px 4px 0 0;
+          }
 
           @media (max-width: 424px) {
             pointer-events: none;
@@ -42,22 +54,31 @@
     grid-template-areas: 
     'up down'
     '. reset';
-    column-gap: 20px;
-    row-gap: 20px;
+    column-gap: size(20px);
+    row-gap: size(20px);
     visibility: hidden;
     opacity: 0;
-    min-width: 240px;
+    min-width: size(240px);
     position: absolute;
     top: 0;
     right: 0;
     color: var(--default-black);
     transform: translate(0, 0);
     z-index: 110;
-    padding: 60px 16px 20px;
+    padding: size(60px) size(16px) size(20px);
     background-color: var(--default-white);
-    border-radius: 8px;
-    box-shadow: 0px -1px 10px 0px rgb(0 0 0 / 20%), 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    border-radius: size(8px);
+    box-shadow: 0px size(-1px) size(10px) 0px rgb(0 0 0 / 20%), 0px size(2px) size(1px) size(-1px) rgb(0 0 0 / 20%), 0px size(1px) size(1px) 0px rgb(0 0 0 / 14%), 0px size(1px) size(3px) 0px rgb(0 0 0 / 12%);
   
+    @media (max-width: 1919px) {
+      column-gap: 20px;
+      row-gap: 20px;
+      min-width: 240px;
+      padding: 60px 16px 20px;
+      border-radius: 8px;
+      box-shadow: 0px -1px 10px 0px rgb(0 0 0 / 20%), 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    }
+
     @media (max-width: 424px) {
       width: 100vw;
       right: -20px;
@@ -67,11 +88,16 @@
 
   &__close {
     position: absolute;
-    top: 8px;
-    left: 16px;
+    top: size(8px);
+    left: size(16px);
     transition: all .3s ease;
     z-index: 120;
     color: var(--default-black);
+
+    @media (max-width: 1919px) {
+      top: 8px;
+      left: 16px;
+    }
     
     &:hover {
       cursor: pointer;
@@ -97,16 +123,25 @@
   &__by-up--active,
   &__by-down--active {
     color: var(--default-black);
-    box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+    box-shadow: 0px size(5px) size(8px) 0px rgb(0 0 0 / 35%);
+
+    @media (max-width: 1919px) {
+      box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+    }
   }
 
   &__by-up {
     grid-area: up;
 
     svg {
-      width: 20px;
-      height: 20px;
+      width: size(20px);
+      height: size(20px);
       transform: rotate(90deg);
+
+      @media (max-width: 1919px) {
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 
@@ -114,9 +149,14 @@
     grid-area: down;
 
     svg {
-      width: 20px;
-      height: 20px;
+      width: size(20px);
+      height: size(20px);
       transform: rotate(-90deg);
+
+      @media (max-width: 1919px) {
+        width: 20px;
+        height: 20px;
+      }  
     }
   }
 }
@@ -126,11 +166,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  column-gap: 5px;
+  column-gap: size(5px);
+
+  @media (max-width: 1919px) {
+    column-gap: 5px;
+  }  
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: size(20px);
+    height: size(20px);
+
+    @media (max-width: 1919px) {
+      width: 20px;
+      height: 20px;
+    }  
   }
 }
 
@@ -149,7 +198,11 @@
     &__by-up--active,
     &__by-down--active {
       color: var(--default-black);
-      box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+      box-shadow: 0px size(5px) size(8px) 0px rgb(0 0 0 / 35%);
+
+      @media (max-width: 1919px) {
+        box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+      }  
     }
 
     &__wrapper {
@@ -163,8 +216,13 @@
   }
 
   .sorts {
-    &:hover {
-      box-shadow: 0px 5px 8px 0px rgb(234 138 50 / 35%);
+    &:hover,
+    &:focus {
+      box-shadow: 0px size(5px) size(8px) 0px rgb(234 138 50 / 35%);
+
+      @media (max-width: 1919px) {
+        box-shadow: 0px 5px 8px 0px rgb(234 138 50 / 35%);
+      }  
     }
   }
 }

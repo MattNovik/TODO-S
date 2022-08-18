@@ -138,10 +138,8 @@ export const boardSlice = createSlice({
     refreshData: (state, action) => {
       state.length = 0;
       action.payload.map((item, i) => {
-        if (item.userEmail === '') {
-          state.unshift(item);
-          item.classChange = '';
-        }
+        state.unshift(item);
+        item.classChange = '';
         return false;
       });
     },

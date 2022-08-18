@@ -1,9 +1,18 @@
+@function size($size-in-px) {
+  @return $size-in-px / 1919px * 100vw;
+}
+
 .head {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
-  column-gap: 40px;
+  row-gap: size(20px);
+  column-gap: size(40px);
   background-color: var(--default-transparent);
+
+  @media (max-width: 1919px) {
+    row-gap: 20px;
+    column-gap: 40px;
+  }
 
   @media (max-width: 767px) {
     padding: 0;
@@ -15,8 +24,13 @@
     justify-content: center;
     align-items: center;
     background-color: var(--head-bg);
-    padding: 15px 40px ;
-    box-shadow: 0px 2px 2px 0px rgba(34, 60, 80, 0.23);
+    padding: size(15px) size(40px);
+    box-shadow: 0px size(2px) size(2px) 0px rgba(34, 60, 80, 0.23);
+
+    @media (max-width: 1919px) {
+      padding: 15px 40px ;
+      box-shadow: 0px 2px 2px 0px rgba(34, 60, 80, 0.23);
+    }
 
     @media (max-width: 767px) {
       padding: 15px 20px;
@@ -25,12 +39,16 @@
 
   &__title-wrapper-sec {
     width: 100%;
-    max-width: 1440px;
+    max-width: size(1440px);
     margin: 0;
     display: flex;
     justify-content:space-between;
     align-items: center;
     background-color: var(--default-transparent);
+
+    @media (max-width: 1919px) {
+      max-width: 1440px;
+    }
   }
 
   &__title {
@@ -44,25 +62,40 @@
     }
 
     svg {
-      width: 150px;
-      height: 40px;
+      width: size(150px);
+      height: size(40px);
+
+      @media (max-width: 1919px) {
+        width: 150px;
+        height: 40px;
+      }
     }
   }
 
   &__theme-auth {
     display: flex;
     align-items: center;
-    column-gap: 30px;
+    column-gap: size(30px);
+
+    @media (max-width: 1919px) {
+      column-gap: 30px;
+    }
   }
 
   &__filters-search-wrapper {
     display: flex;
     justify-content: space-between;
-    padding: 0 40px 20px;
-    column-gap: 20px;
+    padding: 0 size(40px) size(20px);
+    column-gap: size(20px);
     margin: 0 auto;
-    max-width: 1520px;
+    max-width: size(1520px);
     width: 100%;
+
+    @media (max-width: 1919px) {
+      padding: 0 40px 20px;
+      column-gap: 20px;
+      max-width: 1520px;
+    }
 
     @media (max-width: 767px) {
       padding: 0 20px 20px;
@@ -76,7 +109,11 @@
 
   &__filters-wrapper {
     display: flex;
-    column-gap: 30px;
+    column-gap: size(30px);
+
+    @media (max-width: 1919px) {
+      column-gap: 30px;
+    }
 
     @media (max-width: 767px) {
       position: relative;
@@ -88,5 +125,3 @@
     }
   }
 }
-
-

@@ -1,14 +1,28 @@
+@function size($size-in-px) {
+  @return $size-in-px / 1919px * 100vw;
+}
+
 .load-more-button {
   display: block;
-  margin: 20px auto 0;
+  margin: size(20px) auto 0;
   border: none;
-  padding: 10px 30px;
-  border-radius: 20px;
-  box-shadow: 0px 4px 10px 0px rgba(34, 60, 80, 0.43);
+  padding: size(10px) size(30px);
+  border-radius: size(20px);
+  box-shadow: 0px size(4px) size(10px) 0px rgba(34, 60, 80, 0.43);
   background-color: var(--default-white);
-  font-size: 20px;
+  font-size: size(20px);
   cursor: pointer;
   transition: all .3s ease;
+
+  @media (max-width: 1919px) {
+    margin: 20px auto 0;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px 0px rgba(34, 60, 80, 0.43);
+    background-color: var(--default-white);
+    font-size: 20px;
+  }
 
   &:hover {
     background-color: var(--main);

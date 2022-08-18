@@ -8,7 +8,7 @@ const ThemeCheckbox = ({ theme, setTheme }) => {
   return (
     <div className="theme-checkbox">
       <div className="theme-checkbox__wrapper">
-        <div className="theme-checkbox__button">
+        <div className="theme-checkbox__button" tabIndex="0">
           <input
             type="checkbox"
             className="theme-checkbox__checkbox"

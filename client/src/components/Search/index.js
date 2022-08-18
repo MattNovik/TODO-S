@@ -6,29 +6,38 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { Close } from '@mui/icons-material';
 import { useState } from 'react';
+//import { debounce } from 'lodash';
 
-export default function Search({
-  smallBoardList,
-  setSmallBoardList,
-  boardList,
-}) {
+function debounce(func, timeout) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}
+
+export default function Search({ setSearchValue }) {
   const [startType, setStartType] = useState(false);
-
+  const searchFunc = () => {
+    const searchData = document
+      .querySelector('.search-form input')
+      .value.toLowerCase();
+    setSearchValue(searchData);
+  };
+  const debouncedFunc = debounce(() => searchFunc(), 1000);
   return (
     <Paper
       onSubmit={(e) => {
         e.preventDefault();
-        const searchData = document
-          .querySelector('.search-form input')
-          .value.toLowerCase();
-        setSmallBoardList(
-          boardList.filter(
-            (item) =>
-              item.nameItem.toLowerCase().includes(searchData) ||
-              item.description.toLowerCase().includes(searchData)
-          )
-        );
-        console.log(smallBoardList);
+        searchFunc();
+      }}
+      onInput={(e) => {
+        debouncedFunc();
+        if (e.target.value === '') {
+          setStartType(false);
+        }
       }}
       component="form"
       sx={{
@@ -73,18 +82,27 @@ export default function Search({
           width: '38px',
           height: '100%',
           transition: 'all .3s ease',
-          '&:hover': {
+          '&:hover, &:focus': {
             backgroundColor: 'rgba(0, 0, 0, 0.04)',
           },
         }}
         onClick={(e) => {
-          setSmallBoardList(boardList);
+          setSearchValue(null);
           setStartType(false);
           document.querySelector('.search-form input').value = '';
         }}
         className="search-form__close"
       />
-      <IconButton sx={{ p: '7px' }} aria-label="search" type="submit">
+      <IconButton
+        sx={{
+          p: '7px',
+          '&:hover, &:focus': {
+            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+          },
+        }}
+        aria-label="search"
+        type="submit"
+      >
         <SearchIcon className="search-form__search-icon" />
       </IconButton>
     </Paper>

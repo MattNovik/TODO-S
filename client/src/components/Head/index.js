@@ -22,6 +22,7 @@ const Head = ({
   setFilterDoneList,
   setTheme,
   theme,
+  setSearchValue,
 }) => {
   return (
     <div className="head">
@@ -41,6 +42,7 @@ const Head = ({
           smallBoardList={smallBoardList}
           setSmallBoardList={setSmallBoardList}
           boardList={boardList}
+          setSearchValue={setSearchValue}
         />
         <div className="head__filters-wrapper">
           <Filters

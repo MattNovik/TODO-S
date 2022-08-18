@@ -173,7 +173,7 @@ const Item = ({
     <motion.li
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { delay: 0 } }}
+      /* exit={{ opacity: 0 }} */
       className={classChange ? 'item ' + classChange : 'item'}
       data-classdate={classDate}
       data-datetime={pickerDate}
@@ -181,6 +181,23 @@ const Item = ({
       id={idItem}
       ref={dragDrop}
       index={index}
+      tabIndex="0"
+      onKeyPress={(e) => {
+        if (e.key === 'Enter' && e.target.tagName === 'LI') {
+          let listItem = document.querySelectorAll('.item');
+          Array.from(listItem).map((item) => {
+            item.classList.remove('item--change');
+            item.classList.remove('item--new');
+            return false;
+          });
+          e.target.closest('li').classList.add('item--change');
+          e.target.closest('li').querySelector('input[name=nameItem]').value =
+            nameItem;
+          e.target
+            .closest('li')
+            .querySelector('.item__description-input').value = description;
+        }
+      }}
       onClick={(e) => {
         if (
           e.target.tagName !== 'BUTTON' &&
@@ -215,6 +232,7 @@ const Item = ({
       >
         <input type="hidden" name="idItem" value={idItem} />
         <Close
+          tabIndex="0"
           className="item__close"
           onClick={(e) => {
             let data = {
@@ -224,6 +242,16 @@ const Item = ({
             deleteItem();
             dispatch(removeItem(data));
           }}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              let data = {
+                id: e.target.closest('li').id,
+                target: e.target.tagName,
+              };
+              deleteItem();
+              dispatch(removeItem(data));
+            }
+          }}
         />
         <TextField
           placeholder={nameItem}
@@ -231,6 +259,11 @@ const Item = ({
           className="item__name-input"
           onChange={(e) => {
             nameItem = e.target.value;
+          }}
+          draggable
+          onDragStart={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
           }}
           sx={{
             '& .MuiInputBase-input': {
@@ -259,7 +292,11 @@ const Item = ({
         />
         <h3 className="item__name">{nameItem}</h3>
         <TextareaAutosize
-          value={description}
+          draggable
+          onDragStart={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
           aria-label=""
           name="description"
           minRows={3}
@@ -278,12 +315,14 @@ const Item = ({
           <div className="item__type-buttons-list">
             <button
               className="item__type-button-progress"
+              type="button"
               value="progress"
               onClick={(e) => changeType(e.target)}
             >
               In progress
             </button>
             <button
+              type="button"
               className="item__type-button-done"
               value="done"
               onClick={(e) => changeType(e.target)}
@@ -296,6 +335,7 @@ const Item = ({
             <button
               className="item__type-button-todo"
               value="todo"
+              type="button"
               onClick={(e) => changeType(e.target)}
             >
               To Do
@@ -303,6 +343,7 @@ const Item = ({
             <button
               className="item__type-button-done"
               value="done"
+              type="button"
               onClick={(e) => changeType(e.target)}
             >
               Done
@@ -313,6 +354,7 @@ const Item = ({
             <button
               className="item__type-button-todo"
               value="todo"
+              type="button"
               onClick={(e) => changeType(e.target)}
             >
               To Do
@@ -320,6 +362,7 @@ const Item = ({
             <button
               className="item__type-button-progress"
               value="progress"
+              type="button"
               onClick={(e) => changeType(e.target)}
             >
               In progress

@@ -1,18 +1,37 @@
+@function size($size-in-px) {
+  @return $size-in-px / 1919px * 100vw;
+}
+
 .profile {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
 
   &__picture {
     border-radius: 50%;
-    width: 52px;
-    height: 52px;
+    width: size(52px);
+    height: size(52px);
     cursor: pointer;
-    outline: solid 2px transparent;
-    padding: 2px;
+    outline: solid size(2px) transparent;
+    padding: size(2px);
     transition: outline .3s ease;
 
+    @media (max-width: 1919px) {
+      width: 52px;
+      height: 52px;
+      cursor: pointer;
+      outline: solid 2px transparent;
+      padding: 2px;
+    }
+
     &:hover {
-      outline: solid 2px var(--default-white);
+      outline: solid size(2px) var(--default-white);
+      
+      @media (max-width: 1919px) {
+        outline: solid 2px var(--default-white);
+      }
     }
   }
 
@@ -20,21 +39,35 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 200px;
+    min-width: size(200px);
     position: absolute;
-    padding: 10px 0;
+    padding: size(10px) 0;
     top: 100%;
     right: 0;
     z-index: 100;
     background-color: var(--default-white);
-    border-radius: 10px;
-    border: 1px solid rgba(0,0,0,.2);
-    box-shadow: 0px 1px 2px 0px rgb(60 64 67 / 30%), 0px 2px 6px 2px rgb(60 64 67 / 15%);
+    border-radius: size(10px);
+    border: size(1px) solid rgba(0,0,0,.2);
+    box-shadow: 0px size(1px) size(2px) 0px rgb(60 64 67 / 30%), 0px size(2px) size(6px) size(2px) rgb(60 64 67 / 15%);
+
+    @media (max-width: 1919px) {
+      min-width: 200px;
+      padding: 10px 0;
+      z-index: 100;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,.2);
+      box-shadow: 0px 1px 2px 0px rgb(60 64 67 / 30%), 0px 2px 6px 2px rgb(60 64 67 / 15%);
+    }
 
     .profile__picture-second {
-      width: 75px;
-      height: 75px;
+      width: size(75px);
+      height: size(75px);
       border-radius: 50%;
+
+      @media (max-width: 1919px) {
+        width: 75px;
+        height: 75px;
+      }
     }
 
     &--close {
@@ -50,15 +83,27 @@
   }
 
   &__name {
-    margin: 10px 0 0;
-    padding: 10px 10px 0;
-    border-top: solid 1px rgb(145, 144, 144);
+    margin: size(10px) 0 0;
+    padding: size(10px) size(10px) 0;
+    border-top: solid size(1px) rgb(145, 144, 144);
     font-weight: 600;
+
+    @media (max-width: 1919px) {
+      margin: 10px 0 0;
+      padding: 10px 10px 0;
+      border-top: solid 1px rgb(145, 144, 144);
+    }
   }
 
   &__email {
-    margin: 0 0 10px;
-    padding: 0 10px 10px;
-    border-bottom: solid 1px rgb(145, 144, 144);
+    margin: 0 0 size(10px);
+    padding: 0 size(10px) size(10px);
+    border-bottom: solid size(1px) rgb(145, 144, 144);
+
+    @media (max-width: 1919px) {
+      margin: 0 0 10px;
+      padding: 0 10px 10px;
+      border-bottom: solid 1px rgb(145, 144, 144);
+    }
   }
 }

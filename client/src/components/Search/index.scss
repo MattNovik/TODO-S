@@ -1,5 +1,14 @@
+@function size($size-in-px) {
+  @return $size-in-px / 1919px * 100vw;
+}
+
 .search-form {
-  border: solid 1px var(--default-transparent);
+  border: solid size(1px) var(--default-transparent);
+
+  @media (max-width: 1919px) {
+    border: solid 1px var(--default-transparent);
+  }
+  
   &__close {
     visibility: hidden;
     opacity: 0;
@@ -17,7 +26,11 @@
   .search-form {
     background-color: var(--default-transparent);
     color: var(--text-first);
-    border: solid 1px var(--text-first);
+    border: solid size(1px) var(--text-first);
+
+    @media (max-width: 1919px) {
+      order: solid 1px var(--text-first);
+    }
 
     &__input {
       color: var(--text-first);

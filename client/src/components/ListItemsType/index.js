@@ -123,7 +123,7 @@ const ListItemsType = ({
       : 'progress list';
 
   return (
-    <motion.div className={listClasName} ref={ref} data-typetask={value}>
+    <div className={listClasName} ref={ref} data-typetask={value}>
       <div className="type-list__head">
         <div className="type-list__name-wrapper">
           <h3 className="type-list__name">{listName}</h3>
@@ -143,47 +143,54 @@ const ListItemsType = ({
             fetchpostItem(data);
           }}
         >
-          <IconPlus />
+          <IconPlus tabIndex="0" />
         </button>
       </div>
-      <Reorder.Group
-        //layout
-        axis="y"
-        values={smallTypeList}
-        onReorder={setSmallTypeList}
-        className="type-list"
+      <motion.div
+        layout
+        //animate={{ scale: [0, 1, 0.5, 1] }}
+        //transition={{ ease: [0.17, 0.67, 0.83, 0.67] }}
+        className="type-list__animation-wrapper"
       >
-        <li
-          className={
-            isOver && listHovered
-              ? 'type-list__hidden-item type-list__hidden-item--show'
-              : 'type-list__hidden-item'
-          }
-        ></li>
-        <AnimatePresence>
-          {smallTypeList !== null && smallTypeList.length ? (
-            smallTypeList.map((item, index) => {
-              return (
-                <Item
-                  as={Reorder.Item}
-                  index={index}
-                  key={item.idItem}
-                  baseId={item._id}
-                  idItem={item.idItem}
-                  nameItem={item.nameItem}
-                  description={item.description}
-                  date={item.date}
-                  classChange={item.classChange}
-                  typeTask={item.typeTask}
-                  moveListItem={movePetListItem}
-                />
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </AnimatePresence>
-      </Reorder.Group>
+        <Reorder.Group
+          //layout
+          axis="y"
+          values={smallTypeList}
+          onReorder={setSmallTypeList}
+          className="type-list"
+        >
+          <li
+            className={
+              isOver && listHovered
+                ? 'type-list__hidden-item type-list__hidden-item--show'
+                : 'type-list__hidden-item'
+            }
+          ></li>
+          <AnimatePresence>
+            {smallTypeList !== null && smallTypeList.length ? (
+              smallTypeList.map((item, index) => {
+                return (
+                  <Item
+                    as={Reorder.Item}
+                    index={index}
+                    key={item.idItem}
+                    baseId={item._id}
+                    idItem={item.idItem}
+                    nameItem={item.nameItem}
+                    description={item.description}
+                    date={item.date}
+                    classChange={item.classChange}
+                    typeTask={item.typeTask}
+                    moveListItem={movePetListItem}
+                  />
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </AnimatePresence>
+        </Reorder.Group>
+      </motion.div>
       <LoadItemsButton
         listItems={typeList}
         typeList={smallTypeList}
@@ -191,7 +198,7 @@ const ListItemsType = ({
         setTypeList={setSmallTypeList}
         maxList={maxTypeList}
       />
-    </motion.div>
+    </div>
   );
 };
 

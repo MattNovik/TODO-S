@@ -72,40 +72,44 @@ const ListItems = ({
     setSmallDoneList(filterDoneList ? doneList.slice(0, maxDoneList) : []);
   }, [doneList, maxDoneList, filterDoneList]);
 
-  return smallBoardList && smallBoardList.length !== 0 ? (
-    <div className="list-items">
-      <ListItemsType
-        key="1"
-        value="todo"
-        typeList={todoList}
-        smallTypeList={smallTodoList}
-        setMaxTypeList={setMaxTodoList}
-        setSmallTypeList={setSmallTodoList}
-        maxTypeList={maxTodoList}
-      />
-      <ListItemsType
-        key="2"
-        value="progress"
-        typeList={progressList}
-        smallTypeList={smallProgressList}
-        setMaxTypeList={setMaxProgressList}
-        setSmallTypeList={setSmallProgressList}
-        maxTypeList={maxProgressList}
-      />
-      <ListItemsType
-        key="3"
-        value="done"
-        typeList={doneList}
-        smallTypeList={smallDoneList}
-        setMaxTypeList={setMaxDoneList}
-        setSmallTypeList={setSmallDoneList}
-        maxTypeList={maxDoneList}
-      />
-    </div>
-  ) : (
-    <div className="list-items-empty">
-      <p>Hi! You can add new task or goal at this page!</p>
-    </div>
+  return (
+    <LayoutGroup>
+      {smallBoardList && smallBoardList.length !== 0 ? (
+        <div className="list-items">
+          <ListItemsType
+            key="1"
+            value="todo"
+            typeList={todoList}
+            smallTypeList={smallTodoList}
+            setMaxTypeList={setMaxTodoList}
+            setSmallTypeList={setSmallTodoList}
+            maxTypeList={maxTodoList}
+          />
+          <ListItemsType
+            key="2"
+            value="progress"
+            typeList={progressList}
+            smallTypeList={smallProgressList}
+            setMaxTypeList={setMaxProgressList}
+            setSmallTypeList={setSmallProgressList}
+            maxTypeList={maxProgressList}
+          />
+          <ListItemsType
+            key="3"
+            value="done"
+            typeList={doneList}
+            smallTypeList={smallDoneList}
+            setMaxTypeList={setMaxDoneList}
+            setSmallTypeList={setSmallDoneList}
+            maxTypeList={maxDoneList}
+          />
+        </div>
+      ) : (
+        <div className="list-items-empty">
+          <p>Hi! You can add new task or goal at this page!</p>
+        </div>
+      )}
+    </LayoutGroup>
   );
 };
 

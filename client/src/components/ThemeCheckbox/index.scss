@@ -1,9 +1,18 @@
+@function size($size-in-px) {
+  @return $size-in-px / 1919px * 100vw;
+}
+
 .theme-checkbox {
   display: flex;
   position: relative;
-  width: 74px;
-  height: 44px;
+  width: size(74px);
+  height: size(44px);
   box-sizing: border-box;
+
+  @media (max-width: 1919px) {
+    width: 74px;
+    height: 44px;
+  }
 
   @media (max-width: 424px) {
     display: none;
@@ -26,15 +35,34 @@
   &__button {
     position: relative;
     top: 50%;
-    width: 84px;
-    height: 44px;
-    margin: -20px auto 0 auto;
+    width: size(84px);
+    height: size(44px);
+    margin: size(-20px) auto 0 auto;
     overflow: hidden;
+
+    @media (max-width: 1919px) {
+      width: 84px;
+      height: 44px;
+      margin: -20px auto 0 auto;
+    }
+
+    &:hover,
+    &:focus {
+      box-shadow: 0px size(5px) size(8px) 0px rgb(0 0 0 / 35%);
+
+      @media (max-width: 1919px) {
+        box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
+      }
+    }
   }
 
   &__button,
   &__layer {
-    border-radius: 100px;
+    border-radius: size(100px);
+
+    @media (max-width: 1919px) {
+      border-radius: 100px;
+    }
   }
 
   &__checkbox {
@@ -63,19 +91,28 @@
   &__knobs:after {
     content: "LIGHT";
     position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 30px;
-    height: 14px;
+    top: size(4px);
+    left: size(4px);
+    width: size(30px);
+    height: size(14px);
     color: var(--default-white);
-    font-size: 10px;
+    font-size: size(10px);
     font-weight: bold;
     text-align: center;
     line-height: 1;
-    padding: 12px 4px 9px;
+    padding: size(12px) size(4px) size(9px);
     background-color: var(--main);
     border-radius: 50%;
     transition: 0.3s ease all;
+
+    @media (max-width: 1919px) {
+      top: 4px;
+      left: 4px;
+      width: 30px;
+      height: 14px;
+      font-size: 10px;
+      padding: 12px 4px 9px;
+    }
   }
 
   &__knobs:before {
@@ -88,20 +125,45 @@
   }
 
   &__knobs:after {
-    right: -40px;
+    right: size(-40px);
     left: auto;
     background-color: var(--second);
+
+    @media (max-width: 1919px) {
+      right: -40px;
+    }
   }
 
   &__checkbox:checked + .theme-checkbox__knobs:before {
-    left: -40px;
+    left: size(-40px);
+
+    @media (max-width: 1919px) {
+      left: -40px;
+    }
   }
 
   &__checkbox:checked + .theme-checkbox__knobs:after {
-    right: 4px;
+    right: size(4px);
+
+    @media (max-width: 1919px) {
+      right: 4px;
+    }
   }
 
   &__checkbox:checked ~ .theme-checkbox__layer {
     background-color: var(--light-bg);
+  }
+}
+[data-theme='dark'] { 
+
+  .theme-checkbox__button {
+    &:hover,
+    &:focus {
+      box-shadow: 0px size(5px) size(8px) 0px rgb(255 255 255 / 70%);
+
+      @media (max-width: 1919px) {
+        box-shadow: 0px 5px 8px 0px rgb(255 255 255 / 70%);
+      }
+    }
   }
 }

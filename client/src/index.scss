@@ -37,7 +37,7 @@
   --button-inactive: #8d8d8d;
   --text-first: #e2e2e8;
   --text-second: #90989f;
-  --attention: 	#800000;
+  --attention: 	#BC243C;
   --reset-bg: rgba(0, 150, 255, 0.08);
   --logout: #808080;
   --input-hover-border: #1976d2;
@@ -82,7 +82,8 @@ code {
   font-size: 14px;
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: var(--default-white);
     box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 35%);
   }
