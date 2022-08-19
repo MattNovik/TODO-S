@@ -50,8 +50,6 @@ const Filters = ({
             wrapperButtonFilters.classList.toggle(
               'filter__wrapper-filters--open'
             );
-            /*             const root = document.querySelector('#root');
-            root.classList.toggle('root--hidden'); */
 
             if (
               wrapperButtonSorts.classList.contains('sort__wrapper-sorts--open')

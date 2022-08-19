@@ -98,6 +98,38 @@ code {
   }
 }
 
+.react-datepicker {
+  //border: 1px solid  var(--reset-bg) !important;
+
+  &__header {
+    background-color: var(--reset-bg) !important;
+  }
+
+  &__day--selected,
+  &__day--keyboard-selected,
+  &__day--in-range,
+  &__day--in-selecting-range {
+    background-color: var(--main) !important;
+  }
+  
+
+/*   &__navigation-icon {
+    &:before {
+      border-color:  var(--second) !important;
+    }
+  } */
+
+  &__triangle {
+    &:after {
+      border-bottom-color: var(--reset-bg) !important;
+    }
+
+    &:before {
+      border-bottom-color: var(--reset-bg) !important;
+    }
+  }
+}
+
 [data-theme='dark'] {
   .button {
     background-color: var(--default-transparent);

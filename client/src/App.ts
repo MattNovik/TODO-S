@@ -13,13 +13,9 @@ const App = () => {
     defaultDark ? 'dark' : 'light'
   );
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div className="App" data-theme={theme}>
-      <Board theme={theme} setTheme={setTheme} />
+      {isLoading ? <Loading /> : <Board theme={theme} setTheme={setTheme} />}
     </div>
   );
 };
