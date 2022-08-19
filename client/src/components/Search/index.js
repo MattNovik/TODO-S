@@ -43,7 +43,7 @@ export default function Search({ setSearchValue }) {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        width: 300,
+        width: '300px',
         maxHeight: '40px',
         position: 'relative',
         transition: 'all .3s ease',
@@ -54,6 +54,7 @@ export default function Search({ setSearchValue }) {
       className={startType ? 'search-form search-form--start' : 'search-form'}
     >
       <InputBase
+        className="search-form__input"
         sx={{
           ml: 1,
           flex: 1,
@@ -67,7 +68,6 @@ export default function Search({ setSearchValue }) {
             setStartType(true);
           }
         }}
-        className="search-form__input"
       />
       <Close
         sx={{

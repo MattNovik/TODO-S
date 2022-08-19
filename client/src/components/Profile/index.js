@@ -2,20 +2,24 @@ import './index.scss';
 import { useAuth0 } from '@auth0/auth0-react';
 import LogoutButton from '../Auth/LogoutButton';
 import { useEffect } from 'react';
+import { Close } from '@mui/icons-material';
+import ReloginButton from '../Auth/ReloginButton';
 
 export const Profile = () => {
-  const { user } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
+
+  const handleClick = (e) => {
+    console.log('q');
+    document
+      .querySelector('.profile__info')
+      .classList.remove('profile__info--close');
+  };
 
   useEffect(() => {
-    const handleClick = (e) => {
-      if (e.target.classList.contains('profile__picture')) {
-        document
-          .querySelector('.profile__info')
-          .classList.toggle('profile__info--close');
-      }
-    };
-    document.querySelector('.profile').addEventListener('click', handleClick);
-  });
+    if (isAuthenticated) {
+      document.querySelector('.profile').addEventListener('click', handleClick);
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className="profile">
@@ -27,6 +31,14 @@ export const Profile = () => {
         className="profile__picture"
       />
       <div className="profile__info profile__info--close">
+        <Close
+          className="profile__close"
+          onClick={(e) => {
+            document
+              .querySelector('.profile__info')
+              .classList.add('profile__info--close');
+          }}
+        />
         <img
           src={user.picture}
           width="75"
@@ -36,7 +48,10 @@ export const Profile = () => {
         />
         <p className="profile__name">{user.nickname}</p>
         <p className="profile__email">{user.email}</p>
-        <LogoutButton />
+        <div className="profile__wrapper-buttons">
+          <ReloginButton />
+          <LogoutButton />
+        </div>
       </div>
     </div>
   );

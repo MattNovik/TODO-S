@@ -15,6 +15,7 @@
   --button-usual: #F8F9FA;
   --button-darker: #DEE2E6;
   --button-inactive: #8d8d8d;
+  --text-first: #e2e2e8;
   --text-second: #90989f;
   --attention: 	#BC243C;
   --reset-bg: #0096ff14;
@@ -26,7 +27,7 @@
   --default-black: #000;
   --default-transparent: transparent;
   --main: #004cff;
-  --second: #EA8A32;
+  --second: #ea8a32;
   --main-bg: #202025;
   --head-bg: #202025;
   --list-items-bg: #3f3f42;
@@ -66,21 +67,29 @@ code {
 }
 
 .button {
-  min-width: 100px;
-  min-height: 40px;
-  padding: 11px 16px;
-  border-radius: 8px;
+  min-width: size(100px);
+  min-height: size(40px);
+  padding: size(11px) size(16px);
+  border-radius: size(8px);
   text-transform: uppercase;
   outline: 0;
   background-color: var(--button-usual);
   color: var(--default-black);
-  //border: solid 1px var(--default-transparent);
   border: none;
   transition: all .3s ease;
   cursor: pointer;
   font-weight: 700;
-  font-size: 14px;
-  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  font-size: size(14px);
+  box-shadow: 0px size(2px) size(1px) size(-1px) rgb(0 0 0 / 20%), 0px size(1px) size(1px) 0px rgb(0 0 0 / 14%), 0px size(1px) size(3px) 0px rgb(0 0 0 / 12%);
+
+  @media (max-width: 1919px) {
+    min-width: 100px;
+    min-height: 40px;
+    padding: 11px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  }  
 
   &:hover,
   &:focus {

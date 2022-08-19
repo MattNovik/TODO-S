@@ -1,17 +1,63 @@
-@function size($size-in-px) {
-  @return $size-in-px / 1919px * 100vw;
-}
-
 .search-form {
+  width: size(300px) !important;
+  max-height: size(40px) !important;
+  border-radius: size(4px) !important;
+  box-shadow: 0px size(2px) size(1px) size(-1px) rgb(0 0 0 / 20%), 0px size(1px) size(1px) 0px rgb(0 0 0 / 14%), 0px size(1px) size(3px) 0px rgb(0 0 0 / 12%) !important;
   border: solid size(1px) var(--default-transparent);
 
+
   @media (max-width: 1919px) {
+    width: 300px !important;
+    max-height: 40px !important;
+    border-radius: 4px !important;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
     border: solid 1px var(--default-transparent);
+    font-size: 16px !important;
+    line-height: 23px !important;
+  }
+
+  @media (max-width: 424px) {
+    width: 100% !important;
+  }
+
+
+  &__input {
+    font-size: size(18px) !important;
+    line-height: size(23px) !important;
+
+    @media (max-width: 1919px) {
+      font-size: 16px !important;
+      line-height: 23px !important;
+    }
   }
   
   &__close {
     visibility: hidden;
     opacity: 0;
+    right: size(40px) !important;
+    font-size: size(24px) !important;
+    padding: size(7px) !important;
+    width: size(38px) !important;
+
+    @media (max-width: 1919px) {
+      right: 40px;
+      font-size: 24px;
+      padding: 7px;
+      width: 38px;
+    }
+    
+  }
+
+  &__search-icon {
+    width: size(24px) !important;
+    height: size(24px) !important;
+    font-size: size(24px) !important;
+
+    @media (max-width: 1919px) {
+      width: 20px !important;
+      height: 20px !important;
+      font-size: 24px !important;
+    }
   }
 
   &--start {
