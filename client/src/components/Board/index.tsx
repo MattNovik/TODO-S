@@ -1,3 +1,4 @@
+import * as React from 'react';
 import './index.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshData, refreshDataUserEmail } from '../../store/boardList';
@@ -8,13 +9,14 @@ import Head from '../Head';
 import ListItems from '../ListItems';
 import AddItemButton from '../AddItemButton';
 import Time from '../Time';
+import Notification from '../Notification';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Board = ({ theme, setTheme }) => {
   const dispatch = useDispatch();
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState<any | null>(null);
+  const [endDate, setEndDate] = useState<any | null>(null);
   const { user, isAuthenticated } = useAuth0();
   const boardList = useSelector(borderSpace);
   const [smallBoardList, setSmallBoardList] = useState(boardList);
@@ -32,14 +34,16 @@ const Board = ({ theme, setTheme }) => {
       fetch('/api')
         .then((res) => res.json())
         .then((data) => {
-          data.userEmail = userData.email;
+          userData !== undefined
+            ? (data.userEmail = userData.email)
+            : (data.userEmail = '');
           dispatch(refreshDataUserEmail(data));
         });
     } else {
       dispatch(
         refreshData(
-          JSON.parse(localStorage.getItem('boardList')) !== null
-            ? JSON.parse(localStorage.getItem('boardList'))
+          JSON.parse(localStorage.getItem('boardList') || '') !== null
+            ? JSON.parse(localStorage.getItem('boardList') || '')
             : []
         )
       );
@@ -55,7 +59,7 @@ const Board = ({ theme, setTheme }) => {
     if (startDate !== null && endDate !== null) {
       setSmallBoardList(
         boardList.filter(
-          (item) =>
+          (item: { date: number }) =>
             item.date >= startDate.getTime() && item.date <= endDate.getTime()
         )
       );
@@ -63,7 +67,7 @@ const Board = ({ theme, setTheme }) => {
     if (searchValue !== null) {
       setSmallBoardList(
         boardList.filter(
-          (item) =>
+          (item: { nameItem: string; description: string }) =>
             item.nameItem.toLowerCase().includes(searchValue) ||
             item.description.toLowerCase().includes(searchValue)
         )
@@ -75,6 +79,7 @@ const Board = ({ theme, setTheme }) => {
     <div
       className="board"
       onClick={(e) => {
+        const target = e.target as HTMLElement;
         const listItem = document.querySelectorAll('.item');
         const wrapperButtonFilters = document.querySelector(
           '.filter__wrapper-filters'
@@ -83,15 +88,18 @@ const Board = ({ theme, setTheme }) => {
           '.sort__wrapper-sorts'
         );
         if (
-          (wrapperButtonSorts.classList.contains('sort__wrapper-sorts--open') ||
-            wrapperButtonFilters.classList.contains(
+          ((wrapperButtonSorts as HTMLDivElement).classList.contains(
+            'sort__wrapper-sorts--open'
+          ) ||
+            (wrapperButtonFilters as HTMLDivElement).classList.contains(
               'filter__wrapper-filters--open'
             )) &&
-          !e.target.closest('.sort') &&
-          !e.target.closest('.filter')
+          !(target.closest('.sort') && !target.closest('.filter'))
         ) {
-          wrapperButtonSorts.classList.remove('sort__wrapper-sorts--open');
-          wrapperButtonFilters.classList.remove(
+          (wrapperButtonSorts as HTMLDivElement).classList.remove(
+            'sort__wrapper-sorts--open'
+          );
+          (wrapperButtonFilters as HTMLDivElement).classList.remove(
             'filter__wrapper-filters--open'
           );
         } // убираю фокус с фильтра и сортировки
@@ -100,30 +108,32 @@ const Board = ({ theme, setTheme }) => {
         if (
           profileInfo &&
           !profileInfo.classList.contains('profile__info--close') &&
-          !e.target.classList.contains('profile__picture') &&
-          !e.target.closest('.profile')
+          !target.classList.contains('profile__picture') &&
+          !target.closest('.profile')
         ) {
           profileInfo.classList.add('profile__info--close');
         } // убираю окно профиля если открыто
-        if (!e.target.closest('li')) {
+        if (!target.closest('li')) {
           if (
-            (wrapperButtonSorts.classList.contains(
+            ((wrapperButtonSorts as HTMLDivElement).classList.contains(
               'sort__wrapper-sorts--open'
             ) ||
-              wrapperButtonFilters.classList.contains(
+              (wrapperButtonFilters as HTMLDivElement).classList.contains(
                 'filter__wrapper-filters--open'
               )) &&
-            !e.target.closest('.sort') &&
-            !e.target.closest('.filter')
+            !target.closest('.sort') &&
+            !target.closest('.filter')
           ) {
-            wrapperButtonSorts.classList.remove('sort__wrapper-sorts--open');
-            wrapperButtonFilters.classList.remove(
+            (wrapperButtonSorts as HTMLDivElement).classList.remove(
+              'sort__wrapper-sorts--open'
+            );
+            (wrapperButtonFilters as HTMLDivElement).classList.remove(
               'filter__wrapper-filters--open'
             );
           }
           if (
-            document.activeElement.tagName !== 'INPUT' &&
-            document.activeElement.tagName !== 'TEXTAREA'
+            (document.activeElement as HTMLElement).tagName !== 'INPUT' &&
+            (document.activeElement as HTMLElement).tagName !== 'TEXTAREA'
           ) {
             Array.from(listItem).map((item) => {
               if (
@@ -139,6 +149,11 @@ const Board = ({ theme, setTheme }) => {
         } // убираю фокус с задачи
       }}
     >
+      <Notification
+        type="work"
+        text="This project still in work, but you can use it right now!"
+        button="ready"
+      />
       <Head
         setSmallBoardList={setSmallBoardList}
         setStartDate={setStartDate}

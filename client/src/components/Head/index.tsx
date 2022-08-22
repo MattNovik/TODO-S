@@ -1,12 +1,15 @@
+import * as React from 'react';
 import './index.scss';
 import Search from '../Search';
 import AuthNav from '../Auth/AuthNav';
 import Filters from '../Filters';
 import Sorts from '../Sorts';
 import ThemeCheckbox from '../ThemeCheckbox';
-import { ReactComponent as Logo } from '../../img/logo.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Logo from '-!svg-react-loader!../../img/logo.svg';
+import { HeadProps } from '../../interfaces/interfaces';
 
-const Head = ({
+const Head: React.FC<HeadProps> = ({
   setSmallBoardList,
   setStartDate,
   setEndDate,
@@ -38,12 +41,7 @@ const Head = ({
         </div>
       </div>
       <div className="head__filters-search-wrapper">
-        <Search
-          smallBoardList={smallBoardList}
-          setSmallBoardList={setSmallBoardList}
-          boardList={boardList}
-          setSearchValue={setSearchValue}
-        />
+        <Search setSearchValue={setSearchValue} />
         <div className="head__filters-wrapper">
           <Filters
             setEndDate={setEndDate}

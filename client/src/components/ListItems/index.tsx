@@ -1,3 +1,4 @@
+import * as React from 'react';
 import './index.scss';
 import { useEffect, useState } from 'react';
 import ListItemsType from '../ListItemsType';
@@ -11,8 +12,8 @@ const ListItems = ({
 }) => {
   const [todoList, setTodoList] = useState(
     smallBoardList
-      .filter((item) => item.typeTask === 'todo')
-      .sort((a, b) => a.index - b.index)
+      .filter((item: { typeTask: string }) => item.typeTask === 'todo')
+      .sort((a: { index: number }, b: { index: number }) => a.index - b.index)
   );
 
   const [maxTodoList, setMaxTodoList] = useState(6);
@@ -21,8 +22,8 @@ const ListItems = ({
   );
   const [progressList, setProgressList] = useState(
     smallBoardList
-      .filter((item) => item.typeTask === 'progress')
-      .sort((a, b) => a.index - b.index)
+      .filter((item: { typeTask: string }) => item.typeTask === 'progress')
+      .sort((a: { index: number }, b: { index: number }) => a.index - b.index)
   );
   const [maxProgressList, setMaxProgressList] = useState(6);
   const [smallProgressList, setSmallProgressList] = useState(
@@ -32,8 +33,8 @@ const ListItems = ({
   );
   const [doneList, setDoneList] = useState(
     smallBoardList
-      .filter((item) => item.typeTask === 'done')
-      .sort((a, b) => a.index - b.index)
+      .filter((item: { typeTask: string }) => item.typeTask === 'done')
+      .sort((a: { index: number }, b: { index: number }) => a.index - b.index)
   );
   const [maxDoneList, setMaxDoneList] = useState(6);
   const [smallDoneList, setSmallDoneList] = useState(
@@ -43,18 +44,18 @@ const ListItems = ({
   useEffect(() => {
     setTodoList(
       smallBoardList
-        .filter((item) => item.typeTask === 'todo')
-        .sort((a, b) => a.index - b.index)
+        .filter((item: { typeTask: string }) => item.typeTask === 'todo')
+        .sort((a: { index: number }, b: { index: number }) => a.index - b.index)
     );
     setProgressList(
       smallBoardList
-        .filter((item) => item.typeTask === 'progress')
-        .sort((a, b) => a.index - b.index)
+        .filter((item: { typeTask: string }) => item.typeTask === 'progress')
+        .sort((a: { index: number }, b: { index: number }) => a.index - b.index)
     );
     setDoneList(
       smallBoardList
-        .filter((item) => item.typeTask === 'done')
-        .sort((a, b) => a.index - b.index)
+        .filter((item: { typeTask: string }) => item.typeTask === 'done')
+        .sort((a: { index: number }, b: { index: number }) => a.index - b.index)
     );
   }, [smallBoardList]);
 

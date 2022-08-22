@@ -1,16 +1,19 @@
+import * as React from 'react';
 import './index.scss';
 import { addNewItem } from '../../store/boardList';
 import { useDispatch } from 'react-redux';
-import { ReactComponent as IconPlus } from '../../img/icon-plus.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import IconPlus from '-!svg-react-loader!../../img/icon-plus.svg';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAuth0 } from '@auth0/auth0-react';
+import { DataProps } from '../../interfaces/interfaces';
 
-const AddItemButton = () => {
+const AddItemButton: React.FC = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
 
-  const fetchpostItem = (nanoid) => {
-    let data = {
+  const fetchpostItem = (nanoid: string) => {
+    let data: DataProps = {
       index: 0,
       _id: nanoid,
       idItem: nanoid,
@@ -19,13 +22,14 @@ const AddItemButton = () => {
       description: "Todo's description",
       classChange: '',
       typeTask: 'todo',
+      userEmail: '',
     };
 
-    if (!isAuthenticated) {
-      data.userEmail = '';
-    } else {
-      data.userEmail = user.email;
-    }
+    !isAuthenticated
+      ? (data.userEmail = '')
+      : user !== undefined
+      ? (data.userEmail = user.email)
+      : (data.userEmail = '');
 
     // (B) FETCH
     fetch('/', {
@@ -47,16 +51,6 @@ const AddItemButton = () => {
       }}
     >
       <IconPlus />
-      {/*           <picture>
-      <source type="image/webp" srcSet={iconAddWebp} />
-      <img
-        src={iconAddUs}
-        srcSet={iconAdd2x}
-        width="50"
-        height="50"
-        alt="icon-add"
-      />
-    </picture> */}
       <span>New Task</span>
     </button>
   );

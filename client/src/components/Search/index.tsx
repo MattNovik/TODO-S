@@ -8,9 +8,12 @@ import { Close } from '@mui/icons-material';
 import { useState } from 'react';
 //import { debounce } from 'lodash';
 
-function debounce(func, timeout) {
-  let timer;
-  return (...args) => {
+function debounce(
+  func: { (): void; apply?: any },
+  timeout: number | undefined
+) {
+  let timer: string | number | NodeJS.Timeout | undefined;
+  return (...args: any) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       func.apply(this, args);
@@ -18,24 +21,25 @@ function debounce(func, timeout) {
   };
 }
 
-export default function Search({ setSearchValue }) {
+const Search = ({ setSearchValue }) => {
   const [startType, setStartType] = useState(false);
   const searchFunc = () => {
-    const searchData = document
-      .querySelector('.search-form input')
-      .value.toLowerCase();
+    const searchData = (
+      document.querySelector('.search-form input') as HTMLInputElement
+    ).value.toLowerCase();
     setSearchValue(searchData);
   };
   const debouncedFunc = debounce(() => searchFunc(), 1000);
   return (
     <Paper
-      onSubmit={(e) => {
+      onSubmit={(e: { preventDefault: () => void }) => {
         e.preventDefault();
         searchFunc();
       }}
       onInput={(e) => {
+        let target = e.target as HTMLInputElement;
         debouncedFunc();
-        if (e.target.value === '') {
+        if (target.value === '') {
           setStartType(false);
         }
       }}
@@ -63,7 +67,7 @@ export default function Search({ setSearchValue }) {
         }}
         placeholder="Search"
         inputProps={{ 'aria-label': 'search' }}
-        onInput={(e) => {
+        onInput={() => {
           if (!startType) {
             setStartType(true);
           }
@@ -86,10 +90,12 @@ export default function Search({ setSearchValue }) {
             backgroundColor: 'rgba(0, 0, 0, 0.04)',
           },
         }}
-        onClick={(e) => {
+        onClick={() => {
           setSearchValue(null);
           setStartType(false);
-          document.querySelector('.search-form input').value = '';
+          (
+            document.querySelector('.search-form input') as HTMLInputElement
+          ).value = '';
         }}
         className="search-form__close"
       />
@@ -107,4 +113,6 @@ export default function Search({ setSearchValue }) {
       </IconButton>
     </Paper>
   );
-}
+};
+
+export default Search;

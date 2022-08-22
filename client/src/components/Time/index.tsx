@@ -1,23 +1,10 @@
 import './index.scss';
-
-const month = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
+import * as React from 'react';
+import { month } from '../../constants/constants';
 
 const weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const Time = () => {
+const Time: React.FC = () => {
   const todayDate = new Date();
   const todayDateString =
     weekDay[todayDate.getDay()] +

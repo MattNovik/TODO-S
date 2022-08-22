@@ -59,19 +59,18 @@ export const boardSlice = createSlice({
         });
       }
     },
-    sortItemsUp: (state, action) => {
-      state
-        .sort((a, b) => a.date - b.date)
-        .map((item, i) => {
-          item.index = i;
-        });
-    },
-    sortItemsDown: (state, action) => {
-      state
-        .sort((a, b) => b.date - a.date)
-        .map((item, i) => {
-          item.index = i;
-        });
+    sortItems: (state, action) => {
+      action.payload === 'up'
+        ? state
+            .sort((a, b) => a.date - b.date)
+            .map((item, i) => {
+              item.index = i;
+            })
+        : state
+            .sort((a, b) => b.date - a.date)
+            .map((item, i) => {
+              item.index = i;
+            });
     },
     updateItem: (state, action) => {
       let index = action.payload.index;
@@ -163,8 +162,7 @@ export const {
   removeItem,
   updateItem,
   saveItem,
-  sortItemsUp,
-  sortItemsDown,
+  sortItems,
   refreshData,
   refreshDataUserEmail,
   changeTypeTask,

@@ -1,6 +1,5 @@
 // src/components/auth-nav.js
-
-import React from 'react';
+import * as React from 'react';
 import AuthenticationButton from './AuthenticationButton';
 import './index.scss';
 

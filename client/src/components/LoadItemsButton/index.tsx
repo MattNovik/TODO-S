@@ -1,7 +1,8 @@
 import './index.scss';
-import React from 'react';
+import * as React from 'react';
+import { LoadItemsButtonProps } from '../../interfaces/interfaces';
 
-const LoadItemsButton = ({
+const LoadItemsButton: React.FC<LoadItemsButtonProps> = ({
   listItems,
   typeList,
   setMaxList,
@@ -13,9 +14,11 @@ const LoadItemsButton = ({
     listItems.length !== typeList.length ? (
     <button
       className="load-more-button"
-      onClick={e => {
-        const listTypeItems = e.target.closest('.list').querySelector('ul');
-        Array.from(listTypeItems).map(item => {
+      onClick={(e) => {
+        const listTypeItems = (
+          (e.target as HTMLElement).closest('.list') as HTMLElement
+        ).querySelector('ul') as unknown as ArrayLike<any>;
+        Array.from(listTypeItems).map((item: any) => {
           if (
             item.classList.contains('item--change') ||
             item.classList.contains('item--new')

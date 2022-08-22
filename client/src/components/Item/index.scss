@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   width: size(400px);
-  min-height: size(203px);
+  min-height: size(207px);
   padding: size(20px) size(35px) size(20px) size(25px);
   box-sizing: border-box;
   background-color: var(--default-white);
@@ -60,7 +60,7 @@
 
   @media (max-width: 1919px) {
     width: 370px;
-    min-height: 203px;
+    min-height: 211px;
     padding: 20px 35px 20px 25px;
     box-shadow: 0px -2px 12px 0px rgba(34, 60, 80, 0.38);
     border-radius: 10px;  

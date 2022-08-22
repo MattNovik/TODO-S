@@ -1,3 +1,4 @@
+import * as React from 'react';
 import './index.scss';
 import { useDrop } from 'react-dnd';
 import { changeTypeTask, addNewItemType } from '../../store/boardList';
@@ -5,13 +6,14 @@ import { useDispatch } from 'react-redux';
 import Item from '../Item';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadItemsButton from '../LoadItemsButton';
-import { useRef, useState, useCallback } from 'react';
-import { ReactComponent as IconPlus } from '../../img/icon-plus.svg';
+import { useRef, useState } from 'react';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import IconPlus from '-!svg-react-loader!../../img/icon-plus.svg';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AnimatePresence, Reorder, motion } from 'framer-motion';
+import { DataProps } from '../../interfaces/interfaces';
 
 const ListItemsType = ({
-  id,
   value,
   typeList,
   smallTypeList,
@@ -23,7 +25,7 @@ const ListItemsType = ({
   const ref = useRef(null);
   const [listHovered, setListHovered] = useState(false);
 
-  const updateItemForm = (data, baseId) => {
+  const updateItemForm = (data: any, baseId: string) => {
     fetch('/' + baseId, {
       method: 'PATCH',
       body: JSON.stringify({ data }),
@@ -35,7 +37,10 @@ const ListItemsType = ({
     return false;
   };
 
-  const collectDataTypeTaskChange = (item, value) => {
+  const collectDataTypeTaskChange = (
+    item: { typeTask: any; idItem: any; baseId: string },
+    value: any
+  ) => {
     if (item.typeTask !== value) {
       let data = {
         idItem: item.idItem,
@@ -49,13 +54,14 @@ const ListItemsType = ({
 
   const [{ isOver }, drop] = useDrop({
     accept: 'item',
-    hover: (item, monitor) => {
-      if (item.typeTask !== ref.current.dataset.typetask && !listHovered) {
+    hover: (item: any, monitor) => {
+      let target = ref.current as HTMLElement | null;
+      if (!target) {
+        return;
+      }
+      if (item.typeTask !== target.dataset.typetask && !listHovered) {
         setListHovered(true);
-      } else if (
-        item.typeTask === ref.current.dataset.typetask &&
-        listHovered
-      ) {
+      } else if (item.typeTask === target.dataset.typetask && listHovered) {
         setListHovered(false);
       }
     },
@@ -70,8 +76,8 @@ const ListItemsType = ({
 
   const { user, isAuthenticated } = useAuth0();
 
-  const fetchpostItem = (dataInfo) => {
-    let data = {
+  const fetchpostItem = (dataInfo: { id: any; type: any }) => {
+    let data: DataProps = {
       index: 0,
       _id: dataInfo.id,
       idItem: dataInfo.id,
@@ -80,13 +86,8 @@ const ListItemsType = ({
       description: "Todo's description",
       classChange: '',
       typeTask: dataInfo.type,
+      userEmail: !isAuthenticated ? '' : user !== undefined ? user.email : '',
     };
-
-    if (!isAuthenticated) {
-      data.userEmail = '';
-    } else {
-      data.userEmail = user.email;
-    }
 
     // (B) FETCH
     fetch('/', {
@@ -97,13 +98,13 @@ const ListItemsType = ({
 
     return false;
   };
-
+  /* 
   const movePetListItem = useCallback(
     (dragIndex, hoverIndex) => {
       const dragItem = smallTypeList[dragIndex];
       const hoverItem = smallTypeList[hoverIndex];
       // Swap places of dragItem and hoverItem in the pets array
-      setSmallTypeList((smallTypeList) => {
+      setSmallTypeList((smallTypeList: any) => {
         const updatedPets = [...smallTypeList];
         updatedPets[dragIndex] = hoverItem;
         updatedPets[hoverIndex] = dragItem;
@@ -111,7 +112,7 @@ const ListItemsType = ({
       });
     },
     [smallTypeList]
-  );
+  ); */
 
   const listName =
     value === 'todo' ? 'To do' : value === 'done' ? 'Done' : 'In progress';
@@ -134,7 +135,7 @@ const ListItemsType = ({
         <button
           type="button"
           className="type-list__add-button"
-          onClick={(e) => {
+          onClick={() => {
             let data = {
               id: nanoid(),
               type: value,
@@ -143,7 +144,7 @@ const ListItemsType = ({
             fetchpostItem(data);
           }}
         >
-          <IconPlus tabIndex="0" />
+          <IconPlus tabIndex={0} />
         </button>
       </div>
       <motion.div
@@ -168,23 +169,36 @@ const ListItemsType = ({
           ></li>
           <AnimatePresence>
             {smallTypeList !== null && smallTypeList.length ? (
-              smallTypeList.map((item, index) => {
-                return (
-                  <Item
-                    as={Reorder.Item}
-                    index={index}
-                    key={item.idItem}
-                    baseId={item._id}
-                    idItem={item.idItem}
-                    nameItem={item.nameItem}
-                    description={item.description}
-                    date={item.date}
-                    classChange={item.classChange}
-                    typeTask={item.typeTask}
-                    moveListItem={movePetListItem}
-                  />
-                );
-              })
+              smallTypeList.map(
+                (
+                  item: {
+                    idItem: React.Key | null | undefined;
+                    _id: any;
+                    nameItem: any;
+                    description: any;
+                    date: any;
+                    classChange: any;
+                    typeTask: any;
+                  },
+                  index: any
+                ) => {
+                  return (
+                    <Item
+                      as={Reorder.Item}
+                      index={index}
+                      key={item.idItem}
+                      baseId={item._id}
+                      idItem={item.idItem}
+                      nameItem={item.nameItem}
+                      description={item.description}
+                      date={item.date}
+                      classChange={item.classChange}
+                      typeTask={item.typeTask}
+                      /* moveListItem={movePetListItem} */
+                    />
+                  );
+                }
+              )
             ) : (
               <></>
             )}

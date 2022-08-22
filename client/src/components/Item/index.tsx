@@ -1,43 +1,37 @@
-import './index.scss';
-import { TextareaAutosize, TextField } from '@mui/material';
-import { Close } from '@mui/icons-material';
-import { useDispatch } from 'react-redux';
-import { removeItem, updateItem, changeTypeTask } from '../../store/boardList';
-import DatePicker from 'react-datepicker';
+import * as React from 'react';
 import { forwardRef, useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import './index.scss';
+import { removeItem, updateItem, changeTypeTask } from '../../store/boardList';
+import { motion } from 'framer-motion';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDrag, useDrop } from 'react-dnd';
-import { ReactComponent as IconFlag } from '../../img/icon-flag.svg';
-import { motion } from 'framer-motion';
+import { TextareaAutosize, TextField } from '@mui/material';
+import { Close } from '@mui/icons-material';
+import DatePicker from 'react-datepicker';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import IconFlag from '-!svg-react-loader!../../img/icon-flag.svg';
+import { DataProps, CustomInputProps } from '../../interfaces/interfaces';
+import { month } from '../../constants/constants';
 
-const month = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
-const CustomInput = forwardRef(({ value, onClick }, ref) => (
-  <button
-    type="button"
-    className="item__date-visual-button"
-    onClick={onClick}
-    ref={ref}
-  >
-    {value}
-  </button>
-));
+const CustomInput = forwardRef(
+  (
+    { value, onClick }: CustomInputProps,
+    ref: React.LegacyRef<HTMLButtonElement> | undefined
+  ) => (
+    <button
+      type="button"
+      className="item__date-visual-button"
+      onClick={onClick}
+      ref={ref}
+    >
+      {value}
+    </button>
+  )
+);
 
 const Item = ({
-  key,
+  as,
   index,
   baseId,
   idItem,
@@ -46,7 +40,6 @@ const Item = ({
   date,
   classChange,
   typeTask,
-  moveListItem,
 }) => {
   const dispatch = useDispatch();
   const dateObj = new Date(date);
@@ -67,7 +60,7 @@ const Item = ({
 
   const { user, isAuthenticated } = useAuth0();
 
-  const [{ isDragging }, drag, preview] = useDrag({
+  const [, drag /* , preview */] = useDrag({
     type: 'item',
     item: {
       index,
@@ -86,11 +79,12 @@ const Item = ({
 
   const [, drop] = useDrop({
     accept: 'item',
-    hover: (item, monitor) => {
-      if (!ref.current) {
+    hover: (item: any, monitor: any) => {
+      let target = ref.current as HTMLElement | null;
+      if (!target) {
         return;
       }
-      if (ref.current.dataset.typeTask !== item.typeTask) {
+      if (target.dataset.typeTask !== item.typeTask) {
         //block swipe order. rework later
         return;
       }
@@ -101,7 +95,7 @@ const Item = ({
         return;
       }
 
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverBoundingRect = target?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
@@ -116,29 +110,45 @@ const Item = ({
   const ref = useRef(null);
   const dragDrop = drag(drop(ref));
 
-  window.onkeydown = (e) => {
-    const objData = document.querySelector('.item--change > form');
+  window.onkeydown = (e: { keyCode: number; key: string }) => {
+    const objData = document.querySelector(
+      '.item--change > form'
+    ) as HTMLFormElement;
     if ((e.keyCode === 13 || e.key === 'Enter') && objData) {
       let data = collectData(objData);
       updateItemForm(data);
       dispatch(updateItem(data));
-      objData.closest('li').classList.remove('item--change');
-      objData.closest('li').classList.remove('item-new');
+      (objData.closest('li') as HTMLElement).classList.remove('item--change');
+      (objData.closest('li') as HTMLElement).classList.remove('item-new');
     }
   };
 
-  const collectData = (currentForm) => {
+  const collectData = (currentForm: HTMLFormElement) => {
     const data = new FormData(currentForm);
-    let getData = {};
+    let getData: DataProps = {
+      index: 0,
+      _id: data.get('idItem'),
+      typeTask: data.get('typeTask'),
+      idItem: data.get('idItem'),
+      nameItem: data.get('nameItem'),
+      description: data.get('description'),
+      date: data.get('date'),
+      classChange: '',
+      userEmail: !isAuthenticated ? '' : user !== undefined ? user.email : '',
+    };
+
+    /*     getData.index = 0;
     getData.idItem = data.get('idItem');
     getData.nameItem = data.get('nameItem');
     getData.description = data.get('description');
     getData.date = data.get('date');
     getData.classChange = '';
     getData.typeTask = data.get('typeTask');
-    isAuthenticated
+    !isAuthenticated
+      ? (getData.userEmail = '')
+      : user !== undefined
       ? (getData.userEmail = user.email)
-      : (getData.userEmail = '');
+      : (getData.userEmail = ''); */
     return getData;
   };
 
@@ -148,7 +158,7 @@ const Item = ({
     });
   };
 
-  const updateItemForm = (data) => {
+  const updateItemForm = (data: DataProps) => {
     fetch('/' + baseId, {
       method: 'PATCH',
       body: JSON.stringify({ data }),
@@ -157,14 +167,20 @@ const Item = ({
     return false;
   };
 
-  const changeType = (e) => {
-    let dataForm = collectData(e.closest('form'));
-    dataForm.index = +e.closest('li').getAttribute('index');
+  const changeType = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    let target = e.target as HTMLButtonElement;
+    let dataForm: DataProps = collectData(
+      target.closest('form') as HTMLFormElement
+    );
+    dataForm.index =
+      (target.closest('li') as HTMLElement).getAttribute('index') !== null
+        ? Number((target.closest('li') as HTMLElement).getAttribute('index'))
+        : 0;
     let data = {
-      idItem: e.closest('li').id,
-      typeTask: e.value,
+      idItem: (target.closest('li') as HTMLElement).id,
+      typeTask: target.value,
     };
-    dataForm.typeTask = e.value;
+    dataForm.typeTask = target.value;
     dispatch(changeTypeTask(data));
     updateItemForm(dataForm);
   };
@@ -173,7 +189,6 @@ const Item = ({
     <motion.li
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      /* exit={{ opacity: 0 }} */
       className={classChange ? 'item ' + classChange : 'item'}
       data-classdate={classDate}
       data-datetime={pickerDate}
@@ -181,28 +196,35 @@ const Item = ({
       id={idItem}
       ref={dragDrop}
       index={index}
-      tabIndex="0"
+      tabIndex={0}
       onKeyPress={(e) => {
-        if (e.key === 'Enter' && e.target.tagName === 'LI') {
+        let target = e.target as HTMLElement;
+        if (e.key === 'Enter' && target.tagName === 'LI') {
           let listItem = document.querySelectorAll('.item');
           Array.from(listItem).map((item) => {
             item.classList.remove('item--change');
             item.classList.remove('item--new');
             return false;
           });
-          e.target.closest('li').classList.add('item--change');
-          e.target.closest('li').querySelector('input[name=nameItem]').value =
-            nameItem;
-          e.target
-            .closest('li')
-            .querySelector('.item__description-input').value = description;
+          (target.closest('li') as HTMLElement).classList.add('item--change');
+          (
+            (target.closest('li') as HTMLElement).querySelector(
+              'input[name=nameItem]'
+            ) as HTMLInputElement
+          ).value = nameItem;
+          (
+            (target.closest('li') as HTMLElement).querySelector(
+              '.item__description-input'
+            ) as HTMLInputElement
+          ).value = description;
         }
       }}
       onClick={(e) => {
+        let target = e.target as HTMLElement;
         if (
-          e.target.tagName !== 'BUTTON' &&
-          e.target.tagName !== 'svg' &&
-          e.target.tagName !== 'path'
+          target.tagName !== 'BUTTON' &&
+          target.tagName !== 'svg' &&
+          target.tagName !== 'path'
         ) {
           let listItem = document.querySelectorAll('.item');
           Array.from(listItem).map((item) => {
@@ -210,12 +232,17 @@ const Item = ({
             item.classList.remove('item--new');
             return false;
           });
-          e.target.closest('li').classList.add('item--change');
-          e.target.closest('li').querySelector('input[name=nameItem]').value =
-            nameItem;
-          e.target
-            .closest('li')
-            .querySelector('.item__description-input').value = description;
+          (target.closest('li') as HTMLElement).classList.add('item--change');
+          (
+            (target.closest('li') as HTMLElement).querySelector(
+              'input[name=nameItem]'
+            ) as HTMLInputElement
+          ).value = nameItem;
+          (
+            (target.closest('li') as HTMLElement).querySelector(
+              '.item__description-input'
+            ) as HTMLInputElement
+          ).value = description;
         }
       }}
     >
@@ -224,29 +251,32 @@ const Item = ({
         method="POST"
         className="item__form"
         onSubmit={(e) => {
+          let target = e.target as HTMLFormElement;
           e.preventDefault();
-          let dataInfo = collectData(e.target);
+          let dataInfo = collectData(target);
           updateItemForm(dataInfo);
           dispatch(updateItem(dataInfo));
         }}
       >
         <input type="hidden" name="idItem" value={idItem} />
         <Close
-          tabIndex="0"
+          tabIndex={0}
           className="item__close"
           onClick={(e) => {
+            let target = e.target as HTMLElement;
             let data = {
-              id: e.target.closest('li').id,
-              target: e.target.tagName,
+              id: (target.closest('li') as HTMLElement).id,
+              target: target.tagName,
             };
             deleteItem();
             dispatch(removeItem(data));
           }}
           onKeyPress={(e) => {
+            let target = e.target as HTMLElement;
             if (e.key === 'Enter') {
               let data = {
-                id: e.target.closest('li').id,
-                target: e.target.tagName,
+                id: (target.closest('li') as HTMLElement).id,
+                target: target.tagName,
               };
               deleteItem();
               dispatch(removeItem(data));
@@ -305,7 +335,6 @@ const Item = ({
             description = e.target.value;
           }}
           style={{ width: '100%', height: '45px' }}
-          multiline="true"
           placeholder={description}
           className="item__description-input"
         />
@@ -317,7 +346,7 @@ const Item = ({
               className="item__type-button-progress"
               type="button"
               value="progress"
-              onClick={(e) => changeType(e.target)}
+              onClick={(e) => changeType(e)}
             >
               In progress
             </button>
@@ -325,7 +354,7 @@ const Item = ({
               type="button"
               className="item__type-button-done"
               value="done"
-              onClick={(e) => changeType(e.target)}
+              onClick={(e) => changeType(e)}
             >
               Done
             </button>
@@ -336,7 +365,7 @@ const Item = ({
               className="item__type-button-todo"
               value="todo"
               type="button"
-              onClick={(e) => changeType(e.target)}
+              onClick={(e) => changeType(e)}
             >
               To Do
             </button>
@@ -344,7 +373,7 @@ const Item = ({
               className="item__type-button-done"
               value="done"
               type="button"
-              onClick={(e) => changeType(e.target)}
+              onClick={(e) => changeType(e)}
             >
               Done
             </button>
@@ -355,7 +384,7 @@ const Item = ({
               className="item__type-button-todo"
               value="todo"
               type="button"
-              onClick={(e) => changeType(e.target)}
+              onClick={(e) => changeType(e)}
             >
               To Do
             </button>
@@ -363,7 +392,7 @@ const Item = ({
               className="item__type-button-progress"
               value="progress"
               type="button"
-              onClick={(e) => changeType(e.target)}
+              onClick={(e) => changeType(e)}
             >
               In progress
             </button>
@@ -372,15 +401,26 @@ const Item = ({
         <div className="item__date-save">
           <span className="item__date-visual">{coverDate}</span>
           <DatePicker
-            selected={pickerDate}
+            selected={new Date(pickerDate)}
             timeInputLabel="Time:"
             dateFormat="dd MMM, yyyy HH:mm"
             showTimeInput
             onChange={(date) => {
-              setPickerDate(date.getTime());
+              if (date !== null) {
+                setPickerDate(date.getTime());
+              }
             }}
             className="item__date"
-            customInput={<CustomInput />}
+            customInput={
+              <CustomInput
+                value={''}
+                onClick={function (
+                  event: React.MouseEvent<HTMLElement, MouseEvent>
+                ): void {
+                  throw new Error('Function not implemented.');
+                }}
+              />
+            }
           />
           <div
             className={
@@ -401,8 +441,13 @@ const Item = ({
             type="submit"
             className="item__save-button"
             onClick={(e) => {
-              e.target.closest('li').classList.remove('item--change');
-              e.target.closest('li').classList.remove('item-new');
+              let target = e.target as HTMLElement;
+              (target.closest('li') as HTMLElement).classList.remove(
+                'item--change'
+              );
+              (target.closest('li') as HTMLElement).classList.remove(
+                'item-new'
+              );
             }}
           >
             Save

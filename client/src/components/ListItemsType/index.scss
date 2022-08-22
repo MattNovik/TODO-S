@@ -173,13 +173,7 @@
 }
 
 [data-theme='dark'] { 
-  .list {
-    //background-color: #3f3f42;
-    //border: solid 1px #3f3f4a;
-  }
-
   .type-list {
-
     &__name {
       color: var(--text-first);
     }

@@ -1,9 +1,12 @@
+import * as React from 'react';
 import './index.scss';
-import { ReactComponent as IconFilter } from '../../img/icon-filter.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import IconFilter from '-!svg-react-loader!../../img/icon-filter.svg';
 import DatePicker from 'react-datepicker';
 import { Close } from '@mui/icons-material';
+import { FilterProps } from '../../interfaces/interfaces';
 
-const Filters = ({
+const Filters: React.FC<FilterProps> = ({
   setEndDate,
   setStartDate,
   setSmallBoardList,
@@ -18,7 +21,7 @@ const Filters = ({
   filterDoneList,
   setFilterDoneList,
 }) => {
-  const filterByDate = (dates) => {
+  const filterByDate = (dates: [any, any]): void => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
@@ -26,7 +29,7 @@ const Filters = ({
     if (start !== null && end !== null) {
       setSmallBoardList(
         smallBoardList.filter(
-          (item) =>
+          (item: { date: number }) =>
             item.date >= start.getTime() &&
             item.date <= end.getTime() + 86399999
         )
@@ -42,10 +45,10 @@ const Filters = ({
           onClick={() => {
             const wrapperButtonFilters = document.querySelector(
               '.filter__wrapper-filters'
-            );
+            ) as HTMLElement;
             const wrapperButtonSorts = document.querySelector(
               '.sort__wrapper-sorts'
-            );
+            ) as HTMLElement;
 
             wrapperButtonFilters.classList.toggle(
               'filter__wrapper-filters--open'
@@ -67,7 +70,7 @@ const Filters = ({
             onClick={(e) => {
               const wrapperButtonFilters = document.querySelector(
                 '.filter__wrapper-filters'
-              );
+              ) as HTMLElement;
               wrapperButtonFilters.classList.toggle(
                 'filter__wrapper-filters--open'
               );
@@ -89,7 +92,8 @@ const Filters = ({
               className="filter__type-button-todo"
               value="todo"
               onClick={(e) => {
-                e.target.classList.toggle('filter__type-button-todo--active');
+                const target = e.target as HTMLButtonElement;
+                target.classList.toggle('filter__type-button-todo--active');
                 setFilterTodoList(!filterTodoList);
               }}
             >
@@ -99,9 +103,8 @@ const Filters = ({
               className="filter__type-button-progress"
               value="progress"
               onClick={(e) => {
-                e.target.classList.toggle(
-                  'filter__type-button-progress--active'
-                );
+                const target = e.target as HTMLButtonElement;
+                target.classList.toggle('filter__type-button-progress--active');
                 setFilterProgressList(!filterProgressList);
               }}
             >
@@ -111,7 +114,8 @@ const Filters = ({
               className="filter__type-button-done"
               value="done"
               onClick={(e) => {
-                e.target.classList.toggle('filter__type-button-done--active');
+                const target = e.target as HTMLButtonElement;
+                target.classList.toggle('filter__type-button-done--active');
                 setFilterDoneList(!filterDoneList);
               }}
             >
@@ -128,15 +132,21 @@ const Filters = ({
               setFilterTodoList(true);
               setFilterProgressList(true);
               setFilterDoneList(true);
-              document
-                .querySelector('.filter__type-button-todo')
-                .classList.remove('filter__type-button-todo--active');
-              document
-                .querySelector('.filter__type-button-progress')
-                .classList.remove('filter__type-button-progress--active');
-              document
-                .querySelector('.filter__type-button-done')
-                .classList.remove('filter__type-button-done--active');
+              (
+                document.querySelector(
+                  '.filter__type-button-todo'
+                ) as HTMLButtonElement
+              ).classList.remove('filter__type-button-todo--active');
+              (
+                document.querySelector(
+                  '.filter__type-button-progress'
+                ) as HTMLButtonElement
+              ).classList.remove('filter__type-button-progress--active');
+              (
+                document.querySelector(
+                  '.filter__type-button-done'
+                ) as HTMLButtonElement
+              ).classList.remove('filter__type-button-done--active');
             }}
           >
             Reset
