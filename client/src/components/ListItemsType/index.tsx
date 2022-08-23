@@ -134,6 +134,7 @@ const ListItemsType = ({
         </div>
         <button
           type="button"
+          aria-label="add new task"
           className="type-list__add-button"
           onClick={() => {
             let data = {
@@ -147,12 +148,7 @@ const ListItemsType = ({
           <IconPlus tabIndex={0} />
         </button>
       </div>
-      <motion.div
-        layout
-        //animate={{ scale: [0, 1, 0.5, 1] }}
-        //transition={{ ease: [0.17, 0.67, 0.83, 0.67] }}
-        className="type-list__animation-wrapper"
-      >
+      <motion.div layout className="type-list__animation-wrapper">
         <Reorder.Group
           //layout
           axis="y"

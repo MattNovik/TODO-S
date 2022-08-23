@@ -163,13 +163,14 @@ const Board = ({ theme, setTheme }) => {
       )}
       <Notification
         type="notice"
-        text={`This project is still creating by @lockdur. visit my`}
+        text={`This project creating by @lockdur. visit my`}
         button={false}
         links={
           <a
             target="_blank"
             rel="noreferrer"
             href="https://github.com/MattNovik"
+            aria-label="github link"
           >
             {<IconGithub />}
           </a>

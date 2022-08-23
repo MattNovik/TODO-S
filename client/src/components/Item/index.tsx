@@ -6,7 +6,7 @@ import { removeItem, updateItem, changeTypeTask } from '../../store/boardList';
 import { motion } from 'framer-motion';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDrag, useDrop } from 'react-dnd';
-import { TextareaAutosize, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -136,19 +136,6 @@ const Item = ({
       classChange: '',
       userEmail: !isAuthenticated ? '' : user !== undefined ? user.email : '',
     };
-
-    /*     getData.index = 0;
-    getData.idItem = data.get('idItem');
-    getData.nameItem = data.get('nameItem');
-    getData.description = data.get('description');
-    getData.date = data.get('date');
-    getData.classChange = '';
-    getData.typeTask = data.get('typeTask');
-    !isAuthenticated
-      ? (getData.userEmail = '')
-      : user !== undefined
-      ? (getData.userEmail = user.email)
-      : (getData.userEmail = ''); */
     return getData;
   };
 
@@ -321,22 +308,30 @@ const Item = ({
           }}
         />
         <h3 className="item__name">{nameItem}</h3>
-        <TextareaAutosize
+        <TextField
           draggable
           onDragStart={(e) => {
             e.preventDefault();
             e.stopPropagation();
           }}
-          aria-label=""
           name="description"
-          minRows={3}
-          maxRows={10}
-          onChange={(e) => {
-            description = e.target.value;
+          multiline={true}
+          maxRows={3}
+          defaultValue="Todo's description"
+          onInput={(e) => {
+            description = (e.target as HTMLTextAreaElement).value;
           }}
-          style={{ width: '100%', height: '45px' }}
           placeholder={description}
           className="item__description-input"
+          sx={{
+            '& .MuiInputBase-root': {
+              padding: '0',
+              border: 'none',
+            },
+            '& .MuiInputBase-root:hover fieldset': {
+              borderColor: 'transparent',
+            },
+          }}
         />
         <p className="item__description">{description}</p>
         <input type="hidden" name="typeTask" value={typeTask} />

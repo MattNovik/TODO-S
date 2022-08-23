@@ -13,6 +13,7 @@ const ThemeCheckbox: React.FC<ThemeCheckboxProps> = ({ theme, setTheme }) => {
         <div className="theme-checkbox__button" tabIndex={0}>
           <input
             type="checkbox"
+            aria-label="change theme mode"
             className="theme-checkbox__checkbox"
             onChange={onChange}
             value={theme === 'dark' ? 'true' : 'false'}

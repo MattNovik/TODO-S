@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: none;
+}
+
 :root {
   --default-white: #fff;
   --default-black: #000;
@@ -18,7 +22,7 @@
   --text-first: #e2e2e8;
   --text-second: #90989f;
   --attention: 	#BC243C;
-  --reset-bg: #0096ff14;
+  --reset-bg: rgba(0, 150, 255, 0.078);
   --logout: #808080;
   --input-hover-border: #1976d2;
 }

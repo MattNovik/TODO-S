@@ -79,14 +79,14 @@
   }
 
   &--notice {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     min-height: size(20px);
     width: 100%;
     padding: size(10px) 0;
     text-align: center;
-    background-color: var(--reset-bg);
+    background-color: rgb(218, 238, 252);
     transition: all .3s ease;
     color: var(--default-black);
     z-index: 500;
@@ -95,11 +95,7 @@
       min-height: 20px;
       padding: 10px 0;
     }
-
-    @media (max-width: 424px) {
-      background-color: rgb(218, 238, 252);
-    }
-
+    
     &:hover {
       background-color: var(--main);
       color: var(--default-white);
@@ -185,7 +181,7 @@
     }
 
     &--notice {
-      background-color: rgba(102, 102, 102, 0.7);
+      background-color: rgba(102, 102, 102);
 
       .notification__text {
         color: var(--text-first);

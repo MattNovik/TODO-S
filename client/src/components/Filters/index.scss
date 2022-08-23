@@ -27,12 +27,13 @@
             padding: 11px 20px;
             left: calc(100vw - 20px);
             transform: translate(-100%, 0);
-            z-index: 200;
+            z-index: 120;
+
           }
           
           span,
           svg {
-            z-index: 200;
+            z-index: 120;
           }
 
           &:hover {
@@ -211,6 +212,7 @@
         .button {
           &.filters {
             color: var(--default-black);
+            background-color: var(--light-bg);
           }
         }
       }

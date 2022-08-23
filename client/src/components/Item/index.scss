@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   width: size(400px);
-  min-height: size(207px);
+  min-height: size(225px);
   padding: size(20px) size(35px) size(20px) size(25px);
   box-sizing: border-box;
   background-color: var(--default-white);
@@ -60,7 +60,7 @@
 
   @media (max-width: 1919px) {
     width: 370px;
-    min-height: 211px;
+    min-height: 225px;
     padding: 20px 35px 20px 25px;
     box-shadow: 0px -2px 12px 0px rgba(34, 60, 80, 0.38);
     border-radius: 10px;  
@@ -253,7 +253,7 @@
   &__description-input {
     box-sizing: border-box;
     resize: none;
-    max-height: size(45px);
+    max-height: size(60px);
     //max-height: 60px !important;
     height: 100% !important;
     border-radius: size(4px);
@@ -265,7 +265,7 @@
     transition: all .3s ease;
 
     @media (max-width: 1919px) {
-      max-height: 45px;
+      max-height: 60px;
       border-radius: 4px;
       padding: 8px;
       border-width: 2px;
@@ -275,7 +275,7 @@
       display: none;
     }
 
-    &:hover,
+/*     &:hover,
     &:focus {
       border-color: var(--input-hover-border);
     }
@@ -284,7 +284,7 @@
     &:focus {
       border-color: var(--input-hover-border);
       outline: none;
-    }
+    } */
   }
 
   &__name-input,
@@ -308,36 +308,71 @@
   }
 
   &__description-input {
-    textarea {
-      font-size: size(18px) !important ;
-      min-height: size(45px) !important;
+    & .MuiInputBase-root {
+      max-height: size(60px) !important;
 
       @media (max-width: 1919px) {
-        font-size: 18px !important ;
-        min-height: 45px !important;
+        max-height: 60px !important;
+      }
+    }
+
+    fieldset {
+      border-width: 2px !important;
+      border-color: var(--default-transparent) !important;
+
+      @media (max-width: 1919px) {
+        border-width: 2px !important;
+      }
+    }
+
+    textarea {
+      line-height: size(20px) !important;
+      font-size: size(16px) !important ;
+      min-height: size(60px) !important;
+      max-height: 100% !important;
+      box-sizing: border-box !important;
+      background-color: var(--default-white);
+      padding: size(8px);
+      border: solid size(2px) rgba(0, 0, 0, 0.23);
+      transition: all .3s ease;
+
+      @media (max-width: 1919px) {
+        padding: 8px;
+        line-height: 20px !important;
+        font-size: 16px !important ;
+        min-height: 60px !important;
+        border: solid 2px rgba(0, 0, 0, 0.23);
+      }
+      
+      &:hover,
+      &:focus {
+        border: solid size(2px) var(--input-hover-border);
+
+        @media (max-width: 1919px) {
+          border: solid 2px var(--input-hover-border);
+        }
       }
     }
   }
 
   &__description {
-    flex-grow: 1;
     margin: 0;
     font-size: size(18px);
-    min-height: size(45px);
-    height: 100%;
+    min-height: size(60px);
+    //height: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -moz-box;
     -moz-box-orient: vertical;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    line-clamp: 2;
+    line-clamp: 3;
     box-orient: vertical;
 
     @media (max-width: 1919px) {
       font-size: 16px;
-      min-height: 45px;
+      min-height: 60px;
     }
   }
 
@@ -408,6 +443,7 @@
     @media (max-width: 424px) {
         flex-direction: row;
         align-items: flex-start;
+        row-gap: 10px;
     }
 
     span {
@@ -434,10 +470,12 @@
   &__flag {
     display: flex;
     justify-content: flex-start;
+    align-self: center;
     width: 100%;
 
     @media (max-width: 424px) {
       grid-area: flag;
+      width: auto;
     }
 
     svg {
@@ -469,11 +507,7 @@
 
     .item__date-save {
       @media (max-width: 424px) {
-        display: grid;
-        grid-template-areas: 
-        'time flag'
-        'save save';
-        row-gap: 10px;
+        flex-wrap: wrap;
       }
     }
     
