@@ -35,10 +35,6 @@
         row-gap: 15px;
         padding: 20px;
       }
-      
-      [data-theme='dark'] { 
-        background-color: var(--main-bg);
-      }
     }
 
     .notification__text {
@@ -53,26 +49,109 @@
         font-size: 22px;
         line-height: 32px;
       }
-
-      [data-theme='dark'] { 
-        color: var(--text-first)
-      }
     }
 
     .notification__button {
       background-color: var(--main);
       color: var(--default-white);
-
-      [data-theme='dark'] { 
-        background-color: var(--main-bg);
-        color: var(--text-first)
-      }
+      border: solid 1px var(--default-transparent);
     }
 
     &.notification--close {
       opacity: 0;
       visibility: hidden;
       z-index: -1;
+    }
+  }
+
+  &--notice {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    min-height: 20px;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    background-color: var(--reset-bg);
+    transition: all .3s ease;
+    color: var(--default-black);
+    z-index: 500;
+
+    &:hover {
+      background-color: var(--main);
+      color: var(--default-white);
+
+      .notification__text {
+        svg {
+          color: var(--default-white);
+        }
+      }
+    }
+
+    .notification__text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 10px;
+      margin: 0;
+      font-size: 14px;
+      line-height: 16px;
+
+      a {
+        height: 18px;
+      }
+
+      svg {
+        width: 18px;
+        height: 18px;
+        color: var(--default-black);
+        transition: color .3s ease;
+
+        &:hover {
+          color: var(--second);
+        }
+      }
+    }
+  }
+}
+
+[data-theme='dark'] { 
+  .notification {
+    &--work {
+      background-color: rgba(102, 102, 102, 0.7);
+      
+      .notification__wrapper {
+        background-color: var(--main-bg);
+      }
+      .notification__text {
+        color: var(--text-first)
+      }
+      .notification__button {
+        background-color: var(--main-bg);
+        color: var(--second);
+        border: solid 1px var(--second);
+
+        &:hover,
+        &:focus {
+          box-shadow: 0px 5px 8px 6px rgb(234 138 50 / 35%);
+        }
+      }
+    }
+
+    &--notice {
+      background-color: rgba(102, 102, 102, 0.7);
+
+      .notification__text {
+        color: var(--text-first);
+
+        svg {
+          color: var(--text-first);
+
+          &:hover {
+            color: var(--second);
+          }
+        }
+      }
     }
   }
 }

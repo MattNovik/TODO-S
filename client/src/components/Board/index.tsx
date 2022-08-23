@@ -10,6 +10,8 @@ import ListItems from '../ListItems';
 import AddItemButton from '../AddItemButton';
 import Time from '../Time';
 import Notification from '../Notification';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import IconGithub from '-!svg-react-loader!../../img/icon-github.svg';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -83,23 +85,20 @@ const Board = ({ theme, setTheme }) => {
         const listItem = document.querySelectorAll('.item');
         const wrapperButtonFilters = document.querySelector(
           '.filter__wrapper-filters'
-        );
+        ) as HTMLElement;
         const wrapperButtonSorts = document.querySelector(
           '.sort__wrapper-sorts'
-        );
+        ) as HTMLElement;
         if (
-          ((wrapperButtonSorts as HTMLDivElement).classList.contains(
-            'sort__wrapper-sorts--open'
-          ) ||
-            (wrapperButtonFilters as HTMLDivElement).classList.contains(
+          (wrapperButtonSorts.classList.contains('sort__wrapper-sorts--open') ||
+            wrapperButtonFilters.classList.contains(
               'filter__wrapper-filters--open'
             )) &&
-          !(target.closest('.sort') && !target.closest('.filter'))
+          !target.closest('.sort') &&
+          !target.closest('.filter')
         ) {
-          (wrapperButtonSorts as HTMLDivElement).classList.remove(
-            'sort__wrapper-sorts--open'
-          );
-          (wrapperButtonFilters as HTMLDivElement).classList.remove(
+          wrapperButtonSorts.classList.remove('sort__wrapper-sorts--open');
+          wrapperButtonFilters.classList.remove(
             'filter__wrapper-filters--open'
           );
         } // убираю фокус с фильтра и сортировки
@@ -115,19 +114,17 @@ const Board = ({ theme, setTheme }) => {
         } // убираю окно профиля если открыто
         if (!target.closest('li')) {
           if (
-            ((wrapperButtonSorts as HTMLDivElement).classList.contains(
+            (wrapperButtonSorts.classList.contains(
               'sort__wrapper-sorts--open'
             ) ||
-              (wrapperButtonFilters as HTMLDivElement).classList.contains(
+              wrapperButtonFilters.classList.contains(
                 'filter__wrapper-filters--open'
               )) &&
             !target.closest('.sort') &&
             !target.closest('.filter')
           ) {
-            (wrapperButtonSorts as HTMLDivElement).classList.remove(
-              'sort__wrapper-sorts--open'
-            );
-            (wrapperButtonFilters as HTMLDivElement).classList.remove(
+            wrapperButtonSorts.classList.remove('sort__wrapper-sorts--open');
+            wrapperButtonFilters.classList.remove(
               'filter__wrapper-filters--open'
             );
           }
@@ -153,6 +150,21 @@ const Board = ({ theme, setTheme }) => {
         type="work"
         text="This project still in work, but you can use it right now!"
         button="ready"
+        links={false}
+      />
+      <Notification
+        type="notice"
+        text={`This project is still creating by @lockdur. visit my`}
+        button={false}
+        links={
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/MattNovik"
+          >
+            {<IconGithub />}
+          </a>
+        }
       />
       <Head
         setSmallBoardList={setSmallBoardList}

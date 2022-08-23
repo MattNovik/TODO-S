@@ -14,6 +14,7 @@ export interface NotificationProps {
   type: string;
   text: string;
   button: string | boolean;
+  links: any;
 }
 
 export interface FilterProps {

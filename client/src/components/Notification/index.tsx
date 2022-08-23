@@ -2,7 +2,12 @@ import './index.scss';
 import React from 'react';
 import { NotificationProps } from '../../interfaces/interfaces';
 
-const Notification: React.FC<NotificationProps> = ({ type, text, button }) => {
+const Notification: React.FC<NotificationProps> = ({
+  type,
+  text,
+  button,
+  links,
+}) => {
   return (
     <div
       className={`notification notification--${type}`}
@@ -22,7 +27,9 @@ const Notification: React.FC<NotificationProps> = ({ type, text, button }) => {
       }}
     >
       <div className="notification__wrapper">
-        <p className="notification__text">{text}</p>
+        <p className="notification__text">
+          {text} {links ? links : ''}
+        </p>
         {button ? (
           <button
             type="button"
