@@ -14,6 +14,10 @@
     visibility: visible;
     transition: all .3s ease;
 
+    @media (max-width: 424px) {
+      align-items: flex-start;
+    }
+
     .notification__wrapper {
       display: flex;
       flex-direction: column;
@@ -35,6 +39,12 @@
         row-gap: 15px;
         padding: 20px;
       }
+
+      @media (max-width: 424px) {
+        width: 100%;
+        max-height: 300px;
+        border-radius: 0;
+      }
     }
 
     .notification__text {
@@ -54,7 +64,11 @@
     .notification__button {
       background-color: var(--main);
       color: var(--default-white);
-      border: solid 1px var(--default-transparent);
+      border: solid size(1px) var(--default-transparent);
+
+      @media (max-width: 1919px) {
+        border: solid 1px var(--default-transparent);
+      }
     }
 
     &.notification--close {
@@ -68,14 +82,23 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    min-height: 20px;
+    min-height: size(20px);
     width: 100%;
-    padding: 10px 0;
+    padding: size(10px) 0;
     text-align: center;
     background-color: var(--reset-bg);
     transition: all .3s ease;
     color: var(--default-black);
     z-index: 500;
+
+    @media (max-width: 1919px) {
+      min-height: 20px;
+      padding: 10px 0;
+    }
+
+    @media (max-width: 424px) {
+      background-color: rgb(218, 238, 252);
+    }
 
     &:hover {
       background-color: var(--main);
@@ -92,20 +115,35 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      column-gap: 10px;
+      column-gap: size(10px);
       margin: 0;
-      font-size: 14px;
-      line-height: 16px;
+      font-size: size(14px);
+      line-height: size(16px);
+
+      @media (max-width: 1919px) {
+        column-gap: 10px;
+        font-size: 14px;
+        line-height: 16px;
+      }
 
       a {
-        height: 18px;
+        height: size(18px);
+
+        @media (max-width: 1919px) {
+          height: 18px;
+        }
       }
 
       svg {
-        width: 18px;
-        height: 18px;
+        width: size(18px);
+        height: size(18px);
         color: var(--default-black);
         transition: color .3s ease;
+
+        @media (max-width: 1919px) {
+          width: 18px;
+        height: 18px;
+        }
 
         &:hover {
           color: var(--second);
@@ -129,11 +167,19 @@
       .notification__button {
         background-color: var(--main-bg);
         color: var(--second);
-        border: solid 1px var(--second);
+        border: solid size(1px) var(--second);
+
+        @media (max-width: 1919px) {
+          border: solid 1px var(--second);
+        }
 
         &:hover,
         &:focus {
-          box-shadow: 0px 5px 8px 6px rgb(234 138 50 / 35%);
+          box-shadow: 0px size(5px) size(8px) size(6px) rgb(234 138 50 / 35%);
+
+          @media (max-width: 1919px) {
+            box-shadow: 0px 5px 8px 6px rgb(234 138 50 / 35%);
+          }
         }
       }
     }

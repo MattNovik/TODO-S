@@ -29,6 +29,11 @@ const Board = ({ theme, setTheme }) => {
   const [searchValue, setSearchValue] = useState(null);
 
   useEffect(() => {
+    /*     if (sessionStorage.getItem('readyToUse') !== null) {
+      (document.querySelector('.html-hidden') as HTMLElement).classList.remove(
+        'html-hidden'
+      );
+    } */
     if (isAuthenticated) {
       console.log(JSON.stringify(user, null, 2));
       const userData = user;
@@ -44,7 +49,7 @@ const Board = ({ theme, setTheme }) => {
     } else {
       dispatch(
         refreshData(
-          JSON.parse(localStorage.getItem('boardList') || '') !== null
+          localStorage.getItem('boardList') !== null
             ? JSON.parse(localStorage.getItem('boardList') || '')
             : []
         )
@@ -146,12 +151,16 @@ const Board = ({ theme, setTheme }) => {
         } // убираю фокус с задачи
       }}
     >
-      <Notification
-        type="work"
-        text="This project still in work, but you can use it right now!"
-        button="ready"
-        links={false}
-      />
+      {sessionStorage.getItem('readyToUse') === null ? (
+        <Notification
+          type="work"
+          text="This project still in work, but you can use it right now!"
+          button="ready"
+          links={false}
+        />
+      ) : (
+        ''
+      )}
       <Notification
         type="notice"
         text={`This project is still creating by @lockdur. visit my`}

@@ -1,5 +1,5 @@
 import './index.scss';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NotificationProps } from '../../interfaces/interfaces';
 
 const Notification: React.FC<NotificationProps> = ({
@@ -8,6 +8,13 @@ const Notification: React.FC<NotificationProps> = ({
   button,
   links,
 }) => {
+  useEffect(() => {
+    if (sessionStorage.getItem('readyToUse') === null) {
+      (document.querySelector('html') as HTMLElement).classList.add(
+        'html-hidden'
+      );
+    }
+  }, []);
   return (
     <div
       className={`notification notification--${type}`}
@@ -35,6 +42,9 @@ const Notification: React.FC<NotificationProps> = ({
             type="button"
             className="notification__button button"
             onClick={() => {
+              if (sessionStorage.getItem('readyToUse') === null) {
+                sessionStorage.setItem('readyToUse', 'true');
+              }
               (
                 document.querySelector(`.notification--${type}`) as HTMLElement
               ).classList.add('notification--close');
