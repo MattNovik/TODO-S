@@ -2,7 +2,7 @@ import * as React from 'react';
 import './index.scss';
 import { Circles } from 'react-loader-spinner';
 
-const Loading: React.FC = () => {
+const Loading = () => {
   return (
     <div className="react-spinner">
       <Circles

@@ -2,12 +2,7 @@ import './index.scss';
 import React, { useEffect } from 'react';
 import { NotificationProps } from '../../interfaces/interfaces';
 
-const Notification: React.FC<NotificationProps> = ({
-  type,
-  text,
-  button,
-  links,
-}) => {
+const Notification = ({ type, text, button, links }: NotificationProps) => {
   useEffect(() => {
     if (sessionStorage.getItem('readyToUse') === null) {
       (document.querySelector('html') as HTMLElement).classList.add(

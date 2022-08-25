@@ -7,11 +7,9 @@ import Sorts from '../Sorts';
 import ThemeCheckbox from '../ThemeCheckbox';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import Logo from '-!svg-react-loader!../../img/logo.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconGithub from '-!svg-react-loader!../../img/icon-github.svg';
 import { HeadProps } from '../../interfaces/interfaces';
 
-const Head: React.FC<HeadProps> = ({
+const Head = ({
   setSmallBoardList,
   setStartDate,
   setEndDate,
@@ -28,7 +26,7 @@ const Head: React.FC<HeadProps> = ({
   setTheme,
   theme,
   setSearchValue,
-}) => {
+}: HeadProps) => {
   return (
     <div className="head">
       <div className="head__title-wrapper">

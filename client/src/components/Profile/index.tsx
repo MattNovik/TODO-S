@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { Close } from '@mui/icons-material';
 import ReloginButton from '../Auth/ReloginButton';
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const { user, isAuthenticated } = useAuth0();
 
   const handleClick = (): void => {

@@ -2,7 +2,7 @@ import './index.scss';
 import * as React from 'react';
 import { ThemeCheckboxProps } from '../../interfaces/interfaces';
 
-const ThemeCheckbox: React.FC<ThemeCheckboxProps> = ({ theme, setTheme }) => {
+const ThemeCheckbox = ({ theme, setTheme }: ThemeCheckboxProps) => {
   const onChange = (): void => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };

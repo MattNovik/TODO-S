@@ -29,11 +29,6 @@ const Board = ({ theme, setTheme }) => {
   const [searchValue, setSearchValue] = useState(null);
 
   useEffect(() => {
-    /*     if (sessionStorage.getItem('readyToUse') !== null) {
-      (document.querySelector('.html-hidden') as HTMLElement).classList.remove(
-        'html-hidden'
-      );
-    } */
     if (isAuthenticated) {
       console.log(JSON.stringify(user, null, 2));
       const userData = user;

@@ -7,7 +7,7 @@ import Profile from '../Profile';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
-const AuthenticationButton: React.FC = () => {
+const AuthenticationButton = () => {
   const { isAuthenticated } = useAuth0();
 
   return isAuthenticated ? <Profile /> : <LoginButton />;

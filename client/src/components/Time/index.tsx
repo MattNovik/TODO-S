@@ -4,7 +4,7 @@ import { month } from '../../constants/constants';
 
 const weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const Time: React.FC = () => {
+const Time = () => {
   const todayDate = new Date();
   const todayDateString =
     weekDay[todayDate.getDay()] +

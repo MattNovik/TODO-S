@@ -2,13 +2,13 @@ import './index.scss';
 import * as React from 'react';
 import { LoadItemsButtonProps } from '../../interfaces/interfaces';
 
-const LoadItemsButton: React.FC<LoadItemsButtonProps> = ({
+const LoadItemsButton = ({
   listItems,
   typeList,
   setMaxList,
   setTypeList,
   maxList,
-}) => {
+}: LoadItemsButtonProps) => {
   return listItems !== null &&
     listItems.length > maxList &&
     listItems.length !== typeList.length ? (

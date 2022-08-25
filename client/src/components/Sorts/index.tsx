@@ -9,7 +9,7 @@ import IconArrow from '-!svg-react-loader!../../img/icon-arrow.svg';
 import { Close } from '@mui/icons-material';
 import { SortsProps } from '../../interfaces/interfaces';
 
-const Sorts: React.FC<SortsProps> = ({ setSmallBoardList, boardList }) => {
+const Sorts = ({ setSmallBoardList, boardList }: SortsProps) => {
   const dispatch = useDispatch();
   return (
     <div className="sort">

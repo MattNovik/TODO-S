@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import { Close } from '@mui/icons-material';
 import { FilterProps } from '../../interfaces/interfaces';
 
-const Filters: React.FC<FilterProps> = ({
+const Filters = ({
   setEndDate,
   setStartDate,
   setSmallBoardList,
@@ -20,7 +20,7 @@ const Filters: React.FC<FilterProps> = ({
   setFilterProgressList,
   filterDoneList,
   setFilterDoneList,
-}) => {
+}: FilterProps) => {
   const filterByDate = (dates: [any, any]): void => {
     const [start, end] = dates;
     setStartDate(start);

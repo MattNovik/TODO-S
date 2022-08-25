@@ -8,7 +8,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useAuth0 } from '@auth0/auth0-react';
 import { DataProps } from '../../interfaces/interfaces';
 
-const AddItemButton: React.FC = () => {
+const AddItemButton = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
 
